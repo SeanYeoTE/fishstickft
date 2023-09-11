@@ -11,18 +11,20 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int check;
+	int		i;
 	char	*tmp;
 	char	cc;
 
 	tmp = (char *)s;
 	cc = (char)c;
-	int = 0;
+	i = 0;
 	while (tmp[i] != '\0')
+	{
 		if (tmp[i] == cc)
-			return ((char*)tmp + i);
+			return ((char *)tmp + i);
 		i++;
+	}
 	return (0);
 }
