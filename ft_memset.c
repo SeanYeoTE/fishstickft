@@ -19,8 +19,8 @@ void	*ft_memset(void *s, int c, size_t n)
 	while (n > 0)
 	{
 		*dw = c;
-		*dw++;
+		dw++;
 		n--;
 	}
-	return (b);
+	return (s);
 }
