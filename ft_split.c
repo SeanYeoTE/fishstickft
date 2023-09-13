@@ -31,6 +31,30 @@ static	int	ft_wordcount(char *s, char c)
 	return (words);
 }
 
+static char	*ft_stralloc(char *str, char c, int *k)
+{
+	char	*word;
+	int		i;
+
+	i = *k;
+	word = NULL;
+	while (str[*k]  != '\0')
+	{
+		if (str[*k] != c)
+		{
+			while (str[*k] != '\0' && str[*k] != c)
+				*k += 1;
+			word = (char *)malloc(sizeof(char) *(*k + 1));
+			if (word == NULL)
+				return (NULL);
+			break;
+		}
+		*k += 1;
+	}
+	ft_strcpy(word, str, c, i);
+	return (word);
+}
+
 char **ft_split(char const *s, char c)
 {
 	int	words;
@@ -44,6 +68,12 @@ char **ft_split(char const *s, char c)
 	ans = (char **)malloc(sizeof(char *) * (words + 1));
 	if (ans == NULL)
 		return (NULL);
-	whil
-
+	while (i < words)
+	{
+		ans[i] = ft_stralloc(((char *)str), c, &pos);
+		if (ans[i] == NULL)
+			ft_free(ans[i]);
+		i++;
+	}
+	return (ans);
 }
