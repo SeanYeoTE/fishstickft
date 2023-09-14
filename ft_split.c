@@ -82,7 +82,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (i < words)
 	{
-		ans[i] = allocatestr(((char *)str), c, &j);
+		ans[i] = allocatestr(((char *)s), c, &j);
 		if (ans[i] == NULL)
 			ft_free(ans[i]);
 		i++;
