@@ -20,6 +20,7 @@ static void	ft_free(char *i)
 	}
 	free (*i);
 }
+
 static	int	ft_wordcount(char *s, char c)
 {
 	int	words;
@@ -47,7 +48,7 @@ static char	*allocatestr(char *str, char c, int *k)
 
 	i = *k;
 	word = NULL;
-	while (str[*k]  != '\0')
+	while (str[*k] != '\0')
 	{
 		if (str[*k] != c)
 		{
@@ -66,9 +67,9 @@ static char	*allocatestr(char *str, char c, int *k)
 
 char **ft_split(char const *s, char c)
 {
-	int	words;
-	char **ans;
-	int	i;
+	int		words;
+	char	**ans;
+	int		i;
 
 	i = 0;
 	if (!s || !c)
