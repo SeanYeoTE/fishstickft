@@ -18,7 +18,7 @@ static void	ft_free(char *i)
 		free(i);
 		i++;
 	}
-	free (*i);
+	free (i);
 }
 
 static	int	ft_wordcount(const char *s, char c)
