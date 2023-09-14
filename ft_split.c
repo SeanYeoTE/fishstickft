@@ -41,6 +41,21 @@ static	int	ft_wordcount(const char *s, char c)
 	return (words);
 }
 
+static void	ft_strcpy(char *word, char *str, char c, int j)
+{
+	int	i;
+
+	i = 0;
+	while (str[j] != '\0' && str[j] == c)
+		j++;
+	while (str[j + i] != c && str[j + i] != '\0')
+	{
+		word[i] = str[j + i];
+		i++;
+	}
+	word[i] = '\0';
+}
+
 static char	*allocatestr(char *str, char c, int *k)
 {
 	char	*word;
