@@ -57,7 +57,7 @@ static char	*allocatestr(char *str, char c, int *k)
 			word = (char *)malloc(sizeof(char) *(*k + 1));
 			if (word == NULL)
 				return (NULL);
-			break;
+			break ;
 		}
 		*k += 1;
 	}
@@ -65,7 +65,7 @@ static char	*allocatestr(char *str, char c, int *k)
 	return (word);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		words;
 	char	**ans;
