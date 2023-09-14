@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 #include "libft.h"
 
+static void	ft_free(char *i)
+{
+	while (*i)
+	{
+		free(i);
+		i++;
+	}
+	free (*i);
+}
 static	int	ft_wordcount(char *s, char c)
 {
 	int	words;
@@ -31,7 +40,7 @@ static	int	ft_wordcount(char *s, char c)
 	return (words);
 }
 
-static char	*ft_stralloc(char *str, char c, int *k)
+static char	*allocatestr(char *str, char c, int *k)
 {
 	char	*word;
 	int		i;
@@ -70,7 +79,7 @@ char **ft_split(char const *s, char c)
 		return (NULL);
 	while (i < words)
 	{
-		ans[i] = ft_stralloc(((char *)str), c, &pos);
+		ans[i] = allocatestr(((char *)str), c, &pos);
 		if (ans[i] == NULL)
 			ft_free(ans[i]);
 		i++;
