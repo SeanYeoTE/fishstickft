@@ -70,8 +70,10 @@ char	**ft_split(char const *s, char c)
 	int		words;
 	char	**ans;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	if (!s || !c)
 		return (NULL);
 	words = ft_wordcount(s, c);
@@ -80,7 +82,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (i < words)
 	{
-		ans[i] = allocatestr(((char *)str), c, &pos);
+		ans[i] = allocatestr(((char *)str), c, &j);
 		if (ans[i] == NULL)
 			ft_free(ans[i]);
 		i++;
