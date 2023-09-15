@@ -12,31 +12,6 @@
 #include "libft.h"
 
 int	ft_atoi(const char *str)
-/*{
-	int		ans;
-	int		parity;
-	char	*tmp;
-
-	ans = 0;
-	parity = 0;
-	tmp = (char *)str;
-	while (*tmp == ' ' || (*tmp >= 9 && *tmp <= 13))
-		tmp++;
-	if (*tmp == '-' || *tmp == '+')
-	{
-		if (*tmp == '-')
-			parity++;
-		tmp++;
-	}
-	if (*tmp == '+' || *tmp == '-')
-		tmp++;
-	while (*tmp >= '0' && *tmp <= '9')
-	{
-		ans = (ans * 10) + (*tmp - '0');
-		tmp++;
-	}
-	return (ans * (parity * -1));
-}*/
 {
 	int	i;
 	int	neg;
