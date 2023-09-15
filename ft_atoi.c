@@ -13,8 +13,8 @@
 
 int	ft_atoi(const char *str)
 {
-	int	ans;
-	int	parity;
+	int		ans;
+	int		parity;
 	char	*tmp;
 
 	ans = 0;
