@@ -28,6 +28,8 @@ int	ft_atoi(const char *str)
 			parity++;
 		tmp++;
 	}
+	if (*tmp == '+' || *tmp == '-')
+		tmp++;
 	while (*tmp >= '0' && *tmp <= '9')
 	{
 		ans = (ans * 10) + (*tmp - '0');
