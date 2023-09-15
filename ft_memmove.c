@@ -40,18 +40,18 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 }*/
 {
 	size_t	i;
-	char	*cdst;
+	char	*cdest;
 	char	tmp[65535];
 
-	cdst = (char*)dst;
+	cdest = (char*)dest;
 	i = 0;
 	if (len > 65535)
 		return (NULL);
 	ft_memcpy(tmp, src, len);
 	while (i < len)
 	{
-		cdst[i] = tmp[i];
+		cdest[i] = tmp[i];
 		i++;
 	}
-	return (cdst);
+	return (cdest);
 }
