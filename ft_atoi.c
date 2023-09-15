@@ -13,25 +13,25 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	parity;
 	int	ans;
+	int	parity;
+	char	*tmp;
 
-	i = 0;
-	parity = 0;
 	ans = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	parity = 0;
+	tmp = (char *)str;
+	while (*tmp == ' ' || (*tmp >= 9 && *tmp <= 13))
+		tmp++;
+	if (*tmp == '-' || *tmp == '+')
 	{
-		if (str[i] == '-')
+		if (*tmp == '-')
 			parity++;
-		i++;
+		tmp++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (*tmp >= '0' && *tmp <= '9')
 	{
-		ans = (str[i] - '0') + (ans * 10);
-		i++;
+		ans = (ans * 10) + (*tmp - '0');
+		tmp++;
 	}
 	return (ans * (parity * -1));
 }
