@@ -22,7 +22,7 @@ int	ft_atoi(const char *str)
 	tmp = (char *)str;
 	while (*tmp == ' ' || (*tmp >= 9 && *tmp <= 13))
 		tmp++;
-	if (*tmp == '-' || *tmp == '+')
+	while (*tmp == '-' || *tmp == '+')
 	{
 		if (*tmp == '-')
 			parity++;
