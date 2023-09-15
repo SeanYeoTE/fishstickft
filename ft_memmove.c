@@ -17,7 +17,7 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 	char	*cdest;
 	char	tmp[65535];
 
-	cdest = (char*)dest;
+	cdest = (char *)dest;
 	i = 0;
 	if (len > 65535)
 		return (NULL);
