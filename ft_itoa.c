@@ -13,7 +13,7 @@
 
 static	int	isnegative(int n)
 {
-	int isnegative;
+	int	isnegative;
 
 	isnegative = 0;
 	if (n < 0)
