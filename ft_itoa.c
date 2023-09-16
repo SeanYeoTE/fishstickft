@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-static	int isnegative(int n)
+static	int	isnegative(int n)
 {
 	int isnegative;
 
@@ -23,10 +23,10 @@ static	int isnegative(int n)
 	return (isnegative);
 }
 
-static	int getlen(unsigned int nn, int n)
+static	int	getlen(unsigned int nn, int n)
 {
-	int tmp;
-	int len;
+	int	tmp;
+	int	len;
 
 	len = 0;
 	if (isnegative(n) == 1)
