@@ -19,7 +19,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	i = 0;
 	j = 0;
-	ans = (char *)malloc(sizeof(char *) * (len + 1));
+	ans = (char *)malloc(sizeof(*s) * (len + 1));
 	if (ans == 0)
 		return (NULL);
 	while (s[i])
