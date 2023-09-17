@@ -3,6 +3,7 @@
 
 # include <string.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 int		ft_isalpha(int x);
 int		ft_isdigit(int x);
