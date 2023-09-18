@@ -18,6 +18,10 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 
 	i = 0;
 	j = 0;
+	if (*little > 0)
+	if (*big > 0)
+	if (big == NULL || little == NULL)
+		return (NULL);
 	if (little == NULL || little[0] == '\0')
 		return ((char *)big);
 	while (big[i] != '\0' && i < len)
