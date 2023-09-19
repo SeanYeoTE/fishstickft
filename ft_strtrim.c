@@ -11,24 +11,37 @@
 /* ************************************************************************** */
 #include "libft.h"
 
+static char	*strdetect(const char *s, int i)
+{
+	while (*s)
+	{
+		if (*s == i)
+			return ((char *)s);
+		s++;
+	}
+	if (i == '\0')
+		return ((char *)s);
+	return (0);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;
-	size_t	len;
-	char	*ans;
+	size_t	j;
+	char	*str;
 
-	i = 0;
-	len = ft_strlen(s1);
-	ans = 0;
+	str = 0;
 	if (s1 != 0 && set != 0)
 	{
-		while (s1[i] && ft_strchr(set, s1[i]))
+		i = 0;
+		j = ft_strlen(s1);
+		while (s1[i] && strdetect(set, s1[i]))
 			i++;
-		while (s1[len - 1] && ft_strchr(set, s1[len - 1]))
-			len--;
-		ans = (char *)malloc(sizeof(char *) * (len - i + 1));
-		if (ans)
-			ft_strlcpy(ans, &s1[i], len - i + 1);
+		while (s1[j - 1] && strdetect(set, s1[j - 1]) && j > i)
+			j--;
+		str = (char *)malloc(sizeof(char) * (j - i + 1));
+		if (str)
+			ft_strlcpy(str, &s1[i], j - i + 1);
 	}
-	return (ans);
+	return (str);
 }
