@@ -39,8 +39,12 @@ SRC_FILES = ft_bzero.c \
 			ft_putendl_fd.c \
 			ft_putnbr_fd.c \
 
+
+BONUS_SRC_FILES = 
 # Object files
 OBJ_FILES = $(SRC_FILES:.c=.o)
+
+BONUS_FILES = $(BONUS_SRC_FILES:.c=.o)
 
 # Library name
 NAME = libft.a
@@ -51,6 +55,9 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	ar rcs $(NAME) $(OBJ_FILES)
 
+bonus: $(OBJ_FILES) $(BONUS_FILES)
+	ar rcs $(NAME) $(OBJ_FILES) $(BONUS_FILES)
+
 clean:
 	rm -f $(OBJ_FILES)
 
@@ -59,4 +66,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all fclean clean re
+.PHONY: all bonus fclean clean re
