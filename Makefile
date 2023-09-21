@@ -43,7 +43,8 @@ SRC_FILES = ft_bzero.c \
 BONUS			=	ft_lstadd_front.c \
 					ft_lstnew.c  \
 					ft_lstsize.c \
-					
+					ft_lstlast.c \
+					ft_lstadd_back.c \
 
 BONUS_OBJS		= $(BONUS:.c=.o)
 
