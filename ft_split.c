@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-#include "libft.h"
-
 static int	count_strings(char const *str, char c)
 {
 	int	i;

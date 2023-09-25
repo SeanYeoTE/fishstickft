@@ -32,6 +32,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		return (srclen + size);
 	return (srclen + dstlen);
 }
-
-/*while (dst[i] && i < size)
-		i++;*/
