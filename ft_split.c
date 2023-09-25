@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 #include "libft.h"
 
+#include "libft.h"
+
 static int	count_strings(char const *str, char c)
 {
 	int	i;
@@ -30,14 +32,21 @@ static int	count_strings(char const *str, char c)
 	return (count);
 }
 
-static int	ft_strlen_sep(char const *str, char c)
+static char	**ft_freeup(char **strs)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] && !(str[i] == c))
-		i++;
-	return (i);
+	if (strs)
+	{
+		i = 0;
+		while (strs[i] != NULL)
+		{
+			free(strs[i]);
+			i++;
+		}
+		free(strs);
+	}
+	return (NULL);
 }
 
 static char	*ft_word(char const *str, char c)
@@ -46,8 +55,10 @@ static char	*ft_word(char const *str, char c)
 	int		i;
 	char	*word;
 
+	len_word = 0;
 	i = 0;
-	len_word = ft_strlen_sep(str, c);
+	while (str[len_word] && !(str[len_word] == c))
+		len_word++;
 	word = (char *)malloc(sizeof(char) * (len_word + 1));
 	if (!word)
 		return (NULL);
@@ -66,8 +77,7 @@ char	**ft_split(char const *str, char c)
 	int		i;
 
 	i = 0;
-	strings = (char **)malloc(sizeof(char *)
-			* (count_strings(str, c) + 1));
+	strings = (char **)malloc(sizeof(char *) * (count_strings(str, c) + 1));
 	if (!strings)
 		return (NULL);
 	while (*str != '\0')
@@ -77,6 +87,8 @@ char	**ft_split(char const *str, char c)
 		if (*str != '\0')
 		{
 			strings[i] = ft_word(str, c);
+			if (strings[i] == NULL)
+				return (ft_freeup(strings));
 			i++;
 		}
 		while (*str && !(*str == c))
