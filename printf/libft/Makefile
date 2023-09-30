@@ -80,8 +80,9 @@ CFLAGS = -Wall -Wextra -Werror
 # Targets
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES)
-	ar rcs $(NAME) $(OBJ_FILES)
+$(NAME): $(OBJS_CHECK) $(OBJS_MEMORY) $(OBJS_PRINT) $(OBJS_STRING)
+	@$(AR) $(NAME) $(OBJS_CHECK) $(OBJS_MEMORY) $(OBJS_PRINT) $(OBJS_STRING)
+	@$(LIB) $(NAME)
 
 check: $(OBJS_CHECK)
 	@$(AR) $(NAME) $(OBJS_CHECK)
