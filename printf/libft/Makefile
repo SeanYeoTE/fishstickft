@@ -63,7 +63,7 @@ $(NAME): $(OBJS)
 	@$(LIB) $(NAME)
 
 clean:
-	@$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
 	@$(RM) $(NAME)
