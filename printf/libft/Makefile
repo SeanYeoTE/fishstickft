@@ -80,6 +80,21 @@ CFLAGS = -Wall -Wextra -Werror
 # Targets
 all: $(NAME)
 
+$(OBJS_CHECK): %.o: %.c
+	$(GCC) $(CFLAGS) -c -I $(HEAD) $< -o
+
+$(OBJS_LIST): %.o: %.c
+	$(GCC) $(CFLAGS) -c -I $(HEAD) $< -o
+
+$(OBJS_MEMORY): %.o: %.c
+	$(GCC) $(CFLAGS) -c -I $(HEAD) $< -o
+
+$(OBJS_PRINT): %.o: %.c
+	$(GCC) $(CFLAGS) -c -I $(HEAD) $< -o
+
+$(OBJS_STRING): %.o: %.c
+	$(GCC) $(CFLAGS) -c -I $(HEAD) $< -o
+
 $(NAME): $(OBJS_CHECK) $(OBJS_MEMORY) $(OBJS_PRINT) $(OBJS_STRING)
 	@$(AR) $(NAME) $(OBJS_CHECK) $(OBJS_MEMORY) $(OBJS_PRINT) $(OBJS_STRING)
 	@$(LIB) $(NAME)
