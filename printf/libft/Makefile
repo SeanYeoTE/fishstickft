@@ -59,14 +59,13 @@ all: $(NAME)
 
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
-	$(LIB) $(NAME)
+	ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
