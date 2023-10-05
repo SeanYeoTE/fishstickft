@@ -2,7 +2,7 @@
 
 int	print_char(int c)
 {
-	return write(1, &c, 1);
+	return (write(1, &c, 1));
 }
 
 int	print_str(char *str)
@@ -31,11 +31,11 @@ int	print_digit(long n, int base)
 		return (print_digit(-n, base)) + 1;
 	}
 	else if (n < base)
-		return (print_char(symbols[n]);
+		return (print_char(symbols[n]));
 	else
 	{
 		count = print_digit(n / base, base);
-		return count + print_digit(n % base, base);
+		return (count + print_digit(n % base, base));
 	}
 }
 int	print_format(char specifier, va_list ap)
