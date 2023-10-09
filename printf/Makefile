@@ -6,9 +6,11 @@ GCC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 AR = ar rcs
+
 NAME = libftprintf.a
 
-SRC_FILES = ft_printf.c
+SRC = ft_printf
+SRC_FILES = $(addsuffix .c, $(SRC))
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
