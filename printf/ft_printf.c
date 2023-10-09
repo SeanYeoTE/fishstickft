@@ -21,7 +21,7 @@ int	print_str(char *str)
 
 int	print_digit(long n, int base)
 {
-	int	count;
+	int		count;
 	char	*symbols;
 
 	symbols = "0123456789abcdef";
@@ -38,6 +38,7 @@ int	print_digit(long n, int base)
 		return (count + print_digit(n % base, base));
 	}
 }
+
 int	print_format(char specifier, va_list ap)
 {
 	int	count;
