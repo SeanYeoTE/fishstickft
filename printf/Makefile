@@ -1,6 +1,3 @@
-LIBFT_DIR = ./libft/
-LIBFT = libft.a
-LIBFT_AR = $(addprefix $(LIBFT_DIR), $(LIBFT))
 
 GCC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -8,7 +5,13 @@ RM = rm -f
 AR = ar rcs
 NAME = libftprintf.a
 
-SRC_FILES = ft_printf.c
+SRC_FILES = ft_printf.c \
+			print_char.c \
+			print_str.c \
+			print_digit.c \
+			print_hex.c \
+			print_void.c \
+			print_unsigned.c \
 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)

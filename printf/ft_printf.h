@@ -19,8 +19,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <limits.h>
-# include "./libft/libft.h"
 
+int	print_char(int c);
+int	print_str(char *str);
+int	print_digit(long n, int base);
+int	print_hex(long n, int base, char c);
+int	print_unsignedhex(unsigned long int n);
+int	print_void(void *n);
+int	print_unsigned(unsigned int n);
 int	ft_printf(const char *str, ...);
 
 #endif
