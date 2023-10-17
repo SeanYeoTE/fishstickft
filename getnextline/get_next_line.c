@@ -11,9 +11,29 @@
 /* ************************************************************************** */
 include "get_next_line.h"
 
+char	*readline(int fd)
+{
+	char	buff[BUFFER_SIZE];
+	int 	ans;
+
+	if (!buff)
+		return (NULL);
+	ans = read(fd, buff, BUFFER_SIZE)
+	if (ans < 0)
+		return (free(ans), NULL);
+	buff[ans] = '\0';
+	return (buff);
+	ft_strdup()
+}
+
 char	*get_next_line(int fd)
 {
+	static	char	*buf[4096];
 
+	size_t			oldlen;
 
-	ft_strdup()
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
+		return (NULL);
+	
+	
 }
