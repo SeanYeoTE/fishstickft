@@ -26,6 +26,7 @@ char	*readline(int fd)
 	return (buff);
 }
 
+// read returns how many bytes were successfully read
 char	*ft_addtext(char *buf, int fd)
 {
 	char	*newbuf;
@@ -42,6 +43,7 @@ char	*ft_addtext(char *buf, int fd)
 	if (!newbuf)
 		return (free(newbuf), NULL);
 	newbuf = ft_strdup(buf);
+	// ^^ this seems unnecessary
 	ft_strlcat(newbuf, next, newlen + 1);
 	return (free(buf), free(next), newbuf);
 }
