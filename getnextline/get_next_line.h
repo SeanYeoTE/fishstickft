@@ -20,9 +20,10 @@
 # include <string.h>
 # include <limits.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
 
-int	BUFFER_SIZE;
-
+# endif
 
 size_t	ft_strlen(const char *i);
 char	*ft_strdup(const char *s);
