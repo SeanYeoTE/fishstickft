@@ -9,7 +9,7 @@
 /*   Updated: 2023/10/05 16:30:32 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-include "get_next_line.h"
+#include "get_next_line.h"
 
 char	*readline(int fd)
 {
@@ -25,6 +25,7 @@ char	*readline(int fd)
 	return (buff);
 	ft_strdup()
 }
+
 char	*ft_addtext(char *buf, int fd)
 {
 	char	*newbuf;
