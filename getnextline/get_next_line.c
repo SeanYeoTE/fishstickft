@@ -13,17 +13,17 @@
 
 char	*readline(int fd)
 {
-	char	buff[BUFFER_SIZE];
+	char	*buff;
 	int 	ans;
 
+	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	ans = read(fd, buff, BUFFER_SIZE)
+	ans = read(fd, buff, BUFFER_SIZE);
 	if (ans < 0)
-		return (free(ans), NULL);
+		return (free(buff), NULL);
 	buff[ans] = '\0';
 	return (buff);
-	ft_strdup()
 }
 
 char	*ft_addtext(char *buf, int fd)
@@ -36,29 +36,36 @@ char	*ft_addtext(char *buf, int fd)
 	if (!next)
 		return (free(buf), NULL);
 	if (!buf)
-		return (aux);
-	newlen = ft_strlen(buf) + ft_strlen(aux);
+		return (next);
+	newlen = ft_strlen(buf) + ft_strlen(next);
 	newbuf = malloc(newlen + 1);
 	if (!newbuf)
 		return (free(newbuf), NULL);
 	newbuf = ft_strdup(buf);
 	ft_strlcat(newbuf, next, newlen + 1);
-	return (free(buf), free(aux), newbuf);
+	return (free(buf), free(next), newbuf);
 }
 
 
 char	*get_next_line(int fd)
 {
 	static	char	*buf[4096];
-
+	char			*line;
 	size_t			oldlen;
 
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
+	line = NULL;
 	if (ft_strchr(buf[fd], '\n') == 0)
 	{
-		old_len = ft_strlen(buf[fd]);
+		oldlen = ft_strlen(buf[fd]);
 		buf[fd] = ft_addtext(buf[fd], fd);
+		if (oldlen  == ft_strlen(buf[fd]) && buf[fd])
+			line = ft_substr(buf[fd], 0, ft_strlen(buf[fd]));
+	if (line)
+	{
+		return (line);
 	}
-	
+	}
+	return (get_next_line(fd));
 }
