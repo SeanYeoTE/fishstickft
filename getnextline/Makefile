@@ -10,7 +10,7 @@ NAME = get_next_line
 
 
 SRC_FILES = get_next_line.c \
-			get_next_line_util.c \
+			get_next_line_utils.c \
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

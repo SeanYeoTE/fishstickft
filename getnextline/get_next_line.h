@@ -24,6 +24,14 @@
 int	BUFFER_SIZE;
 
 
+size_t	ft_strlen(const char *i);
+char	*ft_strdup(const char *s);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+
+char	*readline(int fd);
+char	*ft_addtext(char *buf, int fd);
 char	*get_next_line(int fd);
 
 # endif

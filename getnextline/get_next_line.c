@@ -45,6 +45,7 @@ char	*ft_addtext(char *buf, int fd)
 	return (free(buf), free(aux), newbuf);
 }
 
+
 char	*get_next_line(int fd)
 {
 	static	char	*buf[4096];
