@@ -25,6 +25,25 @@ char	*readline(int fd)
 	return (buff);
 	ft_strdup()
 }
+char	*ft_addtext(char *buf, int fd)
+{
+	char	*newbuf;
+	char	*next;
+	int		newlen;
+
+	next = readline(fd);
+	if (!next)
+		return (free(buf), NULL);
+	if (!buf)
+		return (aux);
+	newlen = ft_strlen(buf) + ft_strlen(aux);
+	newbuf = malloc(newlen + 1);
+	if (!newbuf)
+		return (free(newbuf), NULL);
+	newbuf = ft_strdup(buf);
+	ft_strlcat(newbuf, next, newlen + 1);
+	return (free(buf), free(aux), newbuf);
+}
 
 char	*get_next_line(int fd)
 {
@@ -34,6 +53,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
-	
+	if (ft_strchr(buf[fd], '\n') == 0)
+	{
+		old_len = ft_strlen(buf[fd]);
+		buf[fd] = ft_addtext(buf[fd], fd);
+	}
 	
 }
