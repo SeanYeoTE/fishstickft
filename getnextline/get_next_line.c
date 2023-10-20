@@ -21,14 +21,14 @@ char	*readline(int fd, char *ret)
 		return (NULL);
 	ans = 1;
 	buff[0] = '\0';
-	while (!(ft_strchr(buf, '\n')) && ans)
+	while (!(ft_strchr(buff, '\n')) && ans)
 	{
 		ans = read(fd, buff, BUFFER_SIZE);
 		if (ans == -1)
-			return (free(buf), NULL);
+			return (free(buff), NULL);
 
 		buff[ans] = '\0';
-		ret = ft_strjoin(ret, buf);
+		ret = ft_strjoin(ret, buff);
 	}
 	return (free(buff), ret);
 }
@@ -73,19 +73,20 @@ char	*get_next_line(int fd)
 {
 	static	char	*buf[1024];
 	char			*line;
-	size_t			oldlen;
+	int				ct;
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
+	ct = 0l
 	buf[fd] = ft_addtext(buf[fd], fd);
 	if (!buf[fd])
 		return (NULL);
 	if (*buf[fd])
 	{
-		while (buf[fd][i]) && buf[fd][i] !='\n')
-			i++;
-		line =  malloc(i + 2);
+		while (buf[fd][ct]) && buf[fd][ct] !='\n')
+			ct++;
+		line =  malloc(ct + 2);
 		if (!line)
 			return (NULL);
 		line = ft_strcpy(line, buf[fd]);
