@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*readline(int fd)
+char	*readline(int fd, char *ret)
 {
 	char	*buff;
 	int 	ans;
@@ -19,55 +19,81 @@ char	*readline(int fd)
 	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	ans = read(fd, buff, BUFFER_SIZE);
-	if (ans < 0)
-		return (free(buff), NULL);
-	buff[ans] = '\0';
-	return (buff);
-}
+	ans = 1;
+	buff[0] = '\0';
+	while (!(ft_strchr(buf, '\n')) && ans)
+	{
+		ans = read(fd, buff, BUFFER_SIZE);
+		if (ans == -1)
+			return (free(buf), NULL);
 
+		buff[ans] = '\0';
+		ret = ft_strjoin(ret, buf);
+	}
+	return (free(buff), ret);
+}
 // read returns how many bytes were successfully read
+
+char	*ft_replaceline(char *buf)
+{
+	int		len;
+	int		i;
+	char	*newline;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	len = ft_strlen(buf);
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	if (!buf[i])
+		return (free(buf), NULL);
+	newline = malloc((len - i) + 1);
+	if (!newline)
+		return (NULL);
+	while (buf[i + ++j])
+		newline[j] = buf[i + j];
+	newline[j] = '\0';
+	return (free(buf), newline);
+	
+}
+// replace buf with the remainder that was not returned
+
 char	*ft_addtext(char *buf, int fd)
 {
-	char	*newbuf;
 	char	*next;
-	int		newlen;
 
-	next = readline(fd);
-	if (!next)
-		return (free(buf), NULL);
-	if (!buf)
-		return (next);
-	newlen = ft_strlen(buf) + ft_strlen(next);
-	newbuf = malloc(newlen + 1);
-	if (!newbuf)
-		return (free(newbuf), NULL);
-	newbuf = ft_strdup(buf);
-	// ^^ this seems unnecessary
-	ft_strlcat(newbuf, next, newlen + 1);
-	return (free(buf), free(next), newbuf);
+	next = readline(fd, buf);
+	return (next);
 }
+
 
 
 char	*get_next_line(int fd)
 {
-	static	char	*buf[4096];
+	static	char	*buf[1024];
 	char			*line;
 	size_t			oldlen;
 
-	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	if (ft_strchr(buf[fd], '\n') == 0)
+	buf[fd] = ft_addtext(buf[fd], fd);
+	if (!buf[fd])
+		return (NULL);
+	if (*buf[fd])
 	{
-		oldlen = ft_strlen(buf[fd]);
-		buf[fd] = ft_addtext(buf[fd], fd);
-		if (oldlen  == ft_strlen(buf[fd]) && buf[fd])
-			line = ft_substr(buf[fd], 0, ft_strlen(buf[fd]));
-	if (line)
-	{
-		return (line);
+		while (buf[fd][i]) && buf[fd][i] !='\n')
+			i++;
+		line =  malloc(i + 2);
+		if (!line)
+			return (NULL);
+		line = ft_strcpy(line, buf[fd]);
 	}
-	}
-	return (get_next_line(fd));
+	buf[fd] = ft_replaceline(buf[fd]);
+	return (line);
 }
+
+
+
+
