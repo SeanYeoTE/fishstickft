@@ -78,7 +78,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	ct = 0l
+	ct = 0;
 	buf[fd] = ft_addtext(buf[fd], fd);
 	if (!buf[fd])
 		return (NULL);
