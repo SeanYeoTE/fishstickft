@@ -21,15 +21,18 @@ BONUS_OBJS = $(BONUS_FILE:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES)
-	$(AR) $(NAME) $(OBJ_FILES)
+$(NAME): $(OBJ_FILES) $(BONUS_OBJS)
+	$(AR) $(NAME) $(OBJ_FILES) $(BONUS_OBJS)
 
 clean:
-	$(RM) $(OBJ_FILES)
+	$(RM) $(OBJ_FILES) $(BONUS_OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus: $(BONUS_OBJS)
+	$(AR) $(NAME) $(BONUS_OBJS)
+
+.PHONY: all clean fclean re bonus
