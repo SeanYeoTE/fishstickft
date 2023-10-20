@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (*buf[fd])
 	{
-		while (buf[fd][ct]) && buf[fd][ct] !='\n')
+		while (buf[fd][ct] && buf[fd][ct] !='\n')
 			ct++;
 		line =  malloc(ct + 2);
 		if (!line)
