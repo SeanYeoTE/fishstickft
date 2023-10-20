@@ -59,16 +59,6 @@ char	*ft_replaceline(char *buf)
 }
 // replace buf with the remainder that was not returned
 
-char	*ft_addtext(char *buf, int fd)
-{
-	char	*next;
-
-	next = readline(fd, buf);
-	return (next);
-}
-
-
-
 char	*get_next_line(int fd)
 {
 	static	char	*buf[1024];
@@ -79,7 +69,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = NULL;
 	ct = 0;
-	buf[fd] = ft_addtext(buf[fd], fd);
+	buf[fd] = readline(buf[fd], fd);
 	if (!buf[fd])
 		return (NULL);
 	if (*buf[fd])

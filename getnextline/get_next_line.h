@@ -35,7 +35,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len);
 
 char	*readline(int fd, char *ret);
 char	*ft_replaceline(char *buf);
-char	*ft_addtext(char *buf, int fd);
 char	*get_next_line(int fd);
 
 # endif
