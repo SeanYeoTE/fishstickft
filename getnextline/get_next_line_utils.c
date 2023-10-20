@@ -125,7 +125,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	str[i] = '\0';
-	return (str);
+	return (free(s1), str);
 }
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
