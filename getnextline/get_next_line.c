@@ -26,15 +26,40 @@ char	*readline(int fd, char *ret)
 		ans = read(fd, buff, BUFFER_SIZE);
 		if (ans == -1)
 			return (free(buff), NULL);
-
 		buff[ans] = '\0';
 		ret = ft_strjoin(ret, buff);
 	}
 	return (free(buff), ret);
 }
 // read returns how many bytes were successfully read
+char	*ft_replaceline(char *reminder)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*line;
 
-char	*ft_replaceline(char *buf)
+	i = 0;
+	j = 0;
+	len = ft_strlen(reminder);
+	while (reminder[i] && reminder[i] != '\n')
+		i++;
+	if (!reminder[i])
+	{
+		free(reminder);
+		return (NULL);
+	}
+	line = malloc(sizeof(char) * ((len - i) + 1));
+	if (!line)
+		return (NULL);
+	i++;
+	while (reminder[i])
+		line[j++] = reminder[i++];
+	line[j] = '\0';
+	free(reminder);
+	return (line);
+}
+/*char	*ft_replaceline(char *buf)
 {
 	int		len;
 	int		i;
@@ -55,8 +80,7 @@ char	*ft_replaceline(char *buf)
 		newline[j] = buf[i + j];
 	newline[j] = '\0';
 	return (free(buf), newline);
-	
-}
+}*/
 // replace buf with the remainder that was not returned
 
 char	*get_next_line(int fd)
