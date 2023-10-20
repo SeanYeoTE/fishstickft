@@ -12,7 +12,12 @@ NAME = get_next_line
 SRC_FILES = get_next_line.c \
 			get_next_line_utils.c \
 
+BONUS_FILES =	get_next_line_bonus.c \
+				get_next_line_utils_bonus.c \
+
+
 OBJ_FILES = $(SRC_FILES:.c=.o)
+BONUS_OBJS = $(BONUS_FILE:.c=.o)
 
 all: $(NAME)
 
