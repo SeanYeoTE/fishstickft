@@ -69,7 +69,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = NULL;
 	ct = 0;
-	buf[fd] = readline(buf[fd], fd);
+	buf[fd] = readline(fd, buf[fd]);
 	if (!buf[fd])
 		return (NULL);
 	if (*buf[fd])
