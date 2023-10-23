@@ -32,7 +32,7 @@ char	*readline(int fd, char *ret)
 	return (free(buff), ret);
 }
 // read returns how many bytes were successfully read
-char	*ft_replaceline(char *reminder)
+/*char	*ft_replaceline(char *reminder)
 {
 	int		i;
 	int		j;
@@ -58,8 +58,8 @@ char	*ft_replaceline(char *reminder)
 	line[j] = '\0';
 	free(reminder);
 	return (line);
-}
-/*char	*ft_replaceline(char *buf)
+}*/
+char	*ft_replaceline(char *buf)
 {
 	int		len;
 	int		i;
@@ -76,11 +76,15 @@ char	*ft_replaceline(char *reminder)
 	newline = malloc((len - i) + 1);
 	if (!newline)
 		return (NULL);
-	while (buf[i + ++j])
+	i++;
+	while (buf[i + j])
+	{
 		newline[j] = buf[i + j];
+		j++;
+	}
 	newline[j] = '\0';
 	return (free(buf), newline);
-}*/
+}
 // replace buf with the remainder that was not returned
 
 char	*get_next_line(int fd)
