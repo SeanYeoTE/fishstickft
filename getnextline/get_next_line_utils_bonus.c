@@ -31,9 +31,7 @@ char	*ft_strchr(const char *s, int c)
 	while (i < len + 1)
 	{
 		if (s[i] == (char)c)
-		{
 			return ((char *)s + i);
-		}
 		i++;
 	}
 	return (0);
