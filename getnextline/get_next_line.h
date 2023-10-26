@@ -9,10 +9,6 @@
 /*   Updated: 2023/10/05 16:31:03 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-
-# endif
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -23,6 +19,11 @@
 # include <stdlib.h>
 # include <string.h>
 # include <limits.h>
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+
+# endif
 
 size_t	ft_strlen(const char *i);
 char	*ft_strchr(const char *s, int c);
