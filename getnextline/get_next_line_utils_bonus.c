@@ -53,6 +53,8 @@ char	*ft_strdup(const char *s)
 		str[tmp] = s[tmp];
 		tmp++;
 	}
+	if (str[tmp] == '\n')
+		str[tmp++] = '\n';
 	str[tmp] = '\0';
 	return (str);
 }
