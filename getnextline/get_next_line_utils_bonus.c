@@ -122,6 +122,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	while (s2[j] != '\0')
 		str[i++] = s2[j++];
+	if (s2[i] == '\n')
+		str[i++] = '\n';
 	str[i] = '\0';
 	return (free(s1), str);
 }
