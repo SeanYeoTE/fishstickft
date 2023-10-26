@@ -75,8 +75,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		dst[dstlen + i] = src[i];
 		i++;
 	}
-	if (src[i] == '\n')
-		dst[i++] = '\n';
 	dst[dstlen + i] = '\0';
 	if (dstlen > size)
 		return (srclen + size);
@@ -122,8 +120,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	while (s2[j] != '\0')
 		str[i++] = s2[j++];
-	if (s2[i] == '\n')
-		str[i++] = '\n';
 	str[i] = '\0';
 	return (free(s1), str);
 }

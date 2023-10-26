@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 		line = malloc(ct + 2);
 		if (!line)
 			return (NULL);
-		line = ft_strjoin(line, buf[fd]);
+		line = ft_strcpy(line, buf[fd]);
 	}
 	buf[fd] = ft_replaceline(buf[fd]);
 	return (line);
