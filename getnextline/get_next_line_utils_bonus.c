@@ -9,7 +9,7 @@
 /*   Updated: 2023/10/05 16:30:56 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *i)
 {
@@ -31,7 +31,9 @@ char	*ft_strchr(const char *s, int c)
 	while (i < len + 1)
 	{
 		if (s[i] == (char)c)
+		{
 			return ((char *)s + i);
+		}
 		i++;
 	}
 	return (0);
@@ -53,8 +55,6 @@ char	*ft_strdup(const char *s)
 		str[tmp] = s[tmp];
 		tmp++;
 	}
-	if (str[tmp] == '\n')
-		str[tmp++] = '\n';
 	str[tmp] = '\0';
 	return (str);
 }
@@ -145,21 +145,4 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	while (src[i] != '\0')
 		i++;
 	return (i);
-}
-
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	char	*ret;
-
-	if (!s)
-		return (0);
-	if (start > (size_t)ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > (size_t)(ft_strlen(s) - start))
-		len = ft_strlen(s) - start;
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		return (0);
-	ft_strlcpy(ret, s + start, len + 1);
-	return (ret);
 }
