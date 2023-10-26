@@ -9,7 +9,7 @@
 /*   Updated: 2023/10/05 16:30:32 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*readline(int fd, char *ret)
 {
@@ -78,15 +78,11 @@ char	*get_next_line(int fd)
 	{
 		while (buf[fd][ct] && buf[fd][ct] !='\n')
 			ct++;
-		line =  malloc(ct + 2);
+		line = malloc(ct + 2);
 		if (!line)
 			return (NULL);
-		line = ft_strdup(buf[fd]);
+		line = ft_strlcat(line, buf[fd], ft_strlen(buf[fd]));
 	}
 	buf[fd] = ft_replaceline(buf[fd]);
 	return (line);
 }
-
-
-
-
