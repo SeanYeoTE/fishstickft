@@ -91,8 +91,10 @@ char	*ft_strcpy(char *dst, const char *src)
 		dst[i] = src[i];
 		i++;
 	}
+	if (src[i] == '\n')
+		dst[i++] = '\n';
 	dst[i] = '\0';
-	return (dst);
+	return (dst, free(src));
 }
 
 char	*ft_strjoin(char *s1, char *s2)
