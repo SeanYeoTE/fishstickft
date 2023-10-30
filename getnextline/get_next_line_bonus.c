@@ -78,7 +78,7 @@ char	*get_next_line(int fd)
 	{
 		while (buf[fd][ct] && buf[fd][ct] !='\n')
 			ct++;
-		line = malloc(ct + 1);
+		line = malloc(ct + 2);
 		if (!line)
 			return (NULL);
 		line = ft_strcpy(line, buf[fd]);
