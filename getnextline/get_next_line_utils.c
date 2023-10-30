@@ -81,7 +81,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (srclen + dstlen);
 }
 
-char	*ft_strcpy(char *dst, const char *src)
+char	*ft_strcpy(char *dst, char *src)
 {
 	int	i;
 
