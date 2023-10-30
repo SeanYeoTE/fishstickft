@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
 
-char	*readline(int fd, char *ret)
+char	*readline(int fd)
 {
 	char	*buff;
 	int 	ans;
@@ -27,9 +27,8 @@ char	*readline(int fd, char *ret)
 		if (ans == -1)
 			return (free(buff), NULL);
 		buff[ans] = '\0';
-		ret = ft_strjoin(ret, buff);
 	}
-	return (free(buff), ret);
+	return (buff);
 }
 // read returns how many bytes were successfully read
 
@@ -71,7 +70,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = NULL;
 	ct = 0;
-	buf[fd] = readline(fd, buf[fd]);
+	buf[fd] = readline(fd);
 	if (!buf[fd])
 		return (NULL);
 	if (*buf[fd])
