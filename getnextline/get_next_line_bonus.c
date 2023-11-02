@@ -84,24 +84,14 @@ char	*get_next_line(int fd)
 	if (!buf)
 		return (line);
 	buf[fd] = formline(buf, line, ft_strlen(buf) + ft_strlen(line));
-
-
-
-
-
-
-
-
-
-}
 	if (*buf[fd])
 	{
-		while (buf[fd][ct] && buf[fd][ct] !='\n')
+		while (buf[fd][ct] != '\n' && buf[fd][ct])
 			ct++;
 		line = malloc(ct + 2);
 		if (!line)
 			return (NULL);
-		line = ft_strcpy(line, buf[fd]);
+		line = ft_strcpy(line, buf[fd]);		
 	}
 	buf[fd] = ft_replaceline(buf[fd]);
 	return (line);

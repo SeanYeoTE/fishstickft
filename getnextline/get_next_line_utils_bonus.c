@@ -39,6 +39,22 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
+char	*ft_strcpy(char *dst, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] && src[i] != '\n')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (src[i] == '\n')
+		dst[i++] = '\n';
+	dst[i] = '\0';
+	return (dst);
+}
+
 char	*ft_strdup(const char *s)
 {
 	int		len;
@@ -79,22 +95,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	if (dstlen > size)
 		return (srclen + size);
 	return (srclen + dstlen);
-}
-
-char	*ft_strcpy(char *dst, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && src[i] != '\n')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (src[i] == '\n')
-		dst[i++] = '\n';
-	dst[i] = '\0';
-	return (dst);
 }
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
