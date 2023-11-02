@@ -78,14 +78,15 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = readline(fd);
 	if (!line)
-		return (free(buf), NULL);
+		return (free(buf[fd]), NULL);
 	if (!line[0])
-		return (free(line), buf);
-	if (!buf)
+		return (free(line), buf[fd]);
+	if (!buf[fd])
 		return (line);
-	buf[fd] = formline(buf, line, ft_strlen(buf) + ft_strlen(line));
+	buf[fd] = formline(buf[fd], line, ft_strlen(buf[fd]) + ft_strlen(line));
 	if (*buf[fd])
 	{
+		ct = 0;
 		while (buf[fd][ct] != '\n' && buf[fd][ct])
 			ct++;
 		line = malloc(ct + 2);
