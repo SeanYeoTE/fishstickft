@@ -90,8 +90,6 @@ char	*ft_replaceline(char *buf)
 }
 // replace buf with the remainder that was not returned
 
-<<<<<<< HEAD
-=======
 char	*formline(char	*buf, char *line, int totalen)
 {
 	char	*final;
@@ -104,7 +102,6 @@ char	*formline(char	*buf, char *line, int totalen)
 	return(free(buf), free(line), final);
 }
 // joins whatever was previously stored in buf, with the newline that has been read
->>>>>>> c6c9cd5057942f5190751975ae3e2f35603c7255
 
 char	*get_next_line(int fd)
 {
