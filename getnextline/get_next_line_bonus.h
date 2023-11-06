@@ -27,11 +27,11 @@
 
 size_t	ft_strlen(const char *i);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
-char	*ft_strcpy(char *dst, const char *src);
+char	*ft_strcpy(char *dst, char *src);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 
-char	*readline(int fd, char *ret);
+char	*readline(int fd);
 char	*ft_replaceline(char *buf);
 char	*get_next_line(int fd);
 

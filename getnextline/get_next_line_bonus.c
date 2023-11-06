@@ -19,6 +19,7 @@ char	*read_to_storage(int fd)
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
+<<<<<<< HEAD
 	ans = 1;
 	buf[0] = '\0';
 	while (!(ft_strchr(buf, '\n')) && ans)
@@ -29,6 +30,13 @@ char	*read_to_storage(int fd)
 		buf[ans] = '\0';
 	}
 	return (buf);
+=======
+	ans = read(fd, buff, BUFFER_SIZE);
+	if (ans == -1)
+		return (free(buff), NULL);
+	buff[ans] = '\0';
+	return (buff);
+>>>>>>> c6c9cd5057942f5190751975ae3e2f35603c7255
 }
 // read returns how many bytes were successfully read
 char	*populate_storage(int fd, char *buf)
@@ -82,6 +90,21 @@ char	*ft_replaceline(char *buf)
 }
 // replace buf with the remainder that was not returned
 
+<<<<<<< HEAD
+=======
+char	*formline(char	*buf, char *line, int totalen)
+{
+	char	*final;
+
+	final = malloc(totalen + 1);
+	if (!final)
+		return (free(final), NULL);
+	ft_strlcpy(final, buf, totalen + 1);
+	ft_strlcat(final, line, totalen + 1);
+	return(free(buf), free(line), final);
+}
+// joins whatever was previously stored in buf, with the newline that has been read
+>>>>>>> c6c9cd5057942f5190751975ae3e2f35603c7255
 
 char	*get_next_line(int fd)
 {
@@ -91,19 +114,23 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 0)
 		return (NULL);
-	line = NULL;
-	ct = 0;
-	buf[fd] = readline(fd);
+	line = readline(fd);
+	if (!line)
+		return (free(buf[fd]), NULL);
+	if (!line[0])
+		return (free(line), buf[fd]);
 	if (!buf[fd])
-		return (NULL);
+		return (line);
+	buf[fd] = formline(buf[fd], line, ft_strlen(buf[fd]) + ft_strlen(line));
 	if (*buf[fd])
 	{
-		while (buf[fd][ct] && buf[fd][ct] !='\n')
+		ct = 0;
+		while (buf[fd][ct] != '\n' && buf[fd][ct])
 			ct++;
 		line = malloc(ct + 2);
 		if (!line)
 			return (NULL);
-		line = ft_strcpy(line, buf[fd]);
+		line = ft_strcpy(line, buf[fd]);		
 	}
 	buf[fd] = ft_replaceline(buf[fd]);
 	return (line);
