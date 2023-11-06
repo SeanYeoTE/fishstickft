@@ -11,26 +11,48 @@
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
 
-char	*readline(int fd)
+char	*read_to_storage(int fd)
 {
-	char	*buff;
+	char	*buf;
 	int 	ans;
 
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
 		return (NULL);
 	ans = 1;
-	buff[0] = '\0';
-	while (!(ft_strchr(buff, '\n')) && ans)
+	buf[0] = '\0';
+	while (!(ft_strchr(buf, '\n')) && ans)
 	{
-		ans = read(fd, buff, BUFFER_SIZE);
+		ans = read(fd, buf, BUFFER_SIZE);
 		if (ans == -1)
-			return (free(buff), NULL);
-		buff[ans] = '\0';
+			return (free(buf), NULL);
+		buf[ans] = '\0';
 	}
-	return (buff);
+	return (buf);
 }
 // read returns how many bytes were successfully read
+char	*populate_storage(int fd, char *buf)
+{
+	char	*line;
+	int		ct;
+
+	line = NULL;
+	ct = 0;
+	buf = read_to_storage(fd);
+	if (!buf)
+		return (NULL);
+	if (*buf[fd])
+	{
+		while (buf[fd][ct] && buf[fd][ct] !='\n')
+			ct++;
+		line = malloc(ct + 2);
+		if (!line)
+			return (NULL);
+		line = ft_strcpy(line, buf[fd]);
+	}
+	buf[fd] = ft_replaceline(buf[fd]);
+	return (line);  
+}
 
 char	*ft_replaceline(char *buf)
 {
@@ -59,6 +81,7 @@ char	*ft_replaceline(char *buf)
 	return (free(buf), newline);
 }
 // replace buf with the remainder that was not returned
+
 
 char	*get_next_line(int fd)
 {
