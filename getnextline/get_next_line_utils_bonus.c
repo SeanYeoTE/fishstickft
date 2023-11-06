@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:30:55 by seayeo            #+#    #+#             */
-/*   Updated: 2023/10/05 16:30:56 by seayeo           ###   ########.fr       */
+/*   Updated: 2023/11/06 13:50:12 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -37,42 +37,6 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	return (0);
-}
-
-char	*ft_strcpy(char *dst, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && src[i] != '\n')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (src[i] == '\n')
-		dst[i++] = '\n';
-	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		len;
-	int		tmp;
-	char	*str;
-
-	len = ft_strlen(s);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	tmp = 0;
-	while (tmp < len)
-	{
-		str[tmp] = s[tmp];
-		tmp++;
-	}
-	str[tmp] = '\0';
-	return (str);
 }
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
@@ -118,4 +82,27 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	while (src[i] != '\0')
 		i++;
 	return (i);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*ret;
+
+	if (!s)
+		return (0);
+	if (start > (size_t)ft_strlen(s))
+	{
+		ret = (char *)malloc(1);
+		if (!ret)
+			return (NULL);
+		ret[0] = '\0';
+		return (ret);
+	}
+	if (len > (size_t)(ft_strlen(s) - start))
+		len = ft_strlen(s) - start;
+	ret = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (0);
+	ft_strlcpy(ret, s + start, len + 1);
+	return (ret);
 }

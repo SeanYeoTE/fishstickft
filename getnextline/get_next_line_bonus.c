@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:30:28 by seayeo            #+#    #+#             */
-/*   Updated: 2023/10/05 16:30:32 by seayeo           ###   ########.fr       */
+/*   Updated: 2023/11/06 13:49:39 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -19,7 +19,6 @@ char	*read_to_storage(int fd)
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-<<<<<<< HEAD
 	ans = 1;
 	buf[0] = '\0';
 	while (!(ft_strchr(buf, '\n')) && ans)
@@ -30,105 +29,75 @@ char	*read_to_storage(int fd)
 		buf[ans] = '\0';
 	}
 	return (buf);
-=======
-	ans = read(fd, buff, BUFFER_SIZE);
-	if (ans == -1)
-		return (free(buff), NULL);
-	buff[ans] = '\0';
-	return (buff);
->>>>>>> c6c9cd5057942f5190751975ae3e2f35603c7255
 }
 // read returns how many bytes were successfully read
-char	*populate_storage(int fd, char *buf)
-{
-	char	*line;
-	int		ct;
 
-	line = NULL;
-	ct = 0;
+char	*populate_storage(int fd, char *oldstash)
+{
+	int		totalen;
+	char	*newstash;
+	char	*buf;
+
 	buf = read_to_storage(fd);
 	if (!buf)
 		return (NULL);
-	if (*buf[fd])
-	{
-		while (buf[fd][ct] && buf[fd][ct] !='\n')
-			ct++;
-		line = malloc(ct + 2);
-		if (!line)
-			return (NULL);
-		line = ft_strcpy(line, buf[fd]);
-	}
-	buf[fd] = ft_replaceline(buf[fd]);
-	return (line);  
+	totalen = ft_strlen(buf) + ft_strlen(oldstash);
+	newstash = malloc(totalen + 1);
+	if (!newstash)
+		return (free(buf), NULL);
+	ft_strlcpy(newstash, oldstash, totalen + 1);
+	ft_strlcat(newstash, buf, totalen + 1);
+	return (free(buf), free(oldstash), newstash);  
 }
+// mallocs new storage to store line and (chars from read to storage function) stored in buf
 
-char	*ft_replaceline(char *buf)
+char	*ft_replaceline(char *oldstash)
 {
 	int		len;
-	int		i;
-	char	*newline;
-	int		j;
-	
-	i = 0;
-	j = 0;
-	len = ft_strlen(buf);
-	while (buf[i] && buf[i] != '\n')
-		i++;
-	if (!buf[i])
-		return (free(buf), NULL);
-	newline = malloc((len - i) + 1);
-	if (!newline)
-		return (NULL);
-	i++;
-	while (buf[i + j])
-	{
-		newline[j] = buf[i + j];
-		j++;
-	}
-	newline[j] = '\0';
-	return (free(buf), newline);
-}
-// replace buf with the remainder that was not returned
+	char	*newstash;
+	int		stopper;
 
-char	*formline(char	*buf, char *line, int totalen)
-{
-	char	*final;
-
-	final = malloc(totalen + 1);
-	if (!final)
-		return (free(final), NULL);
-	ft_strlcpy(final, buf, totalen + 1);
-	ft_strlcat(final, line, totalen + 1);
-	return(free(buf), free(line), final);
+	stopper = 0;
+	len = ft_strlen(oldstash);
+	while (oldstash[stopper] && oldstash[stopper] != '\n')
+		stopper++;
+	if (!oldstash[stopper])
+		return (free(oldstash), NULL);
+	stopper++;
+	newstash = ft_substr(oldstash, stopper, len);
+	if (!newstash)
+		return (free(oldstash), NULL);
+	return (free(oldstash), newstash);
 }
-// joins whatever was previously stored in buf, with the newline that has been read
 
 char	*get_next_line(int fd)
 {
-	static	char	*buf[1024];
+	static	char	*stash[4096];
 	char			*line;
-	int				ct;
+	int				cutoff;
+	int				flag;
 
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 0)
+	flag = 1;
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
-	line = readline(fd);
-	if (!line)
-		return (free(buf[fd]), NULL);
-	if (!line[0])
-		return (free(line), buf[fd]);
-	if (!buf[fd])
-		return (line);
-	buf[fd] = formline(buf[fd], line, ft_strlen(buf[fd]) + ft_strlen(line));
-	if (*buf[fd])
+	while (flag == 1)
 	{
-		ct = 0;
-		while (buf[fd][ct] != '\n' && buf[fd][ct])
-			ct++;
-		line = malloc(ct + 2);
-		if (!line)
+		line = NULL;
+		stash[fd] = populate_storage(fd, stash[fd]);
+		if (!stash[fd])
 			return (NULL);
-		line = ft_strcpy(line, buf[fd]);		
+		if (!line)
+		{
+			cutoff = 0;
+			while (stash[fd][cutoff] != '\n' && stash[fd][cutoff])
+				cutoff++;
+			line = ft_substr(stash[fd], 0, cutoff);		
+		}
+		if (line)
+		{
+			stash[fd] = ft_replaceline(stash[fd]);
+			return (line);	
+		}
 	}
-	buf[fd] = ft_replaceline(buf[fd]);
 	return (line);
 }
