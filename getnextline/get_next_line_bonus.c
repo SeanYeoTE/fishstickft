@@ -19,15 +19,10 @@ char	*read_to_storage(int fd)
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	ans = 1;
-	buf[0] = '\0';
-	while (!(ft_strchr(buf, '\n')) && ans)
-	{
-		ans = read(fd, buf, BUFFER_SIZE);
-		if (ans == -1)
-			return (free(buf), NULL);
-		buf[ans] = '\0';
-	}
+	ans = read(fd, buf, BUFFER_SIZE);
+	if (ans < 0)
+		return (free(buf), NULL);
+	buf[ans] = '\0';
 	return (buf);
 }
 // read returns how many bytes were successfully read
@@ -39,12 +34,10 @@ char	*populate_storage(int fd, char *oldstash)
 	char	*buf;
 
 	buf = read_to_storage(fd);
-	if (!buf)
-		return (NULL);
 	totalen = ft_strlen(buf) + ft_strlen(oldstash);
 	newstash = malloc(totalen + 1);
 	if (!newstash)
-		return (free(buf), NULL);
+		return (NULL);
 	ft_strlcpy(newstash, oldstash, totalen + 1);
 	ft_strlcat(newstash, buf, totalen + 1);
 	return (free(buf), free(oldstash), newstash);  
@@ -59,10 +52,10 @@ char	*ft_replaceline(char *oldstash)
 
 	stopper = 0;
 	len = ft_strlen(oldstash);
-	while (oldstash[stopper] && oldstash[stopper] != '\n')
-		stopper++;
 	if (!oldstash[stopper])
 		return (free(oldstash), NULL);
+	while (oldstash[stopper] && oldstash[stopper] != '\n')
+		stopper++;
 	stopper++;
 	newstash = ft_substr(oldstash, stopper, len);
 	if (!newstash)
@@ -75,17 +68,15 @@ char	*get_next_line(int fd)
 	static	char	*stash[4096];
 	char			*line;
 	int				cutoff;
-	int				flag;
 
-	flag = 1;
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
-	while (flag == 1)
+	line = NULL;
+	stash[fd] = populate_storage(fd, stash[fd]);
+	if (!stash[fd])
+		return (NULL);
+	if (ft_strchr(stash[fd], '\n') == 0)
 	{
-		line = NULL;
-		stash[fd] = populate_storage(fd, stash[fd]);
-		if (!stash[fd])
-			return (NULL);
 		if (!line)
 		{
 			cutoff = 0;
@@ -99,5 +90,5 @@ char	*get_next_line(int fd)
 			return (line);	
 		}
 	}
-	return (line);
+	return (get_next_line(fd));
 }
