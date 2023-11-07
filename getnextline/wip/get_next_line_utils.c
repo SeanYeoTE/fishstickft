@@ -21,22 +21,20 @@ size_t	ft_strlen(const char *i)
 	return (ct);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
 	int		i;
-	int		len;
 
-	len = ft_strlen(s);
 	i = 0;
-	while (i < len + 1)
+	while (s[i] != '\0')
 	{
-		if (s[i] == (char)c)
-		{
-			return ((char *)s + i);
-		}
+		if (s[i] == c)
+			return (i);
 		i++;
 	}
-	return (0);
+	if (c == '\0')
+		return (i);
+	return (-1);
 }
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)

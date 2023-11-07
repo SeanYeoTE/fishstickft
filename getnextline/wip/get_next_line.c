@@ -9,7 +9,7 @@
 /*   Updated: 2023/11/06 13:49:39 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*read_to_storage(int fd)
 {
@@ -44,14 +44,22 @@ char	*populate_storage(int fd, char *oldstash)
 }
 // mallocs new storage to store line and (chars from read to storage function) stored in buf
 
-char	*ft_replaceline(char *oldstash)
+char	*ft_replaceline(char *oldstash, char *line)
 {
-	int		len;
-	char	*newstash;
-	int		stopper;
+	size_t		len;
+	char		*newstash;
+	size_t		stopper;
 
+	if (!oldstash || !line)
+		return (NULL);
 	stopper = 0;
 	len = ft_strlen(oldstash);
+	if (ft_strlen(line) == len)
+		return (free(oldstash), line);
+
+
+
+	
 	if (!oldstash[stopper])
 		return (free(oldstash), NULL);
 	while (oldstash[stopper] && oldstash[stopper] != '\n')
@@ -67,28 +75,42 @@ char	*get_next_line(int fd)
 {
 	static	char	*stash[4096];
 	char			*line;
-	int				cutoff;
+	size_t			cutoff;
 
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	stash[fd] = populate_storage(fd, stash[fd]);
 	if (!stash[fd])
 		return (NULL);
-	if (ft_strchr(stash[fd], '\n') == 0)
+	cutoff = 0;
+	if (ft_strchr(stash[fd], '\n') == -1)
 	{
-		if (!line)
-		{
-			cutoff = 0;
-			while (stash[fd][cutoff] != '\n' && stash[fd][cutoff])
-				cutoff++;
-			line = ft_substr(stash[fd], 0, cutoff);		
-		}
-		if (line)
-		{
-			stash[fd] = ft_replaceline(stash[fd]);
-			return (line);	
-		}
+		cutoff = ft_strlen(stash[fd]);
+		stash[fd] = populate_storage(fd, stash[fd]);
+		if (cutoff == ft_strlen(stash[fd]) && stash[fd])
+			line = ft_substr(stash[fd], 0, cutoff);
+	}
+	if (!line && ft_strchr(stash[fd], '\n') != -1)
+	{
+		cutoff = ft_strchr(stash[fd], '\n');
+		line = ft_substr(stash[fd], 0, cutoff);		
+	}
+	if (line)
+	{
+		stash[fd] = ft_replaceline(stash[fd], line);
+		return (line);	
 	}
 	return (get_next_line(fd));
 }
+
+/*
+#include <fcntl.h>
+
+int	main(void)
+{
+	//int fd = open("lines_around_10.txt", O_RDONLY);
+	int fd = open(-1, O_RDONLY);
+	get_next_line(fd);
+
+	return (0);
+}*/
