@@ -53,31 +53,29 @@ char	*ft_replaceline(char *oldstash, char *line)
 	if (!oldstash || !line)
 		return (NULL);
 	stopper = 0;
-	len = ft_strlen(oldstash);
-	if (ft_strlen(line) == len)
-		return (free(oldstash), line);
-
-
-
-	
+	len = ft_strlen(line);
 	if (!oldstash[stopper])
 		return (free(oldstash), NULL);
+	if (ft_strlen(line) == len)
+		return (free(oldstash), NULL);
+
+
 	while (oldstash[stopper] && oldstash[stopper] != '\n')
 		stopper++;
-	stopper++;
-	newstash = ft_substr(oldstash, stopper, len);
-	if (!newstash)
+	newstash = ft_substr(oldstash, ft_strlen(line), ft_strlen(oldstash) - ft_strlen(line));
+	/*if (!newstash)
 		return (free(oldstash), NULL);
+		*/
 	return (free(oldstash), newstash);
 }
 
 char	*get_next_line(int fd)
 {
-	static	char	*stash[4096];
+	static	char	*stash[1024];
 	char			*line;
 	size_t			cutoff;
 
-	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
+	if (fd < 0 || fd > 1023 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
 	if (!stash[fd])
