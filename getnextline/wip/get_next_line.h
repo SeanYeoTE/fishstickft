@@ -26,14 +26,17 @@
 # endif
 
 size_t	ft_strlen(const char *i);
-int	ft_strchr(const char *s, int c);
+int		ft_strchr(const char *s, int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_strjoin(char *s1, char *s2);
 
 char	*read_to_storage(int fd);
 char	*populate_storage(int fd, char *oldstash);
 char	*ft_replaceline(char *oldstash, char *line);
 char	*get_next_line(int fd);
+
+char	*ft_shrink_buffer(char *buf, char *line);
 
 # endif
