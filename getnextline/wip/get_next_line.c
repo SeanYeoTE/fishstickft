@@ -62,6 +62,7 @@ char	*ft_shrink_buffer(char *buf, char *line)
 	return (free(buf), newbuf);
 }
 
+/*
 char	*get_next_line(int fd)
 {
 	static char	*buf[4096];
@@ -86,6 +87,37 @@ char	*get_next_line(int fd)
 	{
 		buf[fd] = ft_shrink_buffer(buf[fd], line);
 		return (line);
+	}
+	return (get_next_line(fd));
+}
+*/
+
+char	*get_next_line(int fd)
+{
+	static	char	*stash[4096];
+	char			*line;
+	int				cutoff;
+
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
+		return (NULL);
+	line = NULL;
+	stash[fd] = populate_storage(fd, stash[fd]);
+	if (!stash[fd])
+		return (NULL);
+	if (ft_strchr(stash[fd], '\n') == 0)
+	{
+		if (!line)
+		{
+			cutoff = 0;
+			while (stash[fd][cutoff] != '\n' && stash[fd][cutoff])
+				cutoff++;
+			line = ft_substr(stash[fd], 0, cutoff);		
+		}
+		if (line)
+		{
+			stash[fd] = ft_replaceline(stash[fd]);
+			return (line);	
+		}
 	}
 	return (get_next_line(fd));
 }
