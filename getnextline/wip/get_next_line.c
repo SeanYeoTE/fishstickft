@@ -71,7 +71,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	if (ft_strchr_index(buf[fd], '\n') == -1)
+	if (ft_strchr(buf[fd], '\n') == -1)
 	{
 		old_len = ft_strlen(buf[fd]);
 		buf[fd] = ft_expand_buffer(buf[fd], fd);
@@ -80,8 +80,8 @@ char	*get_next_line(int fd)
 	}
 	if (!buf[fd])
 		return (NULL);
-	if (!line && ft_strchr_index(buf[fd], '\n') != -1)
-		line = ft_substr(buf[fd], 0, ft_strchr_index(buf[fd], '\n') + 1);
+	if (!line && ft_strchr(buf[fd], '\n') != -1)
+		line = ft_substr(buf[fd], 0, ft_strchr(buf[fd], '\n') + 1);
 	if (line)
 	{
 		buf[fd] = ft_shrink_buffer(buf[fd], line);
