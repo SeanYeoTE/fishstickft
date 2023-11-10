@@ -29,7 +29,7 @@ int ft_strchr(const char *s, int c)
 
 	i = 0;
 	if (!s)
-		return (NULL);
+		return (-1);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)
