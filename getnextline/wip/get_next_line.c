@@ -11,81 +11,41 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-/*char	*read_to_storage(int fd, char *oldstash)
+char	*ft_newread(int fd)
 {
-	char	*buf;
-	int		reader;
+	char	*aux;
+	int		nbytes;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
+	aux = malloc(BUFFER_SIZE + 1);
+	if (!aux)
 		return (NULL);
-	reader = 1;
-	buf[0] = '\0';
-	while (!(ft_strchr(oldstash, '\n')) && reader)
-	{
-		reader = read(fd, buf, BUFFER_SIZE);
-		if (reader == -1)
-			return (free(buf), NULL);
-		buf[reader] = '\0';
-		oldstash = ft_strjoin(oldstash, buf);
-	}
-	return (free(buf), oldstash);
+	nbytes = read(fd, aux, BUFFER_SIZE);
+	if (nbytes < 0)
+		return (free(aux), NULL);
+	aux[nbytes] = '\0';
+	return (aux);
 }
-*/
-// read returns how many bytes were successfully read
-char	*read_to_storage(int fd)
-{
-	char	*buf;
-	int		reader;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	reader = read(fd, buf, BUFFER_SIZE);
-	if (reader < 0)
+char	*ft_expand_buffer(char *buf, int fd)
+{
+	char	*newbuf;
+	int		newlen;
+	char	*aux;
+
+	aux = ft_newread(fd);
+	if (!aux)
 		return (free(buf), NULL);
-	buf[reader] = '\0';
-	return (buf);
-}
-
-char	*populate_storage(int fd, char *oldstash)
-{
-	int		totalen;
-	char	*newstash;
-	char	*buf;
-
-	buf = read_to_storage(fd);
-	totalen = ft_strlen(buf) + ft_strlen(oldstash);
-	newstash = malloc(totalen + 1);
-	if (!newstash)
-		return (NULL);
-	ft_strlcpy(newstash, oldstash, totalen + 1);
-	ft_strlcat(newstash, buf, totalen + 1);
-	return (free(buf), free(oldstash), newstash);
-}
-
-// mallocs new storage to store line and (chars from read to 
-// storage function) stored in buf
-
-char	*ft_replaceline(char *oldstash, char *line)
-{
-	size_t		len;
-	char		*newstash;
-	size_t		stopper;
-
-	if (!oldstash || !line)
-		return (NULL);
-	stopper = 0;
-	len = ft_strlen(line);
-	if (!oldstash[stopper])
-		return (free(oldstash), NULL);
-	if (ft_strlen(line) == len)
-		return (free(oldstash), NULL);
-	while (oldstash[stopper] && oldstash[stopper] != '\n')
-		stopper++;
-	newstash = ft_substr(oldstash, ft_strlen(line),
-			ft_strlen(oldstash) - ft_strlen(line));
-	return (free(oldstash), newstash);
+	if (!aux[0])
+		return (free(aux), buf);
+	if (!buf)
+		return (aux);
+	newlen = ft_strlen(buf) + ft_strlen(aux);
+	newbuf = malloc(newlen + 1);
+	if (!newbuf)
+		return (free(newbuf), NULL);
+	ft_strlcpy(newbuf, buf, newlen + 1);
+	ft_strlcat(newbuf, aux, newlen + 1);
+	return (free(buf), free(aux), newbuf);
 }
 
 char	*ft_shrink_buffer(char *buf, char *line)
@@ -104,42 +64,28 @@ char	*ft_shrink_buffer(char *buf, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char		*stash[1024];
-	char			*line;
-	size_t			cutoff;
+	static char	*buf[4096];
+	char		*line;
+	size_t		old_len;
 
-	if (fd < 0 || fd > 1023 || BUFFER_SIZE < 0)
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	if (ft_strchr(stash[fd], '\n') == -1)
+	if (ft_strchr_index(buf[fd], '\n') == -1)
 	{
-		cutoff = ft_strlen(stash[fd]);
-		stash[fd] = populate_storage(fd, stash[fd]);
-		if (cutoff == ft_strlen(stash[fd]) && stash[fd])
-			line = ft_substr(stash[fd], 0, cutoff);
+		old_len = ft_strlen(buf[fd]);
+		buf[fd] = ft_expand_buffer(buf[fd], fd);
+		if (old_len == ft_strlen(buf[fd]) && buf[fd])
+			line = ft_substr(buf[fd], 0, ft_strlen(buf[fd]));
 	}
-	if (!stash[fd])
+	if (!buf[fd])
 		return (NULL);
-	if (!line && ft_strchr(stash[fd], '\n') != -1)
-	{
-		line = ft_substr(stash[fd], 0, ft_strchr(stash[fd], '\n') + 1);
-	}
+	if (!line && ft_strchr_index(buf[fd], '\n') != -1)
+		line = ft_substr(buf[fd], 0, ft_strchr_index(buf[fd], '\n') + 1);
 	if (line)
 	{
-		stash[fd] = ft_shrink_buffer(stash[fd], line);
+		buf[fd] = ft_shrink_buffer(buf[fd], line);
 		return (line);
 	}
 	return (get_next_line(fd));
 }
-
-/*
-#include <fcntl.h>
-
-int	main(void)
-{
-	//int fd = open("lines_around_10.txt", O_RDONLY);
-	int fd = open(-1, O_RDONLY);
-	get_next_line(fd);
-
-	return (0);
-}*/
