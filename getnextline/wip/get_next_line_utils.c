@@ -94,22 +94,23 @@ int	ft_strchr(const char *s, int c)
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	char			*ptr;
-	unsigned int	i;
+	size_t	i;
+	size_t	srclen;
+	size_t	dstlen;
 
-	if (size < ft_strlen(dst))
-		return (ft_strlen(src) + size);
-	ptr = dst + ft_strlen(dst);
-	i = ft_strlen(dst);
-	while (i < size -1 && *src != '\0' && size >= 2)
+	i = 0;
+	srclen = ft_strlen(src);
+	dstlen = ft_strlen(dst);
+	if (!size)
+		return (srclen);
+	while (src[i] && (dstlen + i + 1) < size)
 	{
-		*ptr = *src;
-		ptr++;
-		src++;
+		dst[dstlen + i] = src[i];
 		i++;
 	}
-	if (size != 0)
-		*ptr = '\0';
-	return (ft_strlen(dst) + ft_strlen(src));
+	dst[dstlen + i] = '\0';
+	if (dstlen > size)
+		return (srclen + size);
+	return (srclen + dstlen);
 }
 
