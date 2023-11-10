@@ -23,6 +23,24 @@ size_t	ft_strlen(const char*s)
 	return (i);
 }
 
+char	*ft_strchr(const char *s, int c)
+{
+	int		i;
+	int		len;
+
+	len = ft_strlen(s);
+	i = 0;
+	while (i < len + 1)
+	{
+		if (s[i] == (char)c)
+		{
+			return ((char *)s + i);
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
@@ -49,48 +67,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_strlcpy(str, s, len + 1);
 	return (str);
 }
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-	{
-		while (src[i])
-			i++;
-		return (i);
-	}
-	while (i < size - 1 && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i < size)
-		dest[i] = '\0';
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	ft_strchr(const char *s, int c)
-{
-	unsigned char	c_unsigned;
-	int				i;
-
-	i = 0;
-	if (!s)
-		return (-1);
-	c_unsigned = (unsigned char)c;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c_unsigned)
-			return (i);
-		i++;
-	}
-	if (c_unsigned == '\0')
-		return (i);
-	return (-1);
-}
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
@@ -114,3 +90,25 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (srclen + dstlen);
 }
 
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (size == 0)
+	{
+		while (src[i])
+			i++;
+		return (i);
+	}
+	while (i < size - 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (i < size)
+		dest[i] = '\0';
+	while (src[i] != '\0')
+		i++;
+	return (i);
+}
