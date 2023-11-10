@@ -23,7 +23,7 @@ size_t	ft_strlen(const char*s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	*ft_strchr(const char *s, int c)
 {
 	int		i;
 	int		len;
@@ -34,11 +34,13 @@ char	*ft_strchr(const char *s, int c)
 	{
 		if (s[i] == (char)c)
 		{
-			return ((char *)s + i);
+			return (i);
 		}
 		i++;
 	}
-	return (0);
+	if (s[i] == '\0')
+		return (i);
+	return (-1);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
