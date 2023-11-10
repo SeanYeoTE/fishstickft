@@ -23,7 +23,7 @@ size_t	ft_strlen(const char*s)
 	return (i);
 }
 
-int	*ft_strchr(const char *s, int c)
+int ft_strchr(const char *s, int c)
 {
 	int		i;
 	int		len;
