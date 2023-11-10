@@ -32,13 +32,13 @@ int ft_strchr(const char *s, int c)
 	i = 0;
 	while (i < len + 1)
 	{
-		if ((unsigned char)s[i] == (unsigned char)c)
+		if (s[i] == (unsigned char)c)
 		{
 			return (i);
 		}
 		i++;
 	}
-	if ((unsigned char)s[i] == '\0')
+	if ((unsigned char)c == '\0')
 		return (i);
 	return (-1);
 }
