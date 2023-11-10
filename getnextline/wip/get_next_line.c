@@ -11,19 +11,19 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*ft_newread(int fd)
+char	*read_to_storage(int fd)
 {
-	char	*aux;
-	int		nbytes;
+	char	*buf;
+	int 	ans;
 
-	aux = malloc(BUFFER_SIZE + 1);
-	if (!aux)
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
 		return (NULL);
-	nbytes = read(fd, aux, BUFFER_SIZE);
-	if (nbytes < 0)
-		return (free(aux), NULL);
-	aux[nbytes] = '\0';
-	return (aux);
+	ans = read(fd, buf, BUFFER_SIZE);
+	if (ans < 0)
+		return (free(buf), NULL);
+	buf[ans] = '\0';
+	return (buf);
 }
 /*
 char	*ft_expand_buffer(char *buf, int fd)
