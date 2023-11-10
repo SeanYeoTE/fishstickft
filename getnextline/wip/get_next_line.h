@@ -34,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2);
 
 char	*read_to_storage(int fd);
 char	*populate_storage(int fd, char *oldstash);
-char	*ft_replaceline(char *oldstash, char *line);
+char	*ft_replaceline(char *oldstash);
 char	*get_next_line(int fd);
 
 char	*ft_shrink_buffer(char *buf, char *line);
