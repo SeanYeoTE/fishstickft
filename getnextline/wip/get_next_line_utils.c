@@ -11,16 +11,14 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char*s)
+size_t	ft_strlen(const char *i)
 {
-	int	i;
+	size_t	ct;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	ct = 0;
+	while (i[ct])
+		ct++;
+	return (ct);
 }
 
 int ft_strchr(const char *s, int c)
@@ -33,9 +31,7 @@ int ft_strchr(const char *s, int c)
 	while (s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)
-		{
 			return (i);
-		}
 		i++;
 	}
 	if ((unsigned char)c == '\0')
