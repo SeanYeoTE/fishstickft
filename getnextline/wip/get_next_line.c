@@ -25,7 +25,7 @@ char	*ft_newread(int fd)
 	aux[nbytes] = '\0';
 	return (aux);
 }
-
+/*
 char	*ft_expand_buffer(char *buf, int fd)
 {
 	char	*newbuf;
@@ -62,7 +62,7 @@ char	*ft_shrink_buffer(char *buf, char *line)
 	return (free(buf), newbuf);
 }
 
-/*
+
 char	*get_next_line(int fd)
 {
 	static char	*buf[4096];
@@ -91,6 +91,40 @@ char	*get_next_line(int fd)
 	return (get_next_line(fd));
 }
 */
+char	*populate_storage(int fd, char *oldstash)
+{
+	int		totalen;
+	char	*newstash;
+	char	*buf;
+
+	buf = read_to_storage(fd);
+	totalen = ft_strlen(buf) + ft_strlen(oldstash);
+	newstash = malloc(totalen + 1);
+	if (!newstash)
+		return (NULL);
+	ft_strlcpy(newstash, oldstash, totalen + 1);
+	ft_strlcat(newstash, buf, totalen + 1);
+	return (free(buf), free(oldstash), newstash);  
+}
+
+char	*ft_replaceline(char *oldstash)
+{
+	int		len;
+	char	*newstash;
+	int		stopper;
+
+	stopper = 0;
+	len = ft_strlen(oldstash);
+	if (!oldstash[stopper])
+		return (free(oldstash), NULL);
+	while (oldstash[stopper] && oldstash[stopper] != '\n')
+		stopper++;
+	stopper++;
+	newstash = ft_substr(oldstash, stopper, len);
+	if (!newstash)
+		return (free(oldstash), NULL);
+	return (free(oldstash), newstash);
+}
 
 char	*get_next_line(int fd)
 {
@@ -101,7 +135,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	stash[fd] = ft_expand_buffer(fd, stash[fd]);
+	stash[fd] = populate_storage(fd, stash[fd]);
 	if (!stash[fd])
 		return (NULL);
 	if (ft_strchr(stash[fd], '\n') == 0)
@@ -115,7 +149,7 @@ char	*get_next_line(int fd)
 		}
 		if (line)
 		{
-			stash[fd] = ft_shrink_buffer(stash[fd]);
+			stash[fd] = ft_replaceline(stash[fd]);
 			return (line);	
 		}
 	}
