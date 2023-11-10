@@ -26,11 +26,9 @@ size_t	ft_strlen(const char*s)
 int ft_strchr(const char *s, int c)
 {
 	int		i;
-	int		len;
-
-	len = ft_strlen(s);
+	
 	i = 0;
-	while (i < len + 1)
+	while (s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)
 		{
