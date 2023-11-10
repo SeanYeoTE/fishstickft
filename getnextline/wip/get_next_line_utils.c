@@ -49,32 +49,27 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_strlcpy(str, s, len + 1);
 	return (str);
 }
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	unsigned int	i;
-	size_t			size_src;
+	size_t	i;
 
 	i = 0;
-	if (src == NULL)
-		return (0);
-	size_src = ft_strlen(src);
-	if ((int)size < 0)
-		size = size_src + 1;
-	if (size >= 2 && size_src != 0)
+	if (size == 0)
 	{
-		while (i < size - 1)
-		{
-			if (i < size_src)
-				dst[i] = src[i];
-			else if (i == size_src)
-				dst[i] = '\0';
+		while (src[i])
 			i++;
-		}
+		return (i);
 	}
-	if (size != 0)
-		dst[i] = '\0';
-	return (size_src);
+	while (i < size - 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (i < size)
+		dest[i] = '\0';
+	while (src[i] != '\0')
+		i++;
+	return (i);
 }
 
 int	ft_strchr(const char *s, int c)
