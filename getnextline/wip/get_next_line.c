@@ -101,7 +101,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd > 4095 || BUFFER_SIZE < 0)
 		return (NULL);
 	line = NULL;
-	stash[fd] = populate_storage(fd, stash[fd]);
+	stash[fd] = ft_expand_buffer(fd, stash[fd]);
 	if (!stash[fd])
 		return (NULL);
 	if (ft_strchr(stash[fd], '\n') == 0)
@@ -115,7 +115,7 @@ char	*get_next_line(int fd)
 		}
 		if (line)
 		{
-			stash[fd] = ft_replaceline(stash[fd]);
+			stash[fd] = ft_shrink_buffer(stash[fd]);
 			return (line);	
 		}
 	}
