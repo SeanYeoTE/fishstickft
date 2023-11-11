@@ -155,7 +155,7 @@ char	*get_next_line(int fd)
 		}
 		if (line)
 		{
-			stash[fd] = ft_replaceline(stash[fd]);
+			line = ft_replaceline(stash[fd]);
 			return (line);	
 		}
 	}
