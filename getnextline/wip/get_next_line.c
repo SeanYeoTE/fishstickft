@@ -107,7 +107,7 @@ char	*populate_storage(int fd, char *oldstash)
 	if (!buf[0])
 		return (free(buf), oldstash);
 	if (!oldstash)
-		return (aux);
+		return (buf);
 	ft_strlcpy(newstash, oldstash, totalen + 1);
 	ft_strlcat(newstash, buf, totalen + 1);
 	return (free(buf), free(oldstash), newstash);  
