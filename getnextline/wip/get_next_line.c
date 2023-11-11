@@ -102,6 +102,12 @@ char	*populate_storage(int fd, char *oldstash)
 	newstash = malloc(totalen + 1);
 	if (!newstash)
 		return (NULL);
+	if (!buf)
+		return (free(oldstash), NULL);
+	if (!buf[0])
+		return (free(buf), oldstash);
+	if (!oldstash)
+		return (aux);
 	ft_strlcpy(newstash, oldstash, totalen + 1);
 	ft_strlcat(newstash, buf, totalen + 1);
 	return (free(buf), free(oldstash), newstash);  
