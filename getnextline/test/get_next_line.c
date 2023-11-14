@@ -81,9 +81,8 @@ char	*remains(char *buf)
 	int 	newindexer;
 
 	cutoff = 0;
-	/*cutoff = ft_strchr(buf, '\n');*/
 	while (buf[cutoff] && buf[cutoff] != '\n')
-		cutoff++;
+			cutoff++;
 	if (!buf[cutoff])
 		return (free(buf), NULL);
 	leftover = ft_calloc((ft_strlen(buf) - cutoff + 1), sizeof(char));
