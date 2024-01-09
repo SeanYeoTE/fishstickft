@@ -16,6 +16,10 @@
 # include <stdlib.h>
 # include <limits.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE
+#endif
+
 size_t	ft_strlen(const char *i);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(char *s1);
