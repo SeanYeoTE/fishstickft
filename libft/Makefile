@@ -48,7 +48,7 @@ SRC =	file/ft_putstr_fd.c \
 		str/ft_strcmp.c \
 		\
 		get_next_line_bonus.c \
-		get_next_line_bonus_utils.c \
+		get_next_line_utils_bonus.c \
 
 NAME = libft.a
 
