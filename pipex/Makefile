@@ -2,7 +2,7 @@ NAME = pipex
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 RM = rm -rf
 
@@ -17,10 +17,11 @@ $(NAME) :
 all : $(NAME)
 
 fclean : clean
-		$(RM) $(NAME)
-		make fclean -C libft
+	$(RM) $(NAME)
+	make fclean -C libft
 
-clean : $(RM) $(NAME)
-		make fclean -C libft
+clean :
+	$(RM) $(NAME)
+	make clean -C libft
 
 re : fclean all
