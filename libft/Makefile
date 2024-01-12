@@ -1,81 +1,76 @@
-# Compiler flags
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-
 # Source files
-SRC_FILES = ft_bzero.c \
-			ft_isprint.c \
-			ft_strchr.c \
-			ft_strrchr.c \
-			ft_isalnum.c \
-			ft_memchr.c \
-			ft_strlcat.c \
-			ft_tolower.c \
-			ft_isalpha.c \
-			ft_memcpy.c \
-			ft_strlcpy.c \
-			ft_toupper.c \
-			ft_isascii.c \
-			ft_memmove.c \
-			ft_strlen.c \
-			ft_isdigit.c \
-			ft_memset.c \
-			ft_strncmp.c \
-			ft_memchr.c \
-			ft_memcmp.c \
-			ft_strnstr.c \
-			ft_atoi.c \
-			ft_calloc.c \
-			ft_strdup.c \
-			ft_substr.c \
-			ft_strjoin.c \
-			ft_strtrim.c \
-			ft_split.c \
-			ft_itoa.c \
-			ft_strmapi.c \
-			ft_striteri.c \
-			ft_putchar_fd.c \
-			ft_putstr_fd.c \
-			ft_putendl_fd.c \
-			ft_putnbr_fd.c \
+SRC =	file/ft_putstr_fd.c \
+		file/ft_putendl_fd.c \
+		file/ft_putnbr_fd.c \
+		file/ft_putchar_fd.c \
+		\
+		lst/ft_lstadd_back.c \
+		lst/ft_lstadd_front.c \
+		lst/ft_lstclear.c \
+		lst/ft_lstdelone.c \
+		lst/ft_lstiter.c \
+		lst/ft_lstlast.c \
+		lst/ft_lstmap.c \
+		\
+		mem/ft_memset.c \
+		mem/ft_bzero.c \
+		mem/ft_calloc.c \
+		mem/ft_memchr.c \
+		mem/ft_memcmp.c \
+		mem/ft_memcpy.c \
+		mem/ft_memmove.c \
+		\
+		nbr/ft_atoi.c \
+		nbr/ft_itoa.c \
+		\
+		others/ft_isprint.c \
+		others/ft_isdigit.c \
+		others/ft_isalnum.c\
+		others/ft_isalpha.c \
+		others/ft_isascii.c \
+		\
+		str/ft_strjoin.c \
+		str/ft_strdup.c \
+		str/ft_tolower.c \
+		str/ft_strtrim.c \
+		str/ft_strlcat.c \
+		str/ft_substr.c \
+		str/ft_strlcpy.c \
+		str/ft_strlen.c \
+		str/ft_toupper.c \
+		str/ft_strmapi.c \
+		str/ft_split.c \
+		str/ft_strncmp.c \
+		str/ft_strchr.c \
+		str/ft_strnstr.c \
+		str/ft_strrchr.c \
+		str/ft_striteri.c \
+		str/ft_strcmp.c \
+		\
+		get_next_line_bonus.c \
+		get_next_line_bonus_utils.c \
 
-
-BONUS			=	ft_lstadd_front.c \
-					ft_lstnew.c  \
-					ft_lstsize.c \
-					ft_lstlast.c \
-					ft_lstadd_back.c \
-					ft_lstdelone.c \
-					ft_lstclear.c \
-					ft_lstiter.c \
-					ft_lstmap.c
-
-BONUS_OBJS		= $(BONUS:.c=.o)
-
-
-# Object files
-OBJ_FILES = $(SRC_FILES:.c=.o)
-
-BONUS_OBJS		= $(BONUS:.c=.o)
-
-# Library name
 NAME = libft.a
 
-# Targets
-all: $(NAME)
+OBJS = ${SRCS:.c=.o}
 
-$(NAME): $(OBJ_FILES)
-	ar rcs $(NAME) $(OBJ_FILES)
+CC		= gcc
+RM		= rm -f
 
-bonus: $(OBJ_FILES) $(BONUS_OBJS)
-	ar rcs $(NAME) $(OBJ_FILES) $(BONUS_OBJS)
+CFLAGS = -Wall -Wextra -Werror
+
+.c.o:
+		${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}
+
+$(NAME): ${OBJS}
+		ar rcs ${NAME} ${OBJS}
+
+all:	${NAME}
 
 clean:
-	rm -f $(OBJ_FILES) $(BONUS_OBJS)
+		${RM} ${OBJS}
 
-fclean: clean
-	rm -f $(NAME)
+fclean:	clean
+		${RM} ${NAME}
 
-re: fclean all
-
-.PHONY: all fclean clean re bonus
+re:		fclean all
