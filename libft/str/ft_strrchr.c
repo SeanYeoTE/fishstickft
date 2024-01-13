@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 15:30:46 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/08 15:30:48 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:31:28 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {

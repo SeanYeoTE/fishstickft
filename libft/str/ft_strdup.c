@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:00:34 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 17:00:35 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:30:32 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 char	*ft_strdup(const char *s)
 {

@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 13:43:43 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/18 13:43:46 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:27:30 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

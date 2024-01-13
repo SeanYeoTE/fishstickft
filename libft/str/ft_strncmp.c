@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:13:55 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 11:14:11 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:31:21 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

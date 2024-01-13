@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:54:32 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 11:54:34 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:31:25 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {

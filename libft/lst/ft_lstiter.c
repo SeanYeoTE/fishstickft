@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:26:05 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/23 16:26:09 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:28:31 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
