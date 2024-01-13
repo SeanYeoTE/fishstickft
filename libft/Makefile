@@ -45,7 +45,6 @@ SRC =	file/ft_putstr_fd.c \
 		str/ft_strnstr.c \
 		str/ft_strrchr.c \
 		str/ft_striteri.c \
-		str/ft_strcmp.c \
 		\
 		get_next_line_bonus.c \
 		get_next_line_utils_bonus.c \
@@ -59,8 +58,8 @@ RM		= rm -f
 
 CFLAGS = -Wall -Wextra -Werror
 
-.c.o:
-		${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 $(NAME): ${OBJS}
 		ar rcs ${NAME} ${OBJS}
