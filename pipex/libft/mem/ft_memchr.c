@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:22:48 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 11:22:49 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:29:12 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:51:35 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/13 15:51:36 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:30:25 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 static int	count_strings(char const *str, char c)
 {

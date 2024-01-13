@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:05:29 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 12:05:29 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:29:47 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 int	ft_atoi(const char *str)
 {

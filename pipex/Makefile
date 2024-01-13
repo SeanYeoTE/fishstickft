@@ -4,24 +4,30 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
-RM = rm -rf
+RM = rm -f
 
 SRCS =	src/pipex.c\
 		src/utils.c\
-		libft/libft.a\
 
-$(NAME) :
-	make all -C libft
-	gcc $(CFLAGS) $(SRCS) -o $(NAME)
+OBJS = $(SRCS:.c=.o)
+
+LIBFT = libft/libft.a\
 
 all : $(NAME)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME) : $(OBJS)
+	make -C libft
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+
+clean :
+	$(RM) $(OBJS)
+	make clean -C libft
+	
 fclean : clean
 	$(RM) $(NAME)
 	make fclean -C libft
-
-clean :
-	$(RM) $(NAME)
-	make clean -C libft
 
 re : fclean all

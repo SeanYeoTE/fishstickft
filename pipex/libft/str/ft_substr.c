@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:31:12 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 17:31:13 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:31:37 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {

@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:23:03 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/11 11:23:04 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:29:23 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {

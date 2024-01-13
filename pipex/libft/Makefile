@@ -1,5 +1,6 @@
-# Source files
-SRC =	file/ft_putstr_fd.c \
+NAME = libft.a
+
+SRCS =	file/ft_putstr_fd.c \
 		file/ft_putendl_fd.c \
 		file/ft_putnbr_fd.c \
 		file/ft_putchar_fd.c \
@@ -45,14 +46,12 @@ SRC =	file/ft_putstr_fd.c \
 		str/ft_strnstr.c \
 		str/ft_strrchr.c \
 		str/ft_striteri.c \
-		str/ft_strcmp.c \
 		\
 		get_next_line_bonus.c \
-		get_next_line_bonus_utils.c \
-
-NAME = libft.a
+		get_next_line_utils_bonus.c \
 
 OBJS = ${SRCS:.c=.o}
+
 
 CC		= gcc
 RM		= rm -f

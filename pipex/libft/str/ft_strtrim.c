@@ -6,10 +6,11 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 13:42:46 by seayeo            #+#    #+#             */
-/*   Updated: 2023/09/18 13:42:52 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:31:33 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "../libft.h"
 
 static char	*strdetect(const char *s, int i)
 {

@@ -20,11 +20,11 @@
 # define BUFFER_SIZE 1000
 #endif
 
-size_t	ft_strlen(const char *i);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *s1);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char *s, unsigned int start, size_t len);
+size_t	ft_strlen_gnl(const char *i);
+char	*ft_strchr_gnl(const char *s, int c);
+char	*ft_strdup_gnl(char *s1);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+char	*ft_substr_gnl(char *s, unsigned int start, size_t len);
 
 char	*get_next_line(int fd);
 

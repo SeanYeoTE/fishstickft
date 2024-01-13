@@ -6,9 +6,10 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:30:28 by seayeo            #+#    #+#             */
-/*   Updated: 2023/11/16 17:48:00 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/13 19:00:24 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 int	ft_chrindex(const char *s, int c)
@@ -39,8 +40,8 @@ char	*read_to_storage(int fd, char *store)
 		if (ans == 0)
 			break ;
 		buf[ans] = '\0';
-		store = ft_strjoin(store, buf);
-		if (ft_strchr(buf, '\n'))
+		store = ft_strjoin_gnl(store, buf);
+		if (ft_strchr_gnl(buf, '\n'))
 			break ;
 	}
 	return (free(buf), store);
@@ -55,9 +56,9 @@ char	*extract_line(char *buf)
 	if (!buf[i])
 		return (NULL);
 	i = ft_chrindex(buf, '\n');
-	if (ft_strchr(buf, '\n'))
+	if (ft_strchr_gnl(buf, '\n'))
 		i++;
-	line = ft_substr(buf, 0, i);
+	line = ft_substr_gnl(buf, 0, i);
 	return (line);
 }
 
@@ -67,11 +68,11 @@ char	*remains(char *buf)
 	int		cutoff;
 
 	cutoff = ft_chrindex(buf, '\n');
-	if (ft_strchr(buf, '\n'))
+	if (ft_strchr_gnl(buf, '\n'))
 		cutoff++;
 	if (buf[cutoff] == 0)
 		return (free(buf), NULL);
-	leftover = ft_substr(buf, cutoff, ft_strlen(buf) - cutoff);
+	leftover = ft_substr_gnl(buf, cutoff, ft_strlen_gnl(buf) - cutoff);
 	return (free(buf), leftover);
 }
 
