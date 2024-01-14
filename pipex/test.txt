@@ -1,0 +1,3 @@
+This is the content of the text file.
+You can add any text or data here.
+Make sure to save the file before using it as input for pipex.

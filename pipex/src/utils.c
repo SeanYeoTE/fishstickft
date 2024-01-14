@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void error(int i)
+void error_handle(int i)
 {
     if (i == 1)
         ft_putstr_fd("proper input pls\n", 2);

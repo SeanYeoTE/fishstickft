@@ -7,6 +7,8 @@
 # include <stdio.h>
 # include <unistd.h>
 # include "../libft/libft.h"
+#include <sys/wait.h>
 
+void error_handle(int i);
 
 #endif
