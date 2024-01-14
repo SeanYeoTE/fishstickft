@@ -10,5 +10,6 @@
 #include <sys/wait.h>
 
 void error_handle(int i);
+char	*my_getenv(char *name, char **env);
 
 #endif

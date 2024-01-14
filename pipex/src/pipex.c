@@ -6,15 +6,16 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/14 19:04:32 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/14 21:31:55 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void execute_cmd(char *cmd, char **args)
+void	execute_cmd(char *cmd, char **args,char **env)
 {
-    if (execve(cmd, args, NULL) == -1)
+    printf("%s\n", my_getenv("PATH", env));
+	if (execve(cmd, args, NULL) == -1)
     {
         perror("execve");
         exit(EXIT_FAILURE);
@@ -36,6 +37,7 @@ int main(int argc, char **argv, char *env[])
 		ft_putstr_fd("Usage: %s file1 cmd1 cmd2 file2\n", 2);
 		return 1;
 	}
+	printf("%s\n", my_getenv("PATH", env));
 	int	fd1 = open(argv[1], O_RDONLY);
 	int	fd2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	
@@ -59,7 +61,7 @@ int main(int argc, char **argv, char *env[])
         dup2(pipefd[1], STDOUT_FILENO);
         close(pipefd[0]);
         char *cmd1_args[] = {argv[2], NULL};
-        execute_cmd(argv[2], cmd1_args);
-
+        execute_cmd(argv[2], cmd1_args, env);
+	}
     return 0;
 }
