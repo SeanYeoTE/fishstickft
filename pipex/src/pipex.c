@@ -6,62 +6,160 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/14 21:31:55 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/22 18:42:31 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	execute_cmd(char *cmd, char **args,char **env)
-{
-    printf("%s\n", my_getenv("PATH", env));
-	if (execve(cmd, args, NULL) == -1)
-    {
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <string.h>
+
+#define MAX_PATH_LEN 4096
+
+void perror_exit(const char *msg) {
+    perror(msg);
+    exit(EXIT_FAILURE);
+}
+
+void    find_executable_path(const char *executable, char *cmd_path) {
+    char *path = getenv("PATH");
+    char *path_copy = strdup(path);
+    char *dir = strtok(path_copy, ":");
+    char full_path[MAX_PATH_LEN];
+
+    while (dir != NULL) {
+        snprintf(full_path, sizeof(full_path), "%s/%s", dir, executable);
+
+        // Check if the file exists and is executable
+        if (access(full_path, X_OK) == 0) {
+            strcpy(cmd_path, full_path);
+            cmd_path[strlen(cmd_path)] = '\0';
+            free(path_copy);
+            return ;
+        }
+
+        dir = strtok(NULL, ":");
+    }
+
+    free(path_copy);
+    cmd_path[0] = '\0';  // Executable not found
+}
+
+void execute_command(char *cmd[], int input_fd, int output_fd, char *env[]) {
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror_exit("fork");
+    } else if (pid == 0) {
+        // Child process
+
+        // Redirect input
+        if (input_fd != STDIN_FILENO) {
+            dup2(input_fd, STDIN_FILENO);
+            close(input_fd);
+        }
+
+        // Redirect output
+        if (output_fd != STDOUT_FILENO) {
+            dup2(output_fd, STDOUT_FILENO);
+            close(output_fd);
+        }
+
+        // Execute the command with provided environment variables
+        execve(cmd[0], cmd, env);
         perror("execve");
         exit(EXIT_FAILURE);
     }
 }
 
-void	child(char *argv[], char *env[])
-{
-	printf("\e[36mChild: Hi! I'm a child. I'm in an infinite loop.\e[0m\n");
-	while (1)
-		continue ;
-}
+int main(int argc, char *argv[], char *env[]) {
+    if (argc != 5) {
+        fprintf(stderr, "Usage: %s file1 cmd1 cmd2 file2\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
+    const char *file1 = argv[1];
+    char *cmd1_args[3];
+    cmd1_args[0] = malloc(MAX_PATH_LEN);
+    cmd1_args[1] = NULL;
+    cmd1_args[2] = NULL;
+    find_executable_path(argv[2], cmd1_args[0]);
 
-int main(int argc, char **argv, char *env[])
-{
-	if (argc != 5)
-	{
-		ft_putstr_fd("Usage: %s file1 cmd1 cmd2 file2\n", 2);
-		return 1;
-	}
-	printf("%s\n", my_getenv("PATH", env));
-	int	fd1 = open(argv[1], O_RDONLY);
-	int	fd2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	
-	if (fd1 == -1 || fd2 == -1)
-	{
-		perror("open");
-		return 1;
-	}
+    char *cmd2_args[3];
+    cmd2_args[0] = malloc(MAX_PATH_LEN);
+    cmd2_args[1] = NULL;
+    cmd2_args[2] = NULL;
+    find_executable_path(argv[3], cmd2_args[0]);
 
-	int pipefd[2];
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe");
-		return 1;
-	}
+    const char *file2 = argv[4];
+
+    int pipe_fd[2];
+    if (pipe(pipe_fd) == -1) {
+        perror_exit("pipe");
+    }
+
+    // First command: cmd1 < file1
+    int input_fd = open(file1, O_RDONLY);
+    if (input_fd == -1) {
+        perror_exit("open");
+    }
 
     pid_t pid1 = fork();
-    if (pid1 == 0)
-    {
-        dup2(fd1, STDIN_FILENO);
-        dup2(pipefd[1], STDOUT_FILENO);
-        close(pipefd[0]);
-        char *cmd1_args[] = {argv[2], NULL};
-        execute_cmd(argv[2], cmd1_args, env);
-	}
+    if (pid1 < 0) {
+        perror_exit("fork");
+    } else if (pid1 == 0) {
+        // Child process
+        // Redirect output to write to the pipe
+        if (dup2(pipe_fd[1], STDOUT_FILENO) == -1) {
+            perror_exit("dup2");
+        }
+        if (close(pipe_fd[0]) == -1 || close(pipe_fd[1]) == -1) {
+            perror_exit("close");
+        }
+        execute_command(cmd1_args, input_fd, STDOUT_FILENO, env);
+        exit(EXIT_SUCCESS);
+    }
+    // Close write end of pipe in parent
+    if (close(input_fd) == -1 || close(pipe_fd[1]) == -1) {
+        perror_exit("close");
+    }
+    
+
+    // Second command: cmd2 > file2
+    int output_fd = open(file2, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    if (output_fd == -1) {
+        perror_exit("open");
+    }
+
+    pid_t pid2 = fork();
+    if (pid2 < 0) {
+        perror_exit("fork");
+    } else if (pid2 == 0) {
+        // Child process
+        // Redirect input to read from the pipe
+        if (dup2(pipe_fd[0], STDIN_FILENO) == -1) {
+            perror_exit("dup2");
+        }
+        if (close(pipe_fd[0]) == -1) {
+            perror_exit("close");
+        }  
+        execute_command(cmd2_args, STDIN_FILENO, output_fd, env);
+        exit(EXIT_SUCCESS);
+    }
+    // Close read end of pipe in parent
+    if (close(output_fd) == -1 || close(pipe_fd[0]) == -1) {
+        perror_exit("close");
+    }
+    
+    // Wait for both child processes to finish
+    waitpid(pid1, NULL, 0);
+    waitpid(pid2, NULL, 0);
+
     return 0;
 }
