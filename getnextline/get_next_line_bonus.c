@@ -6,9 +6,10 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:30:28 by seayeo            #+#    #+#             */
-/*   Updated: 2023/11/16 17:48:00 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/15 17:17:30 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 int	ft_chrindex(const char *s, int c)
@@ -80,7 +81,7 @@ char	*get_next_line(int fd)
 	static char	*buf[4096];
 	char		*line;
 
-	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0) 
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buf[fd] = read_to_storage(fd, buf[fd]);
 	if (!buf[fd])

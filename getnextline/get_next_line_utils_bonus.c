@@ -6,9 +6,10 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:32:13 by seayeo            #+#    #+#             */
-/*   Updated: 2023/11/16 17:48:49 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/15 17:17:48 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *i)
