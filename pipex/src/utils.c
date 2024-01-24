@@ -7,22 +7,6 @@ void error_handle(int i)
     exit(0);
 }
 
-static	int	ft_strcmp(char *s1, char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s1)
-		return (1);
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	return (0);
-}
-
 char	*my_getenv(char *name, char **env)
 {
 	int		i;
@@ -46,3 +30,29 @@ char	*my_getenv(char *name, char **env)
 	}
 	return (NULL);
 }
+
+char	*get_env(char **envp)
+{
+	while (envp && *envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		{
+			return (ft_strdup(&(*envp[5]));
+		}
+		envp++;
+	}
+	return (NULL);
+}
+
+char	**find_cmd_path(char **envp)
+{
+	char	**possible_paths;
+	char	*all_path;
+
+	all_path = get_env(envp);
+	possible_paths = ft_split(all_path, ':');
+	if (all_path)
+		free(path);
+	return (possible_paths);
+}
+
