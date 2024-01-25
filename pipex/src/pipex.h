@@ -11,5 +11,7 @@
 
 void error_handle(int i);
 char	*my_getenv(char *name, char **env);
+void	find_executable_path(const char *executable, char *cmd_path);
+
 
 #endif

@@ -1,10 +1,61 @@
 #include "pipex.h"
 
-void error_handle(int i)
+char	*get_env(char **envp)
 {
-    if (i == 1)
-        ft_putstr_fd("proper input pls\n", 2);
-    exit(0);
+	while (envp && *envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+			return (ft_strdup(&(*envp[5])));
+		envp++;
+	}
+	return (NULL);
+}
+
+char	**find_cmd_path(char **envp)
+{
+	char	**possible_paths;
+	char	*all_path;
+
+	all_path = get_env(envp);
+	possible_paths = ft_split(all_path, ':');
+	if (all_path)
+		free(path);
+	return (possible_paths);
+}
+
+char	**find_executable_path(char **envp)
+{
+	char	**paths;
+
+
+	if (access(paths, X_OK) == 0)
+	{
+		paths = ft_strdup();
+
+	}
+}
+
+void	find_executable_path(const char *executable, char *cmd_path)
+{
+	char *path = getenv("PATH");
+	char *path_copy = ft_strdup(path);
+	char *dir = strtok(path_copy, ":");
+	char full_path[MAX_PATH_LEN];
+
+	while (dir != NULL) 
+	{
+		// Check if the file exists and is executable
+		if (access(full_path, X_OK) == 0)
+		{
+			strcpy(cmd_path, full_path);
+			cmd_path[strlen(cmd_path)] = '\0';
+			free(path_copy);
+			return ;
+		}
+		dir = strtok(NULL, ":");
+	}
+	free(path_copy);
+	cmd_path[0] = '\0';  // Executable not found
 }
 
 char	*my_getenv(char *name, char **env)
@@ -30,29 +81,3 @@ char	*my_getenv(char *name, char **env)
 	}
 	return (NULL);
 }
-
-char	*get_env(char **envp)
-{
-	while (envp && *envp)
-	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-		{
-			return (ft_strdup(&(*envp[5]));
-		}
-		envp++;
-	}
-	return (NULL);
-}
-
-char	**find_cmd_path(char **envp)
-{
-	char	**possible_paths;
-	char	*all_path;
-
-	all_path = get_env(envp);
-	possible_paths = ft_split(all_path, ':');
-	if (all_path)
-		free(path);
-	return (possible_paths);
-}
-

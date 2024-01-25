@@ -27,29 +27,6 @@ void perror_exit(const char *msg) {
 	exit(EXIT_FAILURE);
 }
 
-void    find_executable_path(const char *executable, char *cmd_path)
-{
-	char *path = getenv("PATH");
-	char *path_copy = ft_strdup(path);
-	char *dir = strtok(path_copy, ":");
-	char full_path[MAX_PATH_LEN];
-
-	while (dir != NULL) 
-	{
-		// Check if the file exists and is executable
-		if (access(full_path, X_OK) == 0)
-		{
-			strcpy(cmd_path, full_path);
-			cmd_path[strlen(cmd_path)] = '\0';
-			free(path_copy);
-			return ;
-		}
-		dir = strtok(NULL, ":");
-	}
-	free(path_copy);
-	cmd_path[0] = '\0';  // Executable not found
-}
-
 void execute_command(char *cmd[], int input_fd, int output_fd, char *env[]) {
 	pid_t pid = fork();
 
@@ -80,6 +57,7 @@ int main(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
 		perror_exit("invalid input params");
+
 
 	const char *file1 = argv[1];
 
