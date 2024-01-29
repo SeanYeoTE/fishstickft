@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 15:39:52 by seayeo            #+#    #+#             */
+/*   Updated: 2024/01/29 16:16:23 by seayeo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 char	*get_env(char **envp)
@@ -5,7 +17,7 @@ char	*get_env(char **envp)
 	while (envp && *envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-			return (ft_strdup(&(*envp[5])));
+			return (ft_strdup((ft_split(*envp, '=')[1])));
 		envp++;
 	}
 	return (NULL);
@@ -19,65 +31,30 @@ char	**find_cmd_path(char **envp)
 	all_path = get_env(envp);
 	possible_paths = ft_split(all_path, ':');
 	if (all_path)
-		free(path);
+		free(all_path);
 	return (possible_paths);
 }
 
-char	**find_executable_path(char **envp)
+char	*find_executable_path(char **envp, char *cmd)
 {
-	char	**paths;
+	char	*cmd_ender;
+	char	*path;
 
-
-	if (access(paths, X_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 	{
-		paths = ft_strdup();
-
+		return (ft_strdup(cmd));
 	}
-}
-
-void	find_executable_path(const char *executable, char *cmd_path)
-{
-	char *path = getenv("PATH");
-	char *path_copy = ft_strdup(path);
-	char *dir = strtok(path_copy, ":");
-	char full_path[MAX_PATH_LEN];
-
-	while (dir != NULL) 
+	printf("Finding executable Path%s\n", cmd);
+	cmd_ender = ft_strjoin("/", cmd);
+	path = NULL;
+	while (envp && *envp)
 	{
-		// Check if the file exists and is executable
-		if (access(full_path, X_OK) == 0)
+		path = ft_strjoin(*envp, cmd_ender);
+		if (access(path, X_OK) == 0)
 		{
-			strcpy(cmd_path, full_path);
-			cmd_path[strlen(cmd_path)] = '\0';
-			free(path_copy);
-			return ;
+			return (ft_strdup(path));
 		}
-		dir = strtok(NULL, ":");
-	}
-	free(path_copy);
-	cmd_path[0] = '\0';  // Executable not found
-}
-
-char	*my_getenv(char *name, char **env)
-{
-	int		i;
-	int		j;
-	char	*sub;
-
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		sub = ft_substr(env[i], 0, j);
-		if (ft_strcmp(sub, name) == 0)
-		{
-			free(sub);
-			return (env[i] + j + 1);
-		}
-		free(sub);
-		i++;
+		*envp++;
 	}
 	return (NULL);
 }
