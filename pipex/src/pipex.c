@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/29 16:44:27 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:04:37 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,45 @@ void perror_exit(const char *msg) {
 	exit(EXIT_FAILURE);
 }
 
-void execute_command(char *cmd[], int input_fd, int output_fd, char *env[])
-{
-	pid_t pid = fork();
-
-	if (pid == -1) {
-		perror_exit("fork");
-	} else if (pid == 0) {
-		// Child process
-		// Redirect input
-		if (input_fd != STDIN_FILENO) {
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
-		}
-		// Redirect output
-		if (output_fd != STDOUT_FILENO) {
-			dup2(output_fd, STDOUT_FILENO);
-			close(output_fd);
-		}
-		// Execute the command with provided environment variables
-		execve(cmd[0], cmd, env);
-		perror_exit("execve");
-	}
-}
-
-int	handler(int input_fd, int output_fd, char **argv, char **envp)
+void execute_command(char *cmd, int input_fd, int output_fd, char *env[])
 {
 	char	**paths = find_cmd_path(envp);
 	char	*exe_path;
 
+	
 	exe_path = find_executable_path(paths, argv[2]);
 	printf("%s\n", exe_path);
 	
 	execute_command(exe_path, input_fd, output_fd, envp);
+	
+	if (input_fd != STDIN_FILENO) {
+		dup2(input_fd, STDIN_FILENO);
+		close(input_fd);
+		}
+		// Redirect output
+	if (output_fd != STDOUT_FILENO) {
+		dup2(output_fd, STDOUT_FILENO);
+		close(output_fd);
+	}
+	// Execute the command with provided environment variables
+	execve(cmd, cmd, env);
+	perror_exit("execve");
+}
 
-	int i = 0;
-	while (paths[i]) {
-		//printf("%s\n", paths[i]);
-		i++;
-	}
-	while (paths[i]) {
-		free(paths[i]);
-		i++;
-	}
-	free(paths);
+int	handler(int input_fd, int output_fd, char **argv, char **envp)
+{
+	pid_t	pid;
+	int		status;
+	int pipe_fd[2];
+
+	status = 0;
+	pid = fork();
+	if (pid < 0)
+		perror_exit("fork");
+	else if (pid == 0)
+		execute_command(argv[2], input_fd, pipe_fd[1], envp);
+	else
+
 }
 
 int main(int argc, char **argv, char **envp)
