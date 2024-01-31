@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/30 15:04:37 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/01/31 17:37:49 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,39 @@ void perror_exit(const char *msg) {
 	exit(EXIT_FAILURE);
 }
 
-void execute_command(char *cmd, int input_fd, int output_fd, char *env[])
+char	**constantfirstarg(char **cmd_args)
 {
-	char	**paths = find_cmd_path(envp);
-	char	*exe_path;
+	char const	*inter;
 
-	
-	exe_path = find_executable_path(paths, argv[2]);
-	printf("%s\n", exe_path);
-	
-	execute_command(exe_path, input_fd, output_fd, envp);
-	
-	if (input_fd != STDIN_FILENO) {
-		dup2(input_fd, STDIN_FILENO);
-		close(input_fd);
-		}
-		// Redirect output
-	if (output_fd != STDOUT_FILENO) {
-		dup2(output_fd, STDOUT_FILENO);
-		close(output_fd);
-	}
-	// Execute the command with provided environment variables
-	execve(cmd, cmd, env);
-	perror_exit("execve");
+	inter = cmd_args[0];	
+	inter = strdup(inter);
+	cmd_args[0] = inter;
+	return (cmd_args);
+}
+
+int	execute_command(char *cmd, int input_fd, int output_fd, char **envp)
+{
+	char	**paths;
+	char	*exe_path;
+	char	**cmd_args;
+	int		status;
+
+	status = 0;
+	paths = find_cmd_path(envp);
+	cmd_args = ft_split(cmd, ' ');
+	cmd_args = constantfirstarg(cmd_args);
+	exe_path = find_executable_path(paths, cmd);
+	free(paths);
+
+	dup2(input_fd, STDIN_FILENO);
+	close(input_fd);
+	dup2(output_fd, STDOUT_FILENO);
+	close(output_fd);
+	if (exe_path)
+		status = execve(exe_path, cmd_args[0], NULL);
+	else
+		perror_exit("execve");
+	return (status);	
 }
 
 int	handler(int input_fd, int output_fd, char **argv, char **envp)
@@ -57,7 +67,9 @@ int	handler(int input_fd, int output_fd, char **argv, char **envp)
 	pid_t	pid;
 	int		status;
 	int pipe_fd[2];
-
+	if (pipe(pipe_fd) == -1)
+		perror_exit("pipe");
+		
 	status = 0;
 	pid = fork();
 	if (pid < 0)
@@ -65,7 +77,11 @@ int	handler(int input_fd, int output_fd, char **argv, char **envp)
 	else if (pid == 0)
 		execute_command(argv[2], input_fd, pipe_fd[1], envp);
 	else
-
+	{
+		close(pipe_fd[1]);
+		status = execute_command(argv[3], pipe_fd[0], output_fd, envp);
+	}
+	return (status);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -75,10 +91,6 @@ int main(int argc, char **argv, char **envp)
 	
 	if (argc != 5)
 		perror_exit("invalid input params");
-	int pipe_fd[2];
-	if (pipe(pipe_fd) == -1) {
-		perror_exit("pipe");
-	}
 	input_fd = open(argv[0], O_RDONLY);
 	if (input_fd == -1)
 		perror_exit("open");
