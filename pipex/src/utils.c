@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:39:52 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/29 16:16:23 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/02/02 16:11:10 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 char	*get_env(char **envp)
 {
+	char	**arr;
+	char	*middle;
+	
 	while (envp && *envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-			return (ft_strdup((ft_split(*envp, '=')[1])));
+		{
+			arr = ft_split(*envp, '=');
+			middle = ft_strdup(arr[1]);
+			free(arr);
+			return (middle);
+		}
 		envp++;
 	}
 	return (NULL);
@@ -54,7 +62,10 @@ char	*find_executable_path(char **envp, char *cmd)
 		{
 			return (ft_strdup(path));
 		}
-		*envp++;
+		free(path);
+		path = NULL;
+		envp++;
 	}
+	
 	return (NULL);
 }

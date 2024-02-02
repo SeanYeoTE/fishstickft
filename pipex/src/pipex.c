@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/31 17:37:49 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/02/01 23:10:47 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,20 @@ void perror_exit(const char *msg) {
 
 char	**constantfirstarg(char **cmd_args)
 {
-	char const	*inter;
+	char 	**inter;
+	int		i;
+	int		count;
+	
+	i = 0;
+	count = 0;
+	if (cmd_args[i++])
+		count++;
+	inter = malloc(sizeof(char *) * count);
+	inter[count - 1] = 0;
+	inter[0] = ft_strdup(cmd_args[0]);
+	
 
-	inter = cmd_args[0];	
-	inter = strdup(inter);
-	cmd_args[0] = inter;
-	return (cmd_args);
+	return (inter);
 }
 
 int	execute_command(char *cmd, int input_fd, int output_fd, char **envp)
@@ -56,7 +64,7 @@ int	execute_command(char *cmd, int input_fd, int output_fd, char **envp)
 	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
 	if (exe_path)
-		status = execve(exe_path, cmd_args[0], NULL);
+		status = execve(exe_path, (char * const *)cmd_args[0], NULL);
 	else
 		perror_exit("execve");
 	return (status);	
