@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/02/01 23:10:47 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/02/07 23:33:05 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,20 @@ int	execute_command(char *cmd, int input_fd, int output_fd, char **envp)
 	char	*exe_path;
 	char	**cmd_args;
 	int		status;
+	char	*printer;
 
+	//printf("original cmd: %s\n", cmd);
 	status = 0;
 	paths = find_cmd_path(envp);
 	cmd_args = ft_split(cmd, ' ');
+	printer = cmd_args[0];
+	while (*printer)
+	{
+		//printf("cmd_args: %s\n", *printer);
+		printer++;
+	}
 	cmd_args = constantfirstarg(cmd_args);
-	exe_path = find_executable_path(paths, cmd);
+	exe_path = find_executable_path(paths, printer);
 	free(paths);
 
 	dup2(input_fd, STDIN_FILENO);
@@ -89,6 +97,8 @@ int	handler(int input_fd, int output_fd, char **argv, char **envp)
 		close(pipe_fd[1]);
 		status = execute_command(argv[3], pipe_fd[0], output_fd, envp);
 	}
+	close(input_fd);
+	close(output_fd);
 	return (status);
 }
 
@@ -99,10 +109,10 @@ int main(int argc, char **argv, char **envp)
 	
 	if (argc != 5)
 		perror_exit("invalid input params");
-	input_fd = open(argv[0], O_RDONLY);
+	input_fd = open(argv[1], O_RDONLY);
 	if (input_fd == -1)
 		perror_exit("open");
-	output_fd = open(argv[3], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	output_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (output_fd == -1)
 		perror_exit("open");
 

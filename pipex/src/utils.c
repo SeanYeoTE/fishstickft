@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:39:52 by seayeo            #+#    #+#             */
-/*   Updated: 2024/02/02 16:11:10 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/02/07 23:33:08 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,17 @@ char	*find_executable_path(char **envp, char *cmd)
 	{
 		return (ft_strdup(cmd));
 	}
-	printf("Finding executable Path%s\n", cmd);
+	//printf("Finding executable Path %s\n", cmd);
 	cmd_ender = ft_strjoin("/", cmd);
+	//printf("Path with CMD: %s\n", cmd_ender);
 	path = NULL;
 	while (envp && *envp)
 	{
 		path = ft_strjoin(*envp, cmd_ender);
+		//printf("Path tested: %s\n", path);
 		if (access(path, X_OK) == 0)
 		{
+			//printf("path is %s\n", path);
 			return (ft_strdup(path));
 		}
 		free(path);
@@ -68,4 +71,19 @@ char	*find_executable_path(char **envp, char *cmd)
 	}
 	
 	return (NULL);
+}
+
+void	free2(char **v)
+{
+	char	**p;
+
+	if (!v)
+		return ;
+	p = v;
+	while (*v)
+	{
+		free(*v);
+		v++;
+	}
+	free(p);
 }
