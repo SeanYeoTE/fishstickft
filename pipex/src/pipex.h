@@ -9,11 +9,12 @@
 #include <fcntl.h>
 #include "../libft/libft.h"
 
-void error_handle(int i);
 
 char	*get_env(char **envp);
 char	**find_cmd_path(char **envp);
 char	*find_executable_path(char **envp, char *cmd);
 void	free2(char **v);
+char	*ft_strndup(const char *s, size_t n);
+char	*ft_strdup_inverted(const char *s);
 
 #endif
