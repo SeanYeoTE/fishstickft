@@ -6,55 +6,74 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/02/27 17:11:01 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/02 23:58:56 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_nodule	**init_node(int value, t_nodule ** head)
+int	init_node(int value, t_nodule ** head)
 {
 	t_nodule	* new_node;
 	t_nodule	* prev_node;
 
-
-	if (head == NULL)
+	new_node = malloc(sizeof(t_nodule));
+	if (!new_node)
+			return (-1);
+	new_node->next = NULL;
+	new_node->value = value;
+	if (*head == NULL)
 		{
-			new_node = malloc(sizeof(t_nodule));
-			new_node->next = NULL;
-			new_node->value = value;
 			new_node->prev = NULL;
+			*head = new_node;
 		}
 	else
 		{
-			prev_node = *head;
-			
-			new_node = malloc(sizeof(t_nodule));
-			prev_node->prev = new_node;
-			
-			new_node->next = prev_node;
-			new_node->value = value;
-			new_node->prev = NULL;
+			prev_node = get_last(*head);
+			prev_node->next = new_node;
+			new_node->prev = prev_node;
 		}
-	*head = new_node;
-	return (head);
+	return (0);
 }
 
-t_nodule	**init_stack(int argc, char *argv[], t_nodule ** head)
+int	init_stack(int argc, char *argv[], t_nodule ** head)
 {
-	if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-
 	int			count;
 	int			value;
 	
+	if (argc == 2)
+	{
+		argv = ft_split(argv[1], ' ');
+	}
 	count = 0;
 	value = 0;
-	head = NULL;
-	while (count++ < argc)
+	while (argv[++count])
 	{
 		value = atoi(argv[count]);
-		head = init_node(value, head);
+		init_node(value, head);
 	}
-	return (head);
+	return (0);
+}
+
+t_nodule	*get_last(t_nodule *last)
+{
+	while (last->next != NULL)
+		last = last->next;
+	return (last);
+}
+
+int	find_largest(t_nodule **head)
+{
+	t_nodule	*start;
+	int			ans;
+
+	ans = 0;
+	start = *head;
+	while (start->next != NULL)
+	{
+		if (start->value > ans)
+			ans = start->value;
+		start = start->next;
+	}
+	return (ans);
 }

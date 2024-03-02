@@ -1,31 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   print_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 20:17:56 by seayeo           ###   ########.fr       */
+/*   Created: 2023/10/11 16:02:27 by seayeo            #+#    #+#             */
+/*   Updated: 2023/10/11 16:02:31 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "ft_printf.h"
 
-#include "push_swap.h"
-
-t_nodule	**swap(t_nodule **head)
+int	print_char(int c)
 {
-	if (head == NULL || (*head)->next == NULL)
-		return (head);
-	t_nodule	*first;
-	t_nodule	*second;
-
-	first = *head;
-	second = first->next;
-
-	*head = second;
-	second->prev = NULL;
-	second->next = first;
-	first->next = NULL;
-	first->prev = second;
-	return (head);
+	return (write(1, &c, 1));
 }

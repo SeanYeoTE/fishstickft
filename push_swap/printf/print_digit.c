@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   print_digit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 20:17:56 by seayeo           ###   ########.fr       */
+/*   Created: 2023/10/11 16:02:49 by seayeo            #+#    #+#             */
+/*   Updated: 2023/10/11 16:02:53 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "ft_printf.h"
 
-#include "push_swap.h"
-
-t_nodule	**swap(t_nodule **head)
+int	print_digit(long n, int base)
 {
-	if (head == NULL || (*head)->next == NULL)
-		return (head);
-	t_nodule	*first;
-	t_nodule	*second;
+	int		count;
+	char	*symbols;
 
-	first = *head;
-	second = first->next;
-
-	*head = second;
-	second->prev = NULL;
-	second->next = first;
-	first->next = NULL;
-	first->prev = second;
-	return (head);
+	symbols = "0123456789abcdef";
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		return (print_digit(-n, base) + 1);
+	}
+	else if (n < base)
+		return (print_char(symbols[n]));
+	else
+	{
+		count = print_digit(n / base, base);
+		return (count + print_digit(n % base, base));
+	}
 }

@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   print_void.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 20:17:56 by seayeo           ###   ########.fr       */
+/*   Created: 2023/10/11 16:03:16 by seayeo            #+#    #+#             */
+/*   Updated: 2023/10/11 16:03:17 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "ft_printf.h"
 
-#include "push_swap.h"
-
-t_nodule	**swap(t_nodule **head)
+int	print_void(void *n)
 {
-	if (head == NULL || (*head)->next == NULL)
-		return (head);
-	t_nodule	*first;
-	t_nodule	*second;
+	int	count;
 
-	first = *head;
-	second = first->next;
-
-	*head = second;
-	second->prev = NULL;
-	second->next = first;
-	first->next = NULL;
-	first->prev = second;
-	return (head);
+	count = 0;
+	if (n == 0)
+		count += print_str("(nil)");
+	else
+	{
+		count += print_str("0x");
+		count += print_unsignedhex((unsigned long int)n);
+	}
+	return (count);
 }
