@@ -6,26 +6,38 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 20:17:56 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/04 15:30:06 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_nodule	**swap(t_nodule **head)
+void	swap(t_nodule **head)
 {
 	if (head == NULL || (*head)->next == NULL)
-		return (head);
+		return ;
 	t_nodule	*first;
 	t_nodule	*second;
 
 	first = *head;
 	second = first->next;
 
+	// *head = (*head)->next;
 	*head = second;
 	second->prev = NULL;
+	first->next = second->next;
 	second->next = first;
-	first->next = NULL;
 	first->prev = second;
-	return (head);
+}
+
+void	sa(t_nodule **head)
+{
+	swap(head);
+	ft_printf("sa\n");
+}
+
+void	sb(t_nodule **head)
+{
+	swap(head);
+	ft_printf("sb\n");
 }

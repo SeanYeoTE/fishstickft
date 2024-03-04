@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/02 23:36:02 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/04 16:59:41 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,18 @@ t_nodule	*get_last(t_nodule *last);
 int	find_largest(t_nodule **head);
 
 // Sorting functions
-t_nodule    **swap(t_nodule **head);
-int	push(t_nodule **here, t_nodule **there);
+// t_nodule    **swap(t_nodule **head);
+void	swap(t_nodule **head);
+void	push(t_nodule **here, t_nodule **there);
 t_nodule	**rotate(t_nodule **stack);
 t_nodule	**reverse_rotate(t_nodule **stack);
 
+void	sa(t_nodule **head);
+void	sb(t_nodule **head);
+void	pa(t_nodule **bhead, t_nodule **ahead);
+void	pb(t_nodule **ahead, t_nodule **bhead);
+
+int print_full(t_nodule **head);
 int print_stack(t_nodule **head);
 
 #endif
