@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 15:30:06 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:02:09 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ void	sb(t_nodule **head)
 {
 	swap(head);
 	ft_printf("sb\n");
+}
+
+void	ss(t_nodule **ahead, t_nodule **bhead)
+{
+	swap(ahead);
+	swap(bhead);
+	ft_printf("ss\n");
 }

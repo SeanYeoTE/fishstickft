@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 16:59:41 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:23:09 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	ft_atoi(const char *str);
 
 // Secondary functions
 int	validity_checks(int argc, char *argv[]);
-t_nodule    **brain(t_nodule **head, t_nodule **bhead, int total);
+int	checkifsorted(t_nodule **ahead);
+void	brain(t_nodule **ahead, t_nodule **bhead, int argc);
+void	simple_sort(t_nodule **ahead);
+
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);
@@ -44,18 +47,24 @@ t_nodule	*get_last(t_nodule *last);
 int	find_largest(t_nodule **head);
 
 // Sorting functions
-// t_nodule    **swap(t_nodule **head);
 void	swap(t_nodule **head);
 void	push(t_nodule **here, t_nodule **there);
-t_nodule	**rotate(t_nodule **stack);
-t_nodule	**reverse_rotate(t_nodule **stack);
+void	rotate(t_nodule **stack);
+void	reverse_rotate(t_nodule **stack);
 
 void	sa(t_nodule **head);
 void	sb(t_nodule **head);
+void	ss(t_nodule **ahead, t_nodule **bhead);
 void	pa(t_nodule **bhead, t_nodule **ahead);
 void	pb(t_nodule **ahead, t_nodule **bhead);
+void	ra(t_nodule **ahead);
+void	rb(t_nodule **bhead);
+void	rr(t_nodule **ahead, t_nodule **bhead);
+void	rra(t_nodule **ahead);
+void	rrb(t_nodule **bhead);
+void	rrr(t_nodule **ahead, t_nodule **bhead);
 
 int print_full(t_nodule **head);
-int print_stack(t_nodule **head);
+int print_stack(t_nodule **head, char c);
 
 #endif

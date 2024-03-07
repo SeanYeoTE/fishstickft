@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:06:36 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 17:09:13 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/07 16:12:40 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	pa(t_nodule **bhead, t_nodule **ahead)
 {
 	push(bhead, ahead);
 	ft_printf("pa\n");
+	print_full(ahead);
 }
 
 void	pb(t_nodule **ahead, t_nodule **bhead)

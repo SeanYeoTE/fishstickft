@@ -6,52 +6,63 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 15:56:23 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:23:08 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_nodule    **brain(t_nodule **head, t_nodule **bhead, int total)
+void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 {
-	t_nodule	*firsthalf;
-	int			count;
-	t_nodule	*secondhalf;
-	
-	count = 0;
-	firsthalf = *head;
-
-	// simple insertion sort first;
-	while (count < total)
+	while (checkifsorted(ahead) && checklength(ahead) == argc)
 	{
-		if (firsthalf->value > find_largest(head)/2)
-		{
-			// i have issues with this, maybe implement a struct for pointer access
-			head, bhead = push(head, bhead);
-			ft_printf("pb");
-			count++;
-		}
+		
 	}
-	firsthalf = *head;
-	firsthalf = insertionsort(firsthalf);
-	secondhalf = *bhead;
-	secondhalf = insertionsort(secondhalf);
-	head = stackjoiner(firsthalf, secondhalf);
 }
 
-t_nodule	**insertionsort(t_nodule *start)
+int	checklength(t_nodule **ahead)
 {
-	t_nodule	*compare;
+	int			count;
+	t_nodule	*temp;
 
-	while (start->next != NULL)
+	count = 0;
+	temp = *ahead;
+	while (temp->next)
 	{
-		compare = start->next;
-		if (start->value > compare->value)
-		{
-			start = swap(start);
-			ft_printf("sa\n");
-		}
-		else
-			start = compare;
+		count++;
+		temp = temp->next;
+	}
+	return (count + 1);
+}
+
+int	checkifsorted(t_nodule **ahead)
+{
+	t_nodule	*temp;
+
+	temp = *ahead;
+	while (temp->next)
+	{
+		if (temp->value > temp->next->value)
+			return (-1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+void	simple_sort(t_nodule **ahead)
+{
+	t_nodule	*second;
+	t_nodule	*third;
+
+	while (checkifsorted(ahead))
+	{
+		second = (*ahead)->next;
+		third = (*ahead)->next->next;
+		if ((*ahead)->value > second->value && (*ahead)->value > third->value)
+			ra(ahead);
+		else if ((*ahead)->value > second->value)
+			sa(ahead);
+		else if ((*ahead)->value > third->value)
+			ra(ahead);
 	}
 }

@@ -11,6 +11,8 @@ SRCS =	main.c \
 		push.c \
 		rotate.c \
 		printer.c \
+		brain.c \
+		rotate2.c \
 		\
 		ft_atoi.c \
 		ft_split.c \

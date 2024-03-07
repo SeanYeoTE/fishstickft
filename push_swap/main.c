@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:20:10 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 17:03:41 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/07 16:45:05 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,14 @@ int	main(int argc, char *argv[])
 	if (valid == 0)
 		return (0);
 	ahead = NULL;
-	// last_node = NULL;
 	bhead = NULL;
-	// blast_node = NULL;
 	init_stack(argc, argv, &ahead);
-	print_stack(&ahead);
-	print_stack(&bhead);
+	print_stack(&ahead, 'a');
 	//brain(ahead, bhead, argc);
-	
-	pb(&ahead, &bhead);
-	ft_printf("\n");
-	print_stack(&ahead);
-	print_stack(&bhead);
-	
-	print_full(&bhead);
-	pa(&bhead, &ahead);
-	ft_printf("\n");
-	print_stack(&ahead);
-	print_stack(&bhead);
+	// ft_printf("\n");
+	// print_stack(&bhead);
+	simple_sort(&ahead);
+	print_stack(&ahead, 'a');
 }
 
 int	validity_checks(int argc, char *argv[])
@@ -49,3 +39,15 @@ int	validity_checks(int argc, char *argv[])
 	else
 		return (1);
 }
+
+// testing for pushing
+/* 	pb(&ahead, &bhead);
+	ft_printf("\n");
+	print_stack(&ahead);
+	print_stack(&bhead);
+	
+	print_full(&bhead);
+	pa(&bhead, &ahead);
+	ft_printf("\n");
+	print_stack(&ahead);
+	print_stack(&bhead); */

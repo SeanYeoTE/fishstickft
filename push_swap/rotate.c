@@ -6,13 +6,13 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:42:03 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/01 20:32:50 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/04 18:08:35 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_nodule	**rotate(t_nodule **stack)
+void	rotate(t_nodule **stack)
 {
 	t_nodule	*first;
 	t_nodule	*second;
@@ -24,13 +24,11 @@ t_nodule	**rotate(t_nodule **stack)
 	second->prev = NULL;
 	first->next = NULL;
 	first->prev = last;
-	last->prev = NULL;
 	last->next = first;
 	*stack = second;
-	return (stack); 
 }
 
-t_nodule	**reverse_rotate(t_nodule **stack)
+void	reverse_rotate(t_nodule **stack)
 {
 	t_nodule	*first;
 	t_nodule	*secondlast;
@@ -44,5 +42,18 @@ t_nodule	**reverse_rotate(t_nodule **stack)
 	first->prev = last;
 	secondlast->next = NULL;
 	*stack = last;
-	return (stack);
+}
+
+void	rr(t_nodule **ahead, t_nodule **bhead)
+{
+	rotate(ahead);
+	rotate(bhead);
+	ft_printf("rr\n");
+}
+
+void	rrr(t_nodule **ahead, t_nodule **bhead)
+{
+	reverse_rotate(ahead);
+	reverse_rotate(bhead);
+	ft_printf("rrr\n");
 }
