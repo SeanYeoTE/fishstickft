@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 18:07:42 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/07 16:12:23 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:15:28 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ra(t_nodule **ahead)
 {
 	rotate(ahead);
 	ft_printf("ra\n");
-	print_full(ahead);
 }
 
 void	rb(t_nodule **bhead)

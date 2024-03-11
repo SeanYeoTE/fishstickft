@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/07 19:23:09 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/11 16:11:55 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 typedef struct stack_node
 {
 	int					value;
+	int					post;
+	int					pre;
+	int					doble;
 	struct stack_node	*prev;
 	struct stack_node	*next;
 	struct stack_node	*current;
@@ -36,6 +39,11 @@ int	validity_checks(int argc, char *argv[]);
 int	checkifsorted(t_nodule **ahead);
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc);
 void	simple_sort(t_nodule **ahead);
+void	setweight(t_nodule **ahead, t_nodule **bhead);
+int	checklength(t_nodule **ahead);
+void	checkefficient(t_nodule **ahead);
+void	executemission(t_nodule **ahead, t_nodule **bhead);
+void	resetweights(t_nodule **head);
 
 
 // Stack initialisation
@@ -64,7 +72,7 @@ void	rra(t_nodule **ahead);
 void	rrb(t_nodule **bhead);
 void	rrr(t_nodule **ahead, t_nodule **bhead);
 
-int print_full(t_nodule **head);
+int print_full(t_nodule **head, char c);
 int print_stack(t_nodule **head, char c);
 
 #endif
