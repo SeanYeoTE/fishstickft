@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/03 00:44:45 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/12 12:37:34 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,29 @@ int	find_largest(t_nodule **head)
 	t_nodule	*start;
 	int			ans;
 
-	ans = 0;
 	start = *head;
-	while (start->next != NULL)
+	ans = start->value;
+	while (start)
 	{
 		if (start->value > ans)
 			ans = start->value;
 		start = start->next;
+	}
+	return (ans);
+}
+
+int	find_smallest(t_nodule **head)
+{
+	t_nodule	*temp;
+	int			ans;
+
+	temp = (*head);
+	ans = temp->value;
+	while (temp)
+	{
+		if (temp->value < ans)
+			ans = temp->value;
+		temp = temp->next;
 	}
 	return (ans);
 }

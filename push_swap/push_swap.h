@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/11 16:11:55 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:41:28 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ void	checkefficient(t_nodule **ahead);
 void	executemission(t_nodule **ahead, t_nodule **bhead);
 void	resetweights(t_nodule **head);
 
+void	setweight2(t_nodule **ahead, t_nodule **bhead);
+int	rotateforbetween(t_nodule **head, t_nodule *tempahead);
+int	rotatetillbig(t_nodule **head);
+int	rotatetillsmall(t_nodule **head);
+
+void	dumpback(t_nodule **entrance, t_nodule **exit);
+int	rotatebackpush(t_nodule **head, t_nodule *tempahead);
+
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);
@@ -53,6 +61,7 @@ int	init_stack(int argc, char *argv[], t_nodule ** head);
 // getters
 t_nodule	*get_last(t_nodule *last);
 int	find_largest(t_nodule **head);
+int	find_smallest(t_nodule **head);
 
 // Sorting functions
 void	swap(t_nodule **head);

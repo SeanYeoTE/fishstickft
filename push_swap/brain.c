@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/11 19:17:10 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:42:49 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,82 @@
 
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 {
-/* 	while (checkifsorted(ahead) != 0 && checklength(ahead) != argc)
-	{
-		if (checklength(ahead) >= 5 && checklength(bhead) < 2)
-		{
-			pb(ahead, bhead);
-			pb(ahead, bhead);
-			print_stack(bhead, 'b');
-		}
-		setweight(ahead, bhead);
-		executemission(ahead, bhead);
-	} */
-	// ft_printf("length of stack a: %d\n", argc);
 	if (checkifsorted(ahead) == 0)
 		return ;
 	if (argc - 1 >= 5)
 	{ 
 		pb(ahead, bhead);
 		pb(ahead, bhead);
-		// print_stack(bhead, 'b');
-		// ft_printf("\n");
 	}
-	
-	// print_full(ahead, 'a');
 	while (checklength(ahead) > 3)
 	{
 		resetweights(ahead);
-		setweight(ahead, bhead);
+		setweight2(ahead, bhead);
 		checkefficient(ahead);
-		print_full(ahead, 'a');
+		// print_full(ahead, 'a');
 		executemission(ahead, bhead);
 	}
 	// print_stack(ahead, 'a');
-	// print_stack(bhead, 'b');
+	print_stack(bhead, 'b');
+	simple_sort(ahead);
+	dumpback(bhead, ahead);
+	print_stack(ahead, 'a');
+	int order = rotatetillsmall(ahead);
+	while (order--)
+		ra(ahead);
+	print_stack(ahead, 'a');
+}
+
+void	dumpback(t_nodule **entrance, t_nodule **exit)
+{
+	t_nodule	*b;
+	int			order;
+
+	order = rotatetillbig(entrance);
+	while (order--)
+		rb(entrance);
+	b = (*entrance);
+	while (b)
+	{
+		if (find_largest(exit) < b->value)
+			pa(entrance, exit);
+		else
+		{
+			rotatebackpush(exit, b);
+			pa(entrance, exit);
+		}
+		b = b->next;
+	}
+}
+
+int	rotatebackpush(t_nodule **head, t_nodule *tempahead)
+{
+	t_nodule	*temp;
+	int			ans;
+
+	temp = (*head);
+	ans = 0;
+	while (temp)
+	{
+		if (temp->value > tempahead->value)
+		{
+			if (temp->prev == NULL)
+			{
+				if (get_last(*head)->value < tempahead->value)
+					break;
+			}
+			else
+			{
+				if (temp->prev->value < tempahead->value)
+					break;
+			}
+		}
+		ans++;
+		temp = temp->next;
+	}
+	while (ans--)
+			rra(head);
+	return (ans);
 }
 
 void	resetweights(t_nodule **head)
@@ -78,7 +121,6 @@ void	executemission(t_nodule **ahead, t_nodule **bhead)
 		if (check < lowestmoves)
 		{
 			lowestmoves = check;
-			ft_printf("lowestmoves %d\n", lowestmoves);
 			currentlowest = temp;
 		}
 		temp = temp->next;
@@ -101,48 +143,109 @@ void	executemission(t_nodule **ahead, t_nodule **bhead)
 	pb(ahead, bhead);
 }
 
-// setting weight does not account for when number is greater than all values in the stack
-// it also does not account for numbers that have to be pushed in between 2 current values
-// that are in the stack
-
-void	setweight(t_nodule **ahead, t_nodule **bhead)
+void	setweight2(t_nodule **ahead, t_nodule **bhead)
 {
-	t_nodule	*temp;
-	t_nodule	*top;
-	int	counterforb;
-	int counterfora;
+	int	largest;
+	int smallest;
+	t_nodule	*tempahead;
+	int	precount;
 
-	temp = (*ahead);
-	counterfora = 0;
-	while (temp)
+	largest = find_largest(bhead);
+	smallest = find_smallest(bhead);
+	tempahead = (*ahead);
+	precount = 0;
+	while (tempahead)
 	{
-		// counts the number of rotates required in stack b before number is ready to be pushed
-		counterforb = 0;
-		top = (*bhead);
-		while (top)
+		if (tempahead->value < smallest || tempahead->value > largest)
+			// count rotates till largest is at the top
+			tempahead->post = rotatetillbig(bhead);
+		else
 		{
-			// two conditions; if value is greater than all, push, if value is less than all, also push without rotating
-			if (temp->value < top->value)
-			{
-				// ft_printf("counterforb %d\n", counterforb);
-				counterforb++;
-				top = top->next;
-			}
-			else if (temp->value > top->value)
-			{
-				// ft_printf("counterforb %d\n", counterforb);
-				temp->post = counterforb;
-				break ;
-			}
+			tempahead->post = rotateforbetween(bhead, tempahead);
+			// rotate till tempahead->value < num, check that last value of stack > num;
 		}
-		temp->pre = counterfora;
-		temp = temp->next;
-		counterfora++;
-		// count the number of rotates to get specific number to top of stack
+		tempahead->pre = precount;
+		tempahead = tempahead->next;
+		precount++;
 	}
-	//checkefficient(ahead);
+	
 }
 
+int	rotateforbetween(t_nodule **head, t_nodule *tempahead)
+{
+	t_nodule	*temp;
+	int			ans;
+
+	temp = (*head);
+	ans = 0;
+	while (temp)
+	{
+		if (temp->value < tempahead->value)
+		{
+			if (temp->prev == NULL)
+			{
+				if (get_last(*head)->value > tempahead->value)
+					return (ans);
+			}
+			else
+			{
+				if (temp->prev->value > tempahead->value)
+					return (ans);
+			}
+		}
+		ans++;
+		temp = temp->next;
+	}
+	return (ans);
+}
+
+int	rotatetillbig(t_nodule **head)
+{
+	t_nodule	*temp;
+	int 		num;
+	int			count;
+	int			ans;
+
+	temp = (*head);
+	num = temp->value;
+	count = 0;
+	ans = 0;
+	while (temp)
+	{
+		if (temp->value > num)
+		{
+			num = temp->value;
+			ans = count;
+		}
+		temp = temp->next;
+		count++;
+	}
+	return (ans);
+}
+
+int	rotatetillsmall(t_nodule **head)
+{
+	t_nodule	*temp;
+	int			num;
+	int			count;
+	int			ans;
+
+	temp = (*head);
+	num = temp->value;
+	count = 0;
+	ans = 0;
+	while (temp)
+	{
+		if (temp->value < num)
+		{
+			num = temp->value;
+			ans = count;
+		}
+		temp = temp->next;
+		count++;
+	}
+	return (ans);
+}
 // something like midpoint theorem, if past midpoint of stack, use reverse rotate instead of rotate
 
 /* fk me i need to check both stacks for efficiency of rotates and compare if both stacks can use the
