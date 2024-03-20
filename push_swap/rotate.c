@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:42:03 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 18:08:35 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/15 18:34:11 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	reverse_rotate(t_nodule **stack)
 	last = get_last(*stack);
 	secondlast = last->prev;
 	last->next = first;
-	last->prev = NULL;
 	first->prev = last;
+	last->prev = NULL;
 	secondlast->next = NULL;
 	*stack = last;
 }

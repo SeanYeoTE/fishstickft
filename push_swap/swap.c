@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:24:12 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/04 18:02:09 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/14 18:06:20 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,18 @@ void	swap(t_nodule **head)
 
 	first = *head;
 	second = first->next;
-
-	// *head = (*head)->next;
-	*head = second;
-	second->prev = NULL;
-	first->next = second->next;
+	if (second->next != NULL)
+	{
+		(second->next)->prev = first;
+		first->next = second->next;
+	}
+	else
+		first->next = NULL;	
 	second->next = first;
+	second->prev = NULL;
+
 	first->prev = second;
+	*head = second;
 }
 
 void	sa(t_nodule **head)

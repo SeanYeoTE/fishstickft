@@ -6,17 +6,17 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:05:29 by seayeo            #+#    #+#             */
-/*   Updated: 2024/02/27 13:15:45 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:45:44 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int	i;
-	int	neg;
-	int	res;
+	long	i;
+	int		neg;
+	int		res;
 
 	i = 0;
 	neg = 1;
@@ -36,3 +36,5 @@ int	ft_atoi(const char *str)
 	}
 	return (res * neg);
 }
+
+

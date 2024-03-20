@@ -6,12 +6,15 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/12 16:41:28 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:09:56 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+
+# include <stdio.h>
+
 
 # include <stdlib.h>
 # include <limits.h>
@@ -32,17 +35,33 @@ typedef struct stack_node
 
 // Data parsing
 char	**ft_split(char const *str, char c);
-int	ft_atoi(const char *str);
+long	ft_atol(const char *str);
+
+
+void print_error(t_nodule **a, char *argv[], int num);
+int check_duplicate(t_nodule **head);
+int	check_tabs(char *argv);
+
+void	free_matrix(char **argv);
+void	free_stack(t_nodule **stack);
 
 // Secondary functions
 int	validity_checks(int argc, char *argv[]);
 int	checkifsorted(t_nodule **ahead);
+
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc);
-void	simple_sort(t_nodule **ahead);
-void	setweight(t_nodule **ahead, t_nodule **bhead);
-int	checklength(t_nodule **ahead);
 void	checkefficient(t_nodule **ahead);
+void	dumpback(t_nodule **entrance, t_nodule **exit);
 void	executemission(t_nodule **ahead, t_nodule **bhead);
+void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp);
+
+void	simple_sort(t_nodule **ahead);
+
+void	setweight(t_nodule **ahead, t_nodule **bhead);
+int	getlength(t_nodule **ahead);
+
+void	checkrr(t_nodule **ahead);
+
 void	resetweights(t_nodule **head);
 
 void	setweight2(t_nodule **ahead, t_nodule **bhead);
@@ -50,13 +69,13 @@ int	rotateforbetween(t_nodule **head, t_nodule *tempahead);
 int	rotatetillbig(t_nodule **head);
 int	rotatetillsmall(t_nodule **head);
 
-void	dumpback(t_nodule **entrance, t_nodule **exit);
-int	rotatebackpush(t_nodule **head, t_nodule *tempahead);
+
+void	rotatebackpush(t_nodule **head, t_nodule *tempahead);
 
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);
-int	init_stack(int argc, char *argv[], t_nodule ** head);
+void	init_stack(int argc, char *argv[], t_nodule ** head);
 
 // getters
 t_nodule	*get_last(t_nodule *last);
@@ -83,5 +102,6 @@ void	rrr(t_nodule **ahead, t_nodule **bhead);
 
 int print_full(t_nodule **head, char c);
 int print_stack(t_nodule **head, char c);
+int print_short(t_nodule **head);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/12 16:42:49 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:13:57 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,90 +21,82 @@ void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 		pb(ahead, bhead);
 		pb(ahead, bhead);
 	}
-	while (checklength(ahead) > 3)
+	while (getlength(ahead) > 3)
 	{
 		resetweights(ahead);
 		setweight2(ahead, bhead);
 		checkefficient(ahead);
-		// print_full(ahead, 'a');
+		checkrr(ahead);
 		executemission(ahead, bhead);
 	}
-	// print_stack(ahead, 'a');
-	print_stack(bhead, 'b');
 	simple_sort(ahead);
+	int	order = rotatetillbig(bhead);
+	while (order--)
+		rb(bhead);
 	dumpback(bhead, ahead);
-	print_stack(ahead, 'a');
-	int order = rotatetillsmall(ahead);
+	
+
+	order = rotatetillsmall(ahead);
 	while (order--)
 		ra(ahead);
-	print_stack(ahead, 'a');
 }
 
-void	dumpback(t_nodule **entrance, t_nodule **exit)
-{
-	t_nodule	*b;
-	int			order;
 
-	order = rotatetillbig(entrance);
-	while (order--)
-		rb(entrance);
-	b = (*entrance);
-	while (b)
+/* apparently so we have a possibility of normal rotates on 1 side and reverse rotates on the other
+so efficiency checker needs to determine individually if pre and post rotates are better positive/negative
+
+then checkrr only fills in for double rotates if calculated pre and post rotates are same signed. */
+
+
+void	checkefficient(t_nodule **ahead)
+{
+	int	stack_len;
+	t_nodule	*temp;
+
+	stack_len = getlength(ahead);
+	temp = *ahead;
+	stack_len = stack_len/2;
+	while (temp)
 	{
-		if (find_largest(exit) < b->value)
-			pa(entrance, exit);
-		else
-		{
-			rotatebackpush(exit, b);
-			pa(entrance, exit);
-		}
-		b = b->next;
+		if (temp->pre > stack_len)
+			temp->pre = temp->pre - getlength(ahead);
+		if (temp->post > stack_len)
+			temp->post = temp->post - getlength(ahead);
+		temp = temp->next;
 	}
 }
 
-int	rotatebackpush(t_nodule **head, t_nodule *tempahead)
+// exception case here not handled causing infinite loop
+void	dumpback(t_nodule **entrance, t_nodule **exit)
 {
-	t_nodule	*temp;
-	int			ans;
-
-	temp = (*head);
-	ans = 0;
-	while (temp)
+	// print_stack(entrance, 'b');
+	while (*entrance)
 	{
-		if (temp->value > tempahead->value)
+		if (find_largest(exit) < (*entrance)->value)
+			pa(entrance, exit);
+		if (find_smallest(exit) > (*entrance)->value)
 		{
-			if (temp->prev == NULL)
+			if ((*exit)->value ==  find_smallest(exit))
+				pa(entrance, exit);
+		}
+		else if ((*exit)->value > (*entrance)->value)
+		{
+			if ((*exit)->prev == NULL)
 			{
-				if (get_last(*head)->value < tempahead->value)
-					break;
+				if (get_last(*exit)->value < (*entrance)->value)
+					pa(entrance, exit);
 			}
 			else
 			{
-				if (temp->prev->value < tempahead->value)
-					break;
+				if ((*exit)->prev->value < (*entrance)->value)
+					pa(entrance, exit);
 			}
 		}
-		ans++;
-		temp = temp->next;
+		rra(exit);
 	}
-	while (ans--)
-			rra(head);
-	return (ans);
+	
 }
 
-void	resetweights(t_nodule **head)
-{
-	t_nodule	*temp;
-	
-	temp = (*head);
-	while (temp)
-	{
-		temp->pre = 0;
-		temp->post = 0;
-		temp->doble = 0;
-		temp = temp->next;
-	}
-}
 void	executemission(t_nodule **ahead, t_nodule **bhead)
 {
 	int	lowestmoves;
@@ -117,7 +109,7 @@ void	executemission(t_nodule **ahead, t_nodule **bhead)
 	temp = (*ahead);
 	while (temp)
 	{
-		check = temp->pre + temp->post + temp->doble;
+		check = abs(temp->pre) + abs(temp->post) + abs(temp->doble);
 		if (check < lowestmoves)
 		{
 			lowestmoves = check;
@@ -125,189 +117,45 @@ void	executemission(t_nodule **ahead, t_nodule **bhead)
 		}
 		temp = temp->next;
 	}
-	while ((currentlowest->doble))
-	{
-		rr(ahead, bhead);
-		currentlowest->doble--;
-	}
-	while ((currentlowest->pre))
-	{
-		ra(ahead);
-		currentlowest->pre--;
-	}		
-	while ((currentlowest->post))
-	{
-		rb(bhead);
-		currentlowest->post--;
-	}
+	trigger(ahead, bhead, currentlowest);
 	pb(ahead, bhead);
 }
 
-void	setweight2(t_nodule **ahead, t_nodule **bhead)
+void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp)
 {
-	int	largest;
-	int smallest;
-	t_nodule	*tempahead;
-	int	precount;
-
-	largest = find_largest(bhead);
-	smallest = find_smallest(bhead);
-	tempahead = (*ahead);
-	precount = 0;
-	while (tempahead)
+	while (temp->doble != 0 || temp->pre != 0 || temp->post != 0)
 	{
-		if (tempahead->value < smallest || tempahead->value > largest)
-			// count rotates till largest is at the top
-			tempahead->post = rotatetillbig(bhead);
-		else
+		if (temp->doble < 0)
 		{
-			tempahead->post = rotateforbetween(bhead, tempahead);
-			// rotate till tempahead->value < num, check that last value of stack > num;
+			rr(ahead, bhead);
+			temp->doble++;
 		}
-		tempahead->pre = precount;
-		tempahead = tempahead->next;
-		precount++;
-	}
-	
-}
-
-int	rotateforbetween(t_nodule **head, t_nodule *tempahead)
-{
-	t_nodule	*temp;
-	int			ans;
-
-	temp = (*head);
-	ans = 0;
-	while (temp)
-	{
-		if (temp->value < tempahead->value)
+		else if (temp->doble > 0)
 		{
-			if (temp->prev == NULL)
-			{
-				if (get_last(*head)->value > tempahead->value)
-					return (ans);
-			}
-			else
-			{
-				if (temp->prev->value > tempahead->value)
-					return (ans);
-			}
+			rrr(ahead, bhead);
+			temp->doble--;
 		}
-		ans++;
-		temp = temp->next;
-	}
-	return (ans);
-}
-
-int	rotatetillbig(t_nodule **head)
-{
-	t_nodule	*temp;
-	int 		num;
-	int			count;
-	int			ans;
-
-	temp = (*head);
-	num = temp->value;
-	count = 0;
-	ans = 0;
-	while (temp)
-	{
-		if (temp->value > num)
+		if (temp->pre > 0)
 		{
-			num = temp->value;
-			ans = count;
+			ra(ahead);
+			temp->pre--;
 		}
-		temp = temp->next;
-		count++;
-	}
-	return (ans);
-}
-
-int	rotatetillsmall(t_nodule **head)
-{
-	t_nodule	*temp;
-	int			num;
-	int			count;
-	int			ans;
-
-	temp = (*head);
-	num = temp->value;
-	count = 0;
-	ans = 0;
-	while (temp)
-	{
-		if (temp->value < num)
+		else if (temp->pre < 0)
 		{
-			num = temp->value;
-			ans = count;
+			rra(ahead);
+			temp->pre++;
 		}
-		temp = temp->next;
-		count++;
-	}
-	return (ans);
-}
-// something like midpoint theorem, if past midpoint of stack, use reverse rotate instead of rotate
-
-/* fk me i need to check both stacks for efficiency of rotates and compare if both stacks can use the
-same double rotates. 
-i think check for double rotates and calculate total
-then check for reverse rotate efficiency */
-void	checkefficient(t_nodule **ahead)
-{
-	// int	len;
-	// int	rotatemoves;
-	// int	rrmoves;
-	t_nodule	*temp;
-
-/* compare post and pre
-whichever is more
-then replace with doble =doublerotate post is single rotate */
-	temp = (*ahead);
-	while (temp)
-	{
-		if (temp->pre > temp->post)
+		if (temp->post > 0)
 		{
-			temp->doble  = temp->post;
-			temp->pre -= temp->doble;
-			temp->post = 0;
+			rb(bhead);
+			temp->post--;
 		}
-		else if (temp->pre < temp->post)
+		else if (temp->post < 0)
 		{
-			temp->doble = temp->pre;
-			temp->post -= temp->doble;
-			temp->pre = 0;
+			rrb(bhead);
+			temp->post++;
 		}
-		temp = temp->next;
 	}
-}
-
-int	checklength(t_nodule **ahead)
-{
-	int			count;
-	t_nodule	*temp;
-
-	count = 0;
-	temp = *ahead;
-	while (temp->next)
-	{
-		count++;
-		temp = temp->next;
-	}
-	return (count + 1);
-}
-
-int	checkifsorted(t_nodule **ahead)
-{
-	t_nodule	*temp;
-
-	temp = *ahead;
-	while (temp->next)
-	{
-		if (temp->value > temp->next->value)
-			return (-1);
-		temp = temp->next;
-	}
-	return (0);
 }
 
 void	simple_sort(t_nodule **ahead)
@@ -319,11 +167,15 @@ void	simple_sort(t_nodule **ahead)
 	{
 		second = (*ahead)->next;
 		third = (*ahead)->next->next;
-		if ((*ahead)->value > second->value && (*ahead)->value > third->value)
+		if (second->value > third->value)
+			ra(ahead);
+		else if ((*ahead)->value > second->value && (*ahead)->value > third->value)
 			ra(ahead);
 		else if ((*ahead)->value > second->value)
 			sa(ahead);
 		else if ((*ahead)->value > third->value)
 			ra(ahead);
+		else if (third->value == find_smallest(ahead))
+			rra(ahead);
 	}
 }

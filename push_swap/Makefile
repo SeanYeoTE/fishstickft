@@ -12,7 +12,11 @@ SRCS =	main.c \
 		rotate.c \
 		printer.c \
 		brain.c \
+		brain2.c \
+		brain_utils.c \
+		efficient.c \
 		rotate2.c \
+		errors.c \
 		\
 		ft_atoi.c \
 		ft_split.c \

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/12 12:37:34 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:22:34 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	init_node(int value, t_nodule ** head)
 	return (0);
 }
 
-int	init_stack(int argc, char *argv[], t_nodule ** head)
+void	init_stack(int argc, char *argv[], t_nodule ** head)
 {
 	int			count;
-	int			value;
+	long		value;
 	
 	if (argc == 2)
 	{
@@ -49,10 +49,18 @@ int	init_stack(int argc, char *argv[], t_nodule ** head)
 	value = 0;
 	while (argv[++count])
 	{
-		value = atoi(argv[count]);
-		init_node(value, head);
+		// if (check_tabs(argv[count]) == 1)
+		// 	print_error(head, argv, 0);
+		value = ft_atol(argv[count]);
+		if (value > INT_MAX || value < INT_MIN)
+			print_error(head, argv, 0);
+		// else if (check_duplicate(head) == 1)
+		// {
+			// ft_printf("hi");
+		// 	print_error(head, argv, 0);
+		// }
+		init_node((int)value, head);
 	}
-	return (0);
 }
 
 t_nodule	*get_last(t_nodule *last)
