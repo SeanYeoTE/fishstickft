@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:20:10 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/18 16:45:18 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:14:58 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ int	main(int argc, char *argv[])
 	ahead = NULL;
 	bhead = NULL;
 	init_stack(argc, argv, &ahead);
-	// print_full(&ahead, 'a');
-	
-	// ft_printf("\n");
-	// ft_printf("is this sorted?? 0 for Yes, -1 for No.\n %d\n", checkifsorted(&ahead));
 	brain(&ahead, &bhead, argc);
 	free_stack(&ahead);
 }

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/20 17:13:57 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:25:29 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 {
+	int	order;
+
 	if (checkifsorted(ahead) == 0)
 		return ;
 	if (argc - 1 >= 5)
-	{ 
+	{
 		pb(ahead, bhead);
 		pb(ahead, bhead);
 	}
@@ -25,84 +27,62 @@ void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 	{
 		resetweights(ahead);
 		setweight2(ahead, bhead);
-		checkefficient(ahead);
-		checkrr(ahead);
+		checkefficient(ahead, bhead);
+		// checkrr(ahead);
 		executemission(ahead, bhead);
 	}
 	simple_sort(ahead);
-	int	order = rotatetillbig(bhead);
+	order = rotatetillbig(bhead);
 	while (order--)
 		rb(bhead);
-	dumpback(bhead, ahead);
-	
-
+	while (*bhead)
+	{
+		resetweights(bhead);
+		setweight3(bhead, ahead);
+		checkefficient2(bhead, ahead);
+		// checkrr(bhead);
+		executemission2(bhead, ahead);
+	}
 	order = rotatetillsmall(ahead);
 	while (order--)
 		ra(ahead);
 }
 
+/* apparently so we have a possibility of normal rotates on 
+1 side and reverse rotates on the other
+so efficiency checker needs to determine individually if pre
+ and post rotates are better positive/negative
 
-/* apparently so we have a possibility of normal rotates on 1 side and reverse rotates on the other
-so efficiency checker needs to determine individually if pre and post rotates are better positive/negative
+then checkrr only fills in for double rotates if calculated 
+pre and post rotates are same signed. */
 
-then checkrr only fills in for double rotates if calculated pre and post rotates are same signed. */
-
-
-void	checkefficient(t_nodule **ahead)
+void	checkefficient(t_nodule **ahead, t_nodule **bhead)
 {
-	int	stack_len;
-	t_nodule	*temp;
+	int			stack_len_a;
+	int			stack_len_b;
+	t_nodule	*atemp;
 
-	stack_len = getlength(ahead);
-	temp = *ahead;
-	stack_len = stack_len/2;
-	while (temp)
+	stack_len_a = getlength(ahead);
+	stack_len_b = getlength(bhead);
+	atemp = *ahead;
+	stack_len_a = stack_len_a / 2;
+	stack_len_b = stack_len_b / 2;
+	while (atemp)
 	{
-		if (temp->pre > stack_len)
-			temp->pre = temp->pre - getlength(ahead);
-		if (temp->post > stack_len)
-			temp->post = temp->post - getlength(ahead);
-		temp = temp->next;
+		if (atemp->pre > stack_len_a)
+			atemp->pre = atemp->pre - getlength(ahead);
+		if (atemp->post > stack_len_b)
+			atemp->post = atemp->post - getlength(bhead);
+		atemp = atemp->next;
 	}
-}
-
-// exception case here not handled causing infinite loop
-void	dumpback(t_nodule **entrance, t_nodule **exit)
-{
-	// print_stack(entrance, 'b');
-	while (*entrance)
-	{
-		if (find_largest(exit) < (*entrance)->value)
-			pa(entrance, exit);
-		if (find_smallest(exit) > (*entrance)->value)
-		{
-			if ((*exit)->value ==  find_smallest(exit))
-				pa(entrance, exit);
-		}
-		else if ((*exit)->value > (*entrance)->value)
-		{
-			if ((*exit)->prev == NULL)
-			{
-				if (get_last(*exit)->value < (*entrance)->value)
-					pa(entrance, exit);
-			}
-			else
-			{
-				if ((*exit)->prev->value < (*entrance)->value)
-					pa(entrance, exit);
-			}
-		}
-		rra(exit);
-	}
-	
 }
 
 void	executemission(t_nodule **ahead, t_nodule **bhead)
 {
-	int	lowestmoves;
+	int			lowestmoves;
 	t_nodule	*temp;
 	t_nodule	*currentlowest;
-	int	check;
+	int			check;
 
 	check = 0;
 	lowestmoves = 1000;
@@ -169,7 +149,8 @@ void	simple_sort(t_nodule **ahead)
 		third = (*ahead)->next->next;
 		if (second->value > third->value)
 			ra(ahead);
-		else if ((*ahead)->value > second->value && (*ahead)->value > third->value)
+		else if ((*ahead)->value > second->value
+			&& (*ahead)->value > third->value)
 			ra(ahead);
 		else if ((*ahead)->value > second->value)
 			sa(ahead);

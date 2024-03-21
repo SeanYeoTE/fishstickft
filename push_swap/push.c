@@ -6,13 +6,14 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:06:36 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/11 18:15:20 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:19:18 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* apparently assigning pointer to a dereferenced pointer to null causes seg fault
+/* apparently assigning pointer to a dereferenced pointer 
+to null causes seg fault
 thus need to handle second stack being empty seperately */
 void	push(t_nodule **here, t_nodule **there)
 {
@@ -22,7 +23,6 @@ void	push(t_nodule **here, t_nodule **there)
 	if (here == NULL)
 		return ;
 	node_to_shift = *here;
-	// new_first = node_to_shift->next;
 	*here = (*here)->next;
 	if (*here)
 		(*here)->prev = NULL;

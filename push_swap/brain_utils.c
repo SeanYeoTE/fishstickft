@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:22:44 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/19 13:06:54 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:28:44 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	checkifsorted(t_nodule **ahead)
 void	resetweights(t_nodule **head)
 {
 	t_nodule	*temp;
-	
+
 	temp = (*head);
 	while (temp)
 	{

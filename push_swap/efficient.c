@@ -6,15 +6,17 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:24:30 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/20 16:58:44 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:31:01 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// something like midpoint theorem, if past midpoint of stack, use reverse rotate instead of rotate
+/* something like midpoint theorem, if past midpoint of stack, 
+use reverse rotate instead of rotate
 
-/* fk me i need to check both stacks for efficiency of rotates and compare if both stacks can use the
+fk me i need to check both stacks for efficiency of rotates 
+and compare if both stacks can use the
 same double rotates. 
 i think check for double rotates and calculate total
 then check for reverse rotate efficiency */
@@ -25,11 +27,11 @@ void	checkrr(t_nodule **ahead)
 	temp = *ahead;
 	while (temp)
 	{
-		if (temp->pre > 0 && temp->post > 0 )
+		if (temp->pre > 0 && temp->post > 0)
 		{
 			if (temp->pre >= temp->post)
 			{
-				temp->doble  = temp->post;
+				temp->doble = temp->post;
 				temp->pre -= temp->doble;
 				temp->post = 0;
 			}
@@ -44,7 +46,7 @@ void	checkrr(t_nodule **ahead)
 		{
 			if (temp->pre >= temp->post)
 			{
-				temp->doble  = temp->pre;
+				temp->doble = temp->pre;
 				temp->post -= temp->doble;
 				temp->pre = 0;
 			}
@@ -61,10 +63,10 @@ void	checkrr(t_nodule **ahead)
 
 void	setweight2(t_nodule **ahead, t_nodule **bhead)
 {
-	int	largest;
-	int smallest;
+	int			largest;
+	int			smallest;
 	t_nodule	*tempahead;
-	int	precount;
+	int			precount;
 
 	largest = find_largest(bhead);
 	smallest = find_smallest(bhead);
@@ -84,7 +86,6 @@ void	setweight2(t_nodule **ahead, t_nodule **bhead)
 		tempahead = tempahead->next;
 		precount++;
 	}
-	
 }
 
 int	rotateforbetween(t_nodule **head, t_nodule *tempahead)
@@ -118,30 +119,6 @@ int	rotateforbetween(t_nodule **head, t_nodule *tempahead)
 int	rotatetillbig(t_nodule **head)
 {
 	t_nodule	*temp;
-	int 		num;
-	int			count;
-	int			ans;
-
-	temp = (*head);
-	num = temp->value;
-	count = 0;
-	ans = 0;
-	while (temp)
-	{
-		if (temp->value > num)
-		{
-			num = temp->value;
-			ans = count;
-		}
-		temp = temp->next;
-		count++;
-	}
-	return (ans);
-}
-
-int	rotatetillsmall(t_nodule **head)
-{
-	t_nodule	*temp;
 	int			num;
 	int			count;
 	int			ans;
@@ -152,7 +129,7 @@ int	rotatetillsmall(t_nodule **head)
 	ans = 0;
 	while (temp)
 	{
-		if (temp->value < num)
+		if (temp->value > num)
 		{
 			num = temp->value;
 			ans = count;

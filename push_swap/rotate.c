@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:42:03 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/15 18:34:11 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:19:37 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	rotate(t_nodule **stack)
 	t_nodule	*first;
 	t_nodule	*second;
 	t_nodule	*last;
-	
+
 	first = *stack;
 	last = get_last(*stack);
 	second = first->next;

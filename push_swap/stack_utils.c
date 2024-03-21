@@ -6,41 +6,41 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/18 17:22:34 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:17:09 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	init_node(int value, t_nodule ** head)
+int	init_node(int value, t_nodule **head)
 {
-	t_nodule	* new_node;
-	t_nodule	* prev_node;
+	t_nodule	*new_node;
+	t_nodule	*prev_node;
 
 	new_node = malloc(sizeof(t_nodule));
 	if (!new_node)
-			return (-1);
+		return (-1);
 	new_node->next = NULL;
 	new_node->value = value;
 	if (*head == NULL)
-		{
-			new_node->prev = NULL;
-			*head = new_node;
-		}
+	{
+		new_node->prev = NULL;
+		*head = new_node;
+	}
 	else
-		{
-			prev_node = get_last(*head);
-			prev_node->next = new_node;
-			new_node->prev = prev_node;
-		}
+	{
+		prev_node = get_last(*head);
+		prev_node->next = new_node;
+		new_node->prev = prev_node;
+	}
 	return (0);
 }
 
-void	init_stack(int argc, char *argv[], t_nodule ** head)
+void	init_stack(int argc, char *argv[], t_nodule **head)
 {
 	int			count;
 	long		value;
-	
+
 	if (argc == 2)
 	{
 		argv = ft_split(argv[1], ' ');

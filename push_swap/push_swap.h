@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/20 17:09:56 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:11:47 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ void	free_stack(t_nodule **stack);
 // Secondary functions
 int	validity_checks(int argc, char *argv[]);
 int	checkifsorted(t_nodule **ahead);
+int	getlength(t_nodule **ahead);
+void	resetweights(t_nodule **head);
+
 
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc);
-void	checkefficient(t_nodule **ahead);
-void	dumpback(t_nodule **entrance, t_nodule **exit);
+void	checkefficient(t_nodule **ahead, t_nodule **bhead);
 void	executemission(t_nodule **ahead, t_nodule **bhead);
 void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp);
 
 void	simple_sort(t_nodule **ahead);
 
-void	setweight(t_nodule **ahead, t_nodule **bhead);
-int	getlength(t_nodule **ahead);
 
-void	checkrr(t_nodule **ahead);
+// void	checkrr(t_nodule **ahead);
 
-void	resetweights(t_nodule **head);
+
 
 void	setweight2(t_nodule **ahead, t_nodule **bhead);
 int	rotateforbetween(t_nodule **head, t_nodule *tempahead);
@@ -70,8 +70,13 @@ int	rotatetillbig(t_nodule **head);
 int	rotatetillsmall(t_nodule **head);
 
 
-void	rotatebackpush(t_nodule **head, t_nodule *tempahead);
+// void	rotatebackpush(t_nodule **head, t_nodule *tempahead);
 
+
+void	setweight3(t_nodule **src, t_nodule **dest);
+int	rotateforbetween2(t_nodule **head, t_nodule *tempahead);
+void	executemission2(t_nodule **ahead, t_nodule **bhead);
+void	checkefficient2(t_nodule **bhead, t_nodule **ahead);
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);

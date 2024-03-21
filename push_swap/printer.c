@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:19:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/17 13:06:48 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:48:39 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int print_full(t_nodule **head, char c)
         ft_printf("Node Post: %d\n", start->post);
         ft_printf("Node Pre: %d\n", start->pre);
         ft_printf("Node Doble: %d\n", start->doble);
-        if (start->prev == NULL)
-            ft_printf("Node Prev: %s\n", start->prev);
-        else
-            ft_printf("Node Prev: %d\n", start->prev->value);
-        if (start->next == NULL)
-            ft_printf("Node Next: %s\n", start->next);
-        else
-            ft_printf("Node Next: %d\n", start->next->value);
+        // if (start->prev == NULL)
+        //     ft_printf("Node Prev: %s\n", start->prev);
+        // else
+        //     ft_printf("Node Prev: %d\n", start->prev->value);
+        // if (start->next == NULL)
+        //     ft_printf("Node Next: %s\n", start->next);
+        // else
+        //     ft_printf("Node Next: %d\n", start->next->value);
         ft_printf("***************\n\n");
         start = start->next;
         count++;
