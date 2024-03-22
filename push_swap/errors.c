@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:27:24 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/18 16:47:34 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:12:21 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void print_error(t_nodule **a, char *argv[], int num)
 {
-	free_matrix(argv);
-	
-	if (num == 0)
-		free_stack(a);
+	free_stack(a);
+	if (num == 1)
+		free_matrix(argv);
 	write(2, "Error\n", 6);
 	exit(1);
 }
@@ -26,23 +25,29 @@ int check_duplicate(t_nodule **head)
 {
 	t_nodule	*temp;
 	t_nodule	*check;
+	int			counter;
 
 	temp = *head;
-	check = *head;
 	while (temp)
 	{
+		check = *head;
+		counter = 0;
 		while (check)
 		{
 			if (temp->value == check->value)
 			{
-				return (1);
+				counter++;
 			}
 			check = check->next;
 		}
+		if (counter > 1)
+			return (1);
 		temp = temp->next;
 	}
 	return (0);
+
 }
+
 
 int	check_tabs(char *argv)
 {
@@ -65,17 +70,17 @@ int	check_tabs(char *argv)
 */
 void	free_matrix(char **argv)
 {
-	int	i;
+	char	**temp;
 
-	i = -1;
-	if (NULL == argv || NULL == *argv)
+	if (!argv)
 		return ;
-	while (argv[i])
+	temp = argv;
+	while (*temp)
 	{
-		free(argv[i]);
-		i++;
+		free(*temp);
+		temp++;
 	}
-	free(argv + 0);
+	free(argv);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/21 17:11:47 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:19:03 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	checkefficient2(t_nodule **bhead, t_nodule **ahead);
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);
-void	init_stack(int argc, char *argv[], t_nodule ** head);
+void	init_stack(int argc, char *argv[], t_nodule **head);
 
 // getters
 t_nodule	*get_last(t_nodule *last);
