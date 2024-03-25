@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/21 17:44:29 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:33:26 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 {
-	int	order;
+	int	second;
 
+	second = 0;
 	if (checkifsorted(ahead) == 0)
 		return ;
-	if (argc - 1 >= 5)
+	while (argc - 1 > 3)
 	{
 		pb(ahead, bhead);
-		pb(ahead, bhead);
+		argc--;
+		second = 1;
 	}
 	while (getlength(ahead) > 3)
 	{
@@ -30,22 +32,11 @@ void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
 		checkefficient(ahead, bhead);
 		// checkrr(ahead);
 		executemission(ahead, bhead);
+		second = 1;
 	}
 	simple_sort(ahead);
-	order = rotatetillbig(bhead);
-	while (order--)
-		rb(bhead);
-	while (*bhead)
-	{
-		resetweights(bhead);
-		setweight3(bhead, ahead);
-		checkefficient2(bhead, ahead);
-		// checkrr(bhead);
-		executemission2(bhead, ahead);
-	}
-	order = rotatetillsmall(ahead);
-	while (order--)
-		ra(ahead);
+	if (second == 1)
+		bigger_stack(ahead, bhead);
 }
 
 /* apparently so we have a possibility of normal rotates on 
@@ -160,3 +151,18 @@ void	simple_sort(t_nodule **ahead)
 			rra(ahead);
 	}
 }
+
+
+/* void	simple_sort(t_nodule **ahead)
+{
+	int	temp;
+
+	temp = find_largest(ahead);
+	if ((*ahead)->value == temp)
+		ra(ahead);
+	else if ((*ahead)->next->value == temp)
+		rra(ahead);
+	if ((*ahead)->value > (*ahead)->next->value)
+		sa(ahead);
+
+} */

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:20:10 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:14 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:50:31 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	bhead = NULL;
 	init_stack(argc, argv, &ahead);
 	brain(&ahead, &bhead, argc);
-	free_stack(&ahead);
+	// free_stack(&ahead);
 }
 
 int	validity_checks(int argc, char *argv[])

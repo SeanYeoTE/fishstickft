@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:03 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:59:47 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ long	ft_atol(const char *str);
 
 void print_error(t_nodule **a, char *argv[], int num);
 int check_duplicate(t_nodule **head);
-int	check_tabs(char *argv);
+int	check_symbols(char *argv);
 
 void	free_matrix(char **argv);
 void	free_stack(t_nodule **stack);
@@ -72,7 +72,7 @@ int	rotatetillsmall(t_nodule **head);
 
 // void	rotatebackpush(t_nodule **head, t_nodule *tempahead);
 
-
+void	bigger_stack(t_nodule **ahead, t_nodule **bhead);
 void	setweight3(t_nodule **src, t_nodule **dest);
 int	rotateforbetween2(t_nodule **head, t_nodule *tempahead);
 void	executemission2(t_nodule **ahead, t_nodule **bhead);

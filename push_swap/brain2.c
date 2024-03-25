@@ -6,11 +6,31 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:15 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/21 17:28:16 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:59:45 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	bigger_stack(t_nodule **ahead, t_nodule **bhead)
+{
+	int order;
+	
+	order = rotatetillbig(bhead);
+	while (order--)
+		rb(bhead);
+	while (*bhead)
+	{
+		resetweights(bhead);
+		setweight3(bhead, ahead);
+		checkefficient2(bhead, ahead);
+		// checkrr(bhead);
+		executemission2(bhead, ahead);
+	}
+	order = rotatetillsmall(ahead);
+	while (order--)
+		ra(ahead);
+}
 
 void	checkefficient2(t_nodule **bhead, t_nodule **ahead)
 {
@@ -108,30 +128,6 @@ int	rotateforbetween2(t_nodule **head, t_nodule *tempahead)
 		}
 		ans++;
 		temp = temp->next;
-	}
-	return (ans);
-}
-
-int	rotatetillsmall(t_nodule **head)
-{
-	t_nodule	*temp;
-	int			num;
-	int			count;
-	int			ans;
-
-	temp = (*head);
-	num = temp->value;
-	count = 0;
-	ans = 0;
-	while (temp)
-	{
-		if (temp->value < num)
-		{
-			num = temp->value;
-			ans = count;
-		}
-		temp = temp->next;
-		count++;
 	}
 	return (ans);
 }

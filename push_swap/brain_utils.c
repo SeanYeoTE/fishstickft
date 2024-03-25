@@ -6,11 +6,35 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:22:44 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/21 17:28:44 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/25 15:55:39 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	rotatetillsmall(t_nodule **head)
+{
+	t_nodule	*temp;
+	int			num;
+	int			count;
+	int			ans;
+
+	temp = (*head);
+	num = temp->value;
+	count = 0;
+	ans = 0;
+	while (temp)
+	{
+		if (temp->value < num)
+		{
+			num = temp->value;
+			ans = count;
+		}
+		temp = temp->next;
+		count++;
+	}
+	return (ans);
+}
 
 int	getlength(t_nodule **ahead)
 {
