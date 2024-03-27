@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/25 15:59:47 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:38:13 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@
 # include <unistd.h>
 # include "printf/ft_printf.h"
 
-typedef struct stack_node
+typedef struct s_stack_node
 {
 	int					value;
 	int					post;
 	int					pre;
 	int					doble;
-	struct stack_node	*prev;
-	struct stack_node	*next;
-	struct stack_node	*current;
+	struct s_stack_node	*prev;
+	struct s_stack_node	*next;
+	struct s_stack_node	*current;
 }	t_nodule;
 
 // Data parsing
@@ -52,7 +52,7 @@ int	getlength(t_nodule **ahead);
 void	resetweights(t_nodule **head);
 
 
-void	brain(t_nodule **ahead, t_nodule **bhead, int argc);
+void	brain(t_nodule **ahead, t_nodule **bhead);
 void	checkefficient(t_nodule **ahead, t_nodule **bhead);
 void	executemission(t_nodule **ahead, t_nodule **bhead);
 void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp);
@@ -80,7 +80,7 @@ void	checkefficient2(t_nodule **bhead, t_nodule **ahead);
 
 // Stack initialisation
 int	init_node(int value, t_nodule ** head);
-void	init_stack(int argc, char *argv[], t_nodule **head);
+void	init_stack(int argc, char *argv[], t_nodule **head, int customs);
 
 // getters
 t_nodule	*get_last(t_nodule *last);

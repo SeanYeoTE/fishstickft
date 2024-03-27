@@ -6,31 +6,32 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:26:17 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/25 16:33:26 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:15:20 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	brain(t_nodule **ahead, t_nodule **bhead, int argc)
+void	brain(t_nodule **ahead, t_nodule **bhead)
 {
 	int	second;
+	int	max;
 
 	second = 0;
+	max = 2;
 	if (checkifsorted(ahead) == 0)
 		return ;
-	while (argc - 1 > 3)
+	if (getlength(ahead) > 3 && max != 0)
 	{
 		pb(ahead, bhead);
-		argc--;
 		second = 1;
+		max--;
 	}
 	while (getlength(ahead) > 3)
 	{
 		resetweights(ahead);
 		setweight2(ahead, bhead);
 		checkefficient(ahead, bhead);
-		// checkrr(ahead);
 		executemission(ahead, bhead);
 		second = 1;
 	}
@@ -94,18 +95,8 @@ void	executemission(t_nodule **ahead, t_nodule **bhead)
 
 void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp)
 {
-	while (temp->doble != 0 || temp->pre != 0 || temp->post != 0)
+	while (temp->pre != 0 || temp->post != 0)
 	{
-		if (temp->doble < 0)
-		{
-			rr(ahead, bhead);
-			temp->doble++;
-		}
-		else if (temp->doble > 0)
-		{
-			rrr(ahead, bhead);
-			temp->doble--;
-		}
 		if (temp->pre > 0)
 		{
 			ra(ahead);
@@ -131,30 +122,6 @@ void	trigger(t_nodule **ahead, t_nodule **bhead, t_nodule *temp)
 
 void	simple_sort(t_nodule **ahead)
 {
-	t_nodule	*second;
-	t_nodule	*third;
-
-	while (checkifsorted(ahead))
-	{
-		second = (*ahead)->next;
-		third = (*ahead)->next->next;
-		if (second->value > third->value)
-			ra(ahead);
-		else if ((*ahead)->value > second->value
-			&& (*ahead)->value > third->value)
-			ra(ahead);
-		else if ((*ahead)->value > second->value)
-			sa(ahead);
-		else if ((*ahead)->value > third->value)
-			ra(ahead);
-		else if (third->value == find_smallest(ahead))
-			rra(ahead);
-	}
-}
-
-
-/* void	simple_sort(t_nodule **ahead)
-{
 	int	temp;
 
 	temp = find_largest(ahead);
@@ -164,5 +131,4 @@ void	simple_sort(t_nodule **ahead)
 		rra(ahead);
 	if ((*ahead)->value > (*ahead)->next->value)
 		sa(ahead);
-
-} */
+}

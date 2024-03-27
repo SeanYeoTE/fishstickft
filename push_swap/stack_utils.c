@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/25 16:03:10 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:28:21 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,17 @@ int	init_node(int value, t_nodule **head)
 	return (0);
 }
 
-void	init_stack(int argc, char *argv[], t_nodule **head)
+void	init_stack(int argc, char *argv[], t_nodule **head, int customs)
 {
 	int			count;
 	long		value;
-	int			customs;
 
-	customs = 0;
+	count = 0;
 	if (argc == 2)
 	{
-		argv = ft_split(argv[1], ' ');
 		customs = 1;
+		count = -1;
 	}
-	count = 0;
 	value = 0;
 	while (argv[++count])
 	{
@@ -61,8 +59,8 @@ void	init_stack(int argc, char *argv[], t_nodule **head)
 		if (check_duplicate(head) == 1)
 			print_error(head, argv, customs);
 	}
-	// if (customs == 1)
-	// 	free_matrix(argv);
+	if (customs == 1)
+		free_matrix(argv);
 }
 
 t_nodule	*get_last(t_nodule *last)

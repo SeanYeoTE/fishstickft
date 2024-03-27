@@ -6,25 +6,25 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:21:15 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/25 15:59:45 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:58:50 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// order = rotatetillbig(bhead);
+	// while (order--)
+	// 	rb(bhead);
+
 void	bigger_stack(t_nodule **ahead, t_nodule **bhead)
 {
-	int order;
-	
-	order = rotatetillbig(bhead);
-	while (order--)
-		rb(bhead);
+	int	order;
+
 	while (*bhead)
 	{
 		resetweights(bhead);
 		setweight3(bhead, ahead);
 		checkefficient2(bhead, ahead);
-		// checkrr(bhead);
 		executemission2(bhead, ahead);
 	}
 	order = rotatetillsmall(ahead);
@@ -91,13 +91,9 @@ void	setweight3(t_nodule **src, t_nodule **dest)
 	while (tempahead)
 	{
 		if (tempahead->value < smallest || tempahead->value > largest)
-			// count rotates till largest is at the top
 			tempahead->pre = rotatetillsmall(dest);
 		else
-		{
 			tempahead->pre = rotateforbetween2(dest, tempahead);
-			// rotate till tempahead->value < num, check last value of stack > num;
-		}
 		tempahead->post = postcount;
 		tempahead = tempahead->next;
 		postcount++;

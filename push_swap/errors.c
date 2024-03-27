@@ -6,13 +6,13 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:27:24 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/25 15:47:42 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:26:37 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void print_error(t_nodule **a, char *argv[], int num)
+void	print_error(t_nodule **a, char *argv[], int num)
 {
 	free_stack(a);
 	if (num == 1)
@@ -21,7 +21,7 @@ void print_error(t_nodule **a, char *argv[], int num)
 	exit(1);
 }
 
-int check_duplicate(t_nodule **head)
+int	check_duplicate(t_nodule **head)
 {
 	t_nodule	*temp;
 	t_nodule	*check;
@@ -45,9 +45,7 @@ int check_duplicate(t_nodule **head)
 		temp = temp->next;
 	}
 	return (0);
-
 }
-
 
 int	check_symbols(char *argv)
 {
@@ -62,12 +60,6 @@ int	check_symbols(char *argv)
 	return (0);
 }
 
-/*
- * Ad hoc function to free the 2D array
- * created with the ft_split function
- * ATTENTION
- * You have to start from -1 
-*/
 void	free_matrix(char **argv)
 {
 	char	**temp;
@@ -83,9 +75,6 @@ void	free_matrix(char **argv)
 	free(argv);
 }
 
-/*
- * Ad hoc function to free a stack
-*/
 void	free_stack(t_nodule **stack)
 {
 	t_nodule	*tmp;
