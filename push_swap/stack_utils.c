@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:39:56 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/27 12:28:21 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/28 14:30:25 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	init_stack(int argc, char *argv[], t_nodule **head, int customs)
 		if (check_symbols(argv[count]) == 1)
 			print_error(head, argv, customs);
 		value = ft_atol(argv[count]);
-		if (value > INT_MAX || value < INT_MIN)
+		if ((value > INT_MAX) || (value < INT_MIN))
 			print_error(head, argv, customs);
 		init_node((int)value, head);
 		if (check_duplicate(head) == 1)

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:01:14 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/27 12:38:13 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/28 14:51:26 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 # define PUSH_SWAP_H
 
 # include <stdio.h>
-
-
 # include <stdlib.h>
-# include <limits.h>
-# include <stdbool.h>
-# include <unistd.h>
+
+
 # include "printf/ft_printf.h"
 
 typedef struct s_stack_node
@@ -46,7 +43,6 @@ void	free_matrix(char **argv);
 void	free_stack(t_nodule **stack);
 
 // Secondary functions
-int	validity_checks(int argc, char *argv[]);
 int	checkifsorted(t_nodule **ahead);
 int	getlength(t_nodule **ahead);
 void	resetweights(t_nodule **head);
@@ -105,8 +101,8 @@ void	rra(t_nodule **ahead);
 void	rrb(t_nodule **bhead);
 void	rrr(t_nodule **ahead, t_nodule **bhead);
 
-int print_full(t_nodule **head, char c);
-int print_stack(t_nodule **head, char c);
-int print_short(t_nodule **head);
+// int print_full(t_nodule **head, char c);
+// int print_stack(t_nodule **head, char c);
+// int print_short(t_nodule **head);
 
 #endif

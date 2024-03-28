@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:27:24 by seayeo            #+#    #+#             */
-/*   Updated: 2024/03/27 12:26:37 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/03/28 13:47:08 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,20 @@ int	check_duplicate(t_nodule **head)
 
 int	check_symbols(char *argv)
 {
+	int	exist;
+
+	exist = 0;
 	if ((*argv == '+' || *argv == '-') && !(*argv >= '0' && *argv <= '9'))
 		argv++;
 	while (*argv)
 	{
+		exist++;
 		if (!(*argv >= '0' && *argv <= '9'))
 			return (1);
 		argv++;
 	}
+	if (exist == 0)
+		return (1);
 	return (0);
 }
 
