@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "fractol.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "fractol": "c",
+        "*.tcc": "c"
+    }
+}
