@@ -45,6 +45,8 @@ typedef struct s_fractol
 	
 	double	juliax;
 	double	juliay;
+	double	shiftx;
+	double	shifty;
 	double	zoom;
 	t_img	img;
 
