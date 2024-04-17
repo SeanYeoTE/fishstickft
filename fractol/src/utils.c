@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:48:58 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/16 18:13:12 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/14 19:09:58 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
 		return ;
 	while (*s)
 	{
-		write(fd, s, 1);
+		// ft_putchar_fd(*s, fd);
+        write(fd, s, 1);
 		s++;
 	}
 }
@@ -53,7 +59,7 @@ t_complex	complex_square(t_complex z)
 	t_complex	ans;
 
 	ans.x = (z.x * z.x) - (z.y * z.y);
-	ans.y = 2 * z.x * z.y;
+	ans.y =  2 * z.x * z.y;
 	return (ans);
 }
 
