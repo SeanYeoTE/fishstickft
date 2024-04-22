@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 23:16:05 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/22 23:17:30 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 23:24:43 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 # define WINDOW_WIDTH    800
 # define WINDOW_HEIGHT   800
+
+# define BLACK 0x000000
 
 typedef struct s_complex
 {

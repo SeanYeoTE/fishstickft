@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:37:25 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/22 23:21:53 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 23:31:08 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	handle_keypress(int keysym, t_fractol *data)
 
 int	color_changer(t_fractol *data)
 {
-	int	colors[];
+	// int	colors[12];
 
-	colors = {0xFF0000, 0x00FF00, 0x0000FF,
+	int colors[12] = {0xFF0000, 0x00FF00, 0x0000FF,
 		0xFFFF00, 0xFF00FF, 0x00FFFF, 0xFFA500,
 		0x800080, 0xFF1493, 0x00FF7F, 0xFF6347,
 		0x9400D3};
