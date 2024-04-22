@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:48:58 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/22 15:32:43 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 23:15:38 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,13 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
-
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
 		return ;
 	while (*s)
 	{
-		// ft_putchar_fd(*s, fd);
-        write(fd, s, 1);
+		write(fd, s, 1);
 		s++;
 	}
 }

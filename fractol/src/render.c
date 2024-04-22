@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:05:39 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/22 15:42:18 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 23:19:15 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 double	convert(double newstart, double newend, double oldend, double value)
 {
-	double oldstart;
+	double	oldstart;
 
 	oldstart = 0;
-	return (newend - newstart)/(oldend - oldstart) * value + newstart;
+	return ((newend - newstart) / (oldend - oldstart) * value + newstart);
 }
 
 void	original_eq(t_complex *c, t_complex *z, t_fractol *fractal,
@@ -49,8 +49,7 @@ int	mandelbrot(int x, int y, t_fractol *fractal)
 {
 	t_complex	z;
 	t_complex	c;
-	int				i;
-	int				color;
+	int			i;
 	t_complex	temp;
 
 	temp.x = x;
@@ -71,7 +70,7 @@ void	renderer(t_fractol *fractal)
 {
 	int	x;
 	int	y;
-	int color;
+	int	color;
 
 	y = -1;
 	while (++y < WINDOW_HEIGHT)
@@ -84,7 +83,8 @@ void	renderer(t_fractol *fractal)
 				my_pixel_put(&fractal->img, x, y, BLACK);
 			else
 			{
-				color = convert(DARK_HOT_PURPLE, GREEN, fractal->max_iter, color);
+				color = convert(fractal->firstcolor, fractal->secondcolor,
+						fractal->max_iter, color);
 				my_pixel_put(&fractal->img, x, y, color);
 			}
 		}
