@@ -6,87 +6,89 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:05:39 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/16 16:33:46 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 15:42:18 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	renderer(t_fractol *data)
+double	convert(double newstart, double newend, double oldend, double value)
 {
-	int x;
-	int y;
-	int	valid;
+	double oldstart;
+
+	oldstart = 0;
+	return (newend - newstart)/(oldend - oldstart) * value + newstart;
+}
+
+void	original_eq(t_complex *c, t_complex *z, t_fractol *fractal,
+	t_complex *temp)
+{
+	if (ft_strncmp("julia", fractal->name, 5) == 0)
+	{
+		z->x = (convert(-2, +2, WINDOW_WIDTH, temp->x)
+				* fractal->zoom) + fractal -> shiftx;
+		z->y = (convert(2, -2, WINDOW_HEIGHT, temp->y)
+				* fractal->zoom) + fractal -> shifty;
+		c->x = fractal->juliax;
+		c->y = fractal->juliax;
+	}
+	else
+	{
+		z->x = 0;
+		z->y = 0;
+		c->x = (convert(-2, +2, WINDOW_WIDTH, temp->x) * fractal->zoom)
+			+ fractal->shiftx;
+		c->y = (convert(2, -2, WINDOW_HEIGHT, temp->y) * fractal->zoom)
+			+ fractal->shifty;
+	}
+}
+
+// c is the actual starting point
+// z is the calculated points
+int	mandelbrot(int x, int y, t_fractol *fractal)
+{
+	t_complex	z;
+	t_complex	c;
+	int				i;
+	int				color;
+	t_complex	temp;
+
+	temp.x = x;
+	temp.y = y;
+	i = 0;
+	original_eq(&c, &z, fractal, &temp);
+	while (i < fractal->max_iter)
+	{
+		z = complex_add(complex_square(z), c);
+		if ((z.x * z.x) + (z.y * z.y) > 4.0)
+			return (i);
+		++i;
+	}
+	return (i);
+}
+
+void	renderer(t_fractol *fractal)
+{
+	int	x;
+	int	y;
+	int color;
 
 	y = -1;
 	while (++y < WINDOW_HEIGHT)
 	{
 		x = -1;
 		while (++x < WINDOW_WIDTH)
-			pixel_painter(x, y, data);
+		{
+			color = mandelbrot(x, y, fractal);
+			if (color == fractal->max_iter)
+				my_pixel_put(&fractal->img, x, y, BLACK);
+			else
+			{
+				color = convert(DARK_HOT_PURPLE, GREEN, fractal->max_iter, color);
+				my_pixel_put(&fractal->img, x, y, color);
+			}
+		}
 	}
-	mlx_put_image_to_window(data->mlx_connection, data->mlx_window, data->img.img_ptr, 0, 0);
-}
-
-void	pixel_painter(int x, int y, t_fractol *data)
-{
-	int	valid;
-	int	color;
-	
-	valid = mandelbrot(x, y, data);
-	if (valid == data->max_iter)
-	{
-		my_pixel_put(&data->img, x, y, WHITE);
-	}
-	else
-	{
-		color = convert(BLACK, WHITE, 0, data->max_iter, valid);
-		my_pixel_put(&data->img, x, y, color);
-	}
-}
-
-void	original_eq(t_complex *z, t_complex *c, t_fractol *data, t_complex *tmp)
-{
-	
-	if (ft_strncmp(data->name, "julia", 5) == 0)
-	{
-		z->x = convert(-2, +2, 0, WINDOW_WIDTH, tmp->x) * data->zoom + data->shiftx;
-		z->y = convert(+2, -2, 0, WINDOW_HEIGHT, tmp->y) * data->zoom + data->shifty;
-		c->x = data->juliax;
-		c->x = data->juliay;
-	}
-	else
-	{
-		z->x = 0;
-		z->y = 0;
-		c->x = z->x;
-		c->y = z->y;
-	}
-}
-
-int	mandelbrot(int x, int y, t_fractol *data)
-{
-	t_complex	z;
-	t_complex	c;
-	t_complex	tmp;
-	int	n;
-
-	n = 0;
-	tmp.x = x;
-	tmp.y = y;
-	original_eq(&z, &c, data, &tmp);
-	while (n < data->max_iter)
-	{
-		tmp = complex_square(z);
-		z = complex_add(tmp, c);	
-		if ((z.x * z.x) + (z.y * z.y) > 4.0)
-			return (n);
-		n++;
-	}
-	return (n);
-}
-
-double	convert(double newstart, double newend, double oldstart, double oldend, double value)
-{
-	return (newend - newstart)/(oldend - oldstart) * value + newstart;
+	mlx_put_image_to_window(fractal->mlx_connection, fractal->mlx_window,
+		fractal->img.img_ptr, 0, 0);
 }

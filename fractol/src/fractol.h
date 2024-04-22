@@ -15,6 +15,14 @@
 
 #define BLACK       0x000000  // RGB(0, 0, 0)
 #define WHITE       0xFFFFFF  // RGB(255, 255, 255)
+# define RED		0xFF0000
+# define GREEN	0x00FF00
+# define BLUE	0x0000FF
+// # define MAGENTA_BURST   0xFF00FF  // A vibrant magenta
+// # define DARK_ELECTRIC_PINK 0xCC00CC
+# define DARK_NEON_GREEN 0x00CC00
+# define DARK_HOT_PURPLE 0x99004C
+
 
 typedef struct s_complex
 {  
@@ -60,16 +68,14 @@ t_complex	complex_add(t_complex z1, t_complex z2);
 
 int	handle_mouse(int keysym, int x, int y, t_fractol *data);
 int	handle_keypress(int keysym, t_fractol *data);
-int handle_keyrelease(int keysym, t_fractol *data);
 
 void	init(t_fractol *data);
 void	triggers(t_fractol *data);
 void	setbase(t_fractol *data);
 
+double	convert(double newstart, double newend, double oldend, double value);
+void	original_eq(t_complex *z, t_complex *c, t_fractol *data, t_complex *tmp);
 void	renderer(t_fractol *data);
 int	mandelbrot(int x, int y, t_fractol *data);
-void	original_eq(t_complex *z, t_complex *c, t_fractol *data, t_complex *tmp);
-void	pixel_painter(int x, int y, t_fractol *data);
-double	convert(double newstart, double newend, double oldstart, double oldend, double value);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 13:48:58 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/14 19:09:58 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/22 15:32:43 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_complex	complex_square(t_complex z)
 	t_complex	ans;
 
 	ans.x = (z.x * z.x) - (z.y * z.y);
-	ans.y =  2 * z.x * z.y;
+	ans.y = 2 * z.x * z.y;
 	return (ans);
 }
 
