@@ -43,7 +43,6 @@ double	atodbl(char *s)
 int	main(int argc, char **argv)
 {
 	t_fractol	data;
-	int			store;
 
 	setbase(&data);
 	if (argc == 1)

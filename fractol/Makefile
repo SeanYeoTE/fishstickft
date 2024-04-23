@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -g
+CFLAGS = -Wall -Wextra -Werror
 
 # Minilibx
 MLX_PATH	= minilibx-linux/

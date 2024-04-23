@@ -14,6 +14,8 @@
 
 int	handle_mouse(int keysym, int x, int y, t_fractol *data)
 {
+	(void)x;
+	(void)y;
 	if (keysym == 5)
 		data->zoom *= 1.05;
 	else if (keysym == 4)
@@ -52,14 +54,36 @@ int	handle_keypress(int keysym, t_fractol *data)
 
 int	color_changer(t_fractol *data)
 {
-	// int	colors[12];
-
-	int colors[12] = {0xFF0000, 0x00FF00, 0x0000FF,
-		0xFFFF00, 0xFF00FF, 0x00FFFF, 0xFFA500,
-		0x800080, 0xFF1493, 0x00FF7F, 0xFF6347,
-		0x9400D3};
-	data->firstcolor = colors[data->colnum % 12];
-	data->secondcolor = colors[data->colnum % 12 + 7];
+	data->firstcolor = color_picker(data->colnum % 12);
+	data->secondcolor = color_picker(data->colnum % 12 + 7);
 	data->colnum++;
 	return (0);
+}
+
+int	color_picker(int num)
+{
+	if (num == 0)
+		return (0xFF0000);
+	else if (num == 1)
+		return (0x00FF00);
+	else if (num == 2)
+		return (0x0000FF);
+	else if (num == 3)
+		return (0xFFFF00);
+	else if (num == 4)
+		return (0xFF00FF);
+	else if (num == 5)
+		return (0x00FFFF);
+	else if (num == 6)
+		return (0xFFA500);
+	else if (num == 7)
+		return (0x800080);
+	else if (num == 8)
+		return (0xFF1493);
+	else if (num == 9)
+		return (0x00FF7F);
+	else if (num == 10)
+		return (0xFF6347);
+	else
+		return (0x9400D3);
 }

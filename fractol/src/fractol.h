@@ -29,10 +29,7 @@
 
 typedef struct s_complex
 {
-	// real
 	double	x;
-
-	// imaginary
 	double	y;
 }	t_complex;
 
@@ -74,6 +71,7 @@ t_complex	complex_add(t_complex z1, t_complex z2);
 int			handle_mouse(int keysym, int x, int y, t_fractol *data);
 int			handle_keypress(int keysym, t_fractol *data);
 int			color_changer(t_fractol *data);
+int			color_picker(int num);
 
 void		init(t_fractol *data);
 void		triggers(t_fractol *data);
