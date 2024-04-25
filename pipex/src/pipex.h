@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:17:10 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/25 14:17:12 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/25 18:49:53 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,27 @@
 
 
 
-struct s_pipex {
+typedef struct s_pipex {
 	char	**argvs1;
 	char	**argvs2;
 	int		fdpipe[2];
-};
+	char	**paths;
+	char	*path;
+	int		input_fd;
+	int		output_fd;
+}	t_store ;
 
 void	freechararray(char **arr);
 
-void	setstructure(char *argv[], struct s_pipex *pipexstruct, char *path);
-void	closepipes(struct s_pipex *pipexstruct);
+void	setstructure(char *argv[], t_store *vars, char *path);
+void	closepipes(t_store *vars);
 
-char	*findprocesspath(char *path,
-			struct s_pipex pipexstruct, int processnum);
-int		p1child(char *path, char *envp[],
-			struct s_pipex pipexstruct, int inputfd);
-
-int		p2child(char *path, char *envp[],
-			struct s_pipex pipexstruct, int outputfd);
+char	*findprocesspath(char *path, t_store vars, int processnum);
+int		p1child(char *path, char *envp[], t_store vars, int inputfd);
+int		p2child(char *path, char *envp[], t_store vars, int outputfd);
 
 char	*findpath(char *envp[]);
-void	freestuff(struct s_pipex *pipexstruct);
+void	freestuff(t_store *vars);
 
 
 #endif
