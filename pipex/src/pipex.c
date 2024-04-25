@@ -5,152 +5,176 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 10:17:43 by seayeo            #+#    #+#             */
-/*   Updated: 2024/02/24 19:25:04 by seayeo           ###   ########.fr       */
+/*   Created: 2024/04/25 14:15:49 by seayeo            #+#    #+#             */
+/*   Updated: 2024/04/25 14:15:55 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <string.h>
-
-#define MAX_PATH_LEN 4096
-void	child(int input_fd, int *pipe_fd, char **env, char **argv);
-void	parent(int output_fd, int *pipe_fd, char **env, char **argv);
-
-void perror_exit(const char *msg) {
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
-
-char	*pathfinder(char *argv, char **env)
+/* void	freechararray(char **arr)
 {
-	char	*realpath;
-	char	**tabpath;
-	char	*temppath;
-	int		i;
+	int	i;
 
-	tabpath = ft_split(get_env(env), ':');
 	i = 0;
-	while (tabpath[i++])
+	while (arr && arr[i])
 	{
-		temppath = ft_strjoin(tabpath[i], "/");
-		realpath = ft_strjoin(temppath, argv);
-		free(temppath);
-		if (access(realpath, F_OK) == 0)
-		{
-			free(tabpath);
-			return (realpath);
-		}
-		free(realpath);
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
 	}
-	free2(tabpath);
-	perror("error could not find binary");
-	return (NULL);
+	free(arr);
+} */
+void	freechararray(char **v)
+{
+	char	**p;
+	
+	if (!v)
+		return ;
+	p = v;
+	while (*v)
+	{
+		free(*v);
+		v++;
+	}
+	free(p);
 }
 
-char	**ft_split_custom(char *s)
+char	*findprocesspath(char *path,
+struct s_pipex pipexstruct, int processnum)
 {
-	char 	*inter;
-	int		cmd_size;
-	char	**ret;
-	
-	if (s == NULL || *s == 0)
+	int		i;
+	char	*temp;
+	char	**looper;
+	i = 0;
+	looper = ft_split(path + 5, ':');
+	while (looper[i])
+	{
+		temp = ft_strjoin(looper[i], "/");
+		if (processnum == 1)
+			path = ft_strjoin(temp, pipexstruct.argvs1[0]);
+		else
+			path = ft_strjoin(temp, pipexstruct.argvs2[0]);
+		if (access(path, F_OK) == 0)
+			break ;
+		free (temp);
+		free (path);
+		path = NULL;
+		i++;
+	}
+	freechararray(looper);
+	if (path != NULL && access(path, F_OK) == 0)
+		return (path);
+	else
 		return (NULL);
-	inter = s;
-	while (*inter && *inter != ' ')
-	{
-		inter++;
-	}
-	if (inter != NULL)
-		ret = ft_split(s, ' ');
-	else
-	{
-		cmd_size = 3;
-		ret = (char **)malloc(sizeof(char *) * cmd_size);
-		ret[0] = ft_strndup(s, inter - s);
-		ret[1] = ft_strdup_inverted(inter);
-		printf("ret[1] = %s\n", ret[1]);
-		ret[2] = NULL;
-	}
-	return (ret);
 }
 
-void execute_command(char *argv, char **env)
+int	p1child( char *path, char *envp[], struct s_pipex pipexstruct, int inputfd)
 {
-	char	**argtab;
-	char	*path;
-	
-	printf("argv: %s\n", argv);
-	argtab = ft_split_custom(argv);
-	path = pathfinder(argtab[0], env);
-	if (execve(path, argtab, env) == -1)
+	int		execveresult;
+
+	path = findprocesspath(path, pipexstruct, 1);
+	if (path == NULL)
 	{
-		free2(argtab);
-		free(path);
-		perror_exit("could not execute");
+		perror("Path not found");
+		return (1);
 	}
-	free2(argtab);
+	dup2(pipexstruct.fdpipe[1], 1);
+	close(pipexstruct.fdpipe[0]);
+	dup2(inputfd, 0);
+	execveresult = execve(path, pipexstruct.argvs1, envp);
+	if (execveresult == -1)
+		perror("Execve failed in P1child. Terminating Now");
 	free(path);
+	return (0);
 }
 
-void	handler(int input_fd, int output_fd, char **argv, char **envp)
+int	p2child(char *path, char *envp[], struct s_pipex pipexstruct, int outputfd)
 {
-	pid_t	pid;
-	int pipe_fd[2];
-	if (pipe(pipe_fd) == -1)
-		perror_exit("pipe");
-	pid = fork();
-	if (pid < 0)
-		perror_exit("fork");
-	else if (pid == 0)
+	int		execveresult;
+
+	path = findprocesspath(path, pipexstruct, 2);
+	if (path == NULL)
 	{
-		child(input_fd, pipe_fd, envp, argv);
+		perror("Path not found");
+		return (1);
 	}
+	dup2(pipexstruct.fdpipe[0], 0);
+	close(pipexstruct.fdpipe[1]);
+	dup2(outputfd, 1);
+	execveresult = execve(path, pipexstruct.argvs2, envp);
+	if (execveresult == -1)
+		perror("smth wrong with executing. Terminate now");
+	free(path);
+	return (0);
+}
+
+char	*findpath(char *envp[])
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp("PATH=", envp[i], 5) == 0)
+		{
+			path = envp[i];
+			break ;
+		}
+		i++;
+	}
+	if (ft_strncmp("PATH=", path, 5) == 0)
+		return (path);
 	else
-	{
-		//close(pipe_fd[1]);
-		parent(output_fd, pipe_fd, envp, argv);
-		close(pipe_fd[0]);
-	}
+		return (NULL);
 }
 
-// write to pipe_fd[1], read from pipe_fd[0]
-void	parent(int output_fd, int *pipe_fd, char **env, char **argv)
+int	main(int argc, char *argv[], char *envp[])
 {
-	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(output_fd, STDOUT_FILENO);
-	execute_command(argv[3], env);
-}
-
-void	child(int input_fd, int *pipe_fd, char **env, char **argv)
-{
-	dup2(input_fd, STDIN_FILENO);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	execute_command(argv[2], env);
-}
-
-
-int main(int argc, char **argv, char **envp)
-{
-	int	input_fd;
-	int	output_fd;
+	struct s_pipex	pipexstruct;
+	char			*path;
+	int				input_fd;
+	int				output_fd;
+	int				pid1;
+	int				pid2;
+	int				pid1status;
+	int				pid2status;
 	
 	if (argc != 5)
-		perror_exit("invalid input params");
+		return (1);
+	path = findpath(envp);
+	if (pipe(pipexstruct.fdpipe) == -1)
+		return (1);
 	input_fd = open(argv[1], O_RDONLY);
-	if (input_fd == -1)
-		perror_exit("open");
-	output_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (output_fd == -1)
-		perror_exit("open");
-	handler(input_fd, output_fd, argv, envp);
+	if (input_fd < 0)
+	{
+		perror("Error opening file");
+		return (0);
+	}
+	output_fd = open(argv[4], O_APPEND | O_CREAT | O_RDWR, 0644);
+	if (output_fd < 0)
+	{
+		perror("Error in output file");
+		return (0);
+	}
+	// setstructure(argv, &pipexstruct, path);
+	pipexstruct.argvs1 = ft_split(argv[2], ' ');
+	pipexstruct.argvs2 = ft_split(argv[3], ' ');
+	// if (pipexstruct.err == 1)
+	// {
+	// 	freestuff(&pipexstruct);
+	// 	return (0);
+	// }
+	pid1 = fork();
+	if (pid1 == 0)
+		p1child(path, envp, pipexstruct, input_fd);
+	pid2 = fork();
+	if (pid2 == 0 && pid1 != 0)
+		p2child(path, envp, pipexstruct, output_fd);
+	closepipes(&pipexstruct);
+	waitpid(pid1, &pid1status, 0);
+	waitpid(pid2, &pid2status, 0);
+	freestuff(&pipexstruct);
 	return (0);
 }
