@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:30:28 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/13 19:00:24 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:10:50 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 	static char	*buf[4096];
 	char		*line;
 
-	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0) 
+	if (fd < 0 || fd > 4095 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buf[fd] = read_to_storage(fd, buf[fd]);
 	if (!buf[fd])

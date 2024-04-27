@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:32:13 by seayeo            #+#    #+#             */
-/*   Updated: 2024/01/13 19:01:12 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:10:28 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	str = (char *)malloc(sizeof(char)
+			* (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
 	if (str == NULL)
 		return (NULL);
 	while (s1 && s1[i])

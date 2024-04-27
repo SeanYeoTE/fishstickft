@@ -16,9 +16,9 @@
 # include <stdlib.h>
 # include <limits.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1000
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1000
+# endif
 
 size_t	ft_strlen_gnl(const char *i);
 char	*ft_strchr_gnl(const char *s, int c);
