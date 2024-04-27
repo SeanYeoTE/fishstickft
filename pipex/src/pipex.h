@@ -6,7 +6,7 @@
 /*   By: seayeo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:17:10 by seayeo            #+#    #+#             */
-/*   Updated: 2024/04/25 18:49:53 by seayeo           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:33:18 by seayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,27 @@
 
 # include "../libft/libft.h"
 
-
-
-typedef struct s_pipex {
+typedef struct s_pipex
+{
 	char	**argvs1;
 	char	**argvs2;
 	int		fdpipe[2];
 	char	**paths;
-	char	*path;
 	int		input_fd;
 	int		output_fd;
+
+	char	*path;
+	char	**envp;
 }	t_store ;
 
+int		secondary(t_store *vars, char **argv, char **envp);
+char	*findprocesspath(t_store *vars, int processnum);
+int		p1child(t_store *vars, char **envp);
+int		p2child(t_store *vars, char **envp);
+
 void	freechararray(char **arr);
-
-void	setstructure(char *argv[], t_store *vars, char *path);
 void	closepipes(t_store *vars);
-
-char	*findprocesspath(char *path, t_store vars, int processnum);
-int		p1child(char *path, char *envp[], t_store vars, int inputfd);
-int		p2child(char *path, char *envp[], t_store vars, int outputfd);
-
-char	*findpath(char *envp[]);
 void	freestuff(t_store *vars);
-
+char	*findpath(char *envp[]);
 
 #endif
