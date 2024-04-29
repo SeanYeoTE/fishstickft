@@ -60,7 +60,7 @@ int	p1child(t_store *vars, char **envp)
 	if (exepath)
 		execveresult = execve(exepath, vars->argvs1, envp);
 	else
-		perror("Execve failed in P1child. Terminating Now");
+		perror("first process error");
 	if (exepath)
 		free(exepath);
 	return (execveresult);
@@ -73,7 +73,7 @@ int	p2child(t_store *vars, char **envp)
 	char	*exepath;
 
 	execveresult = 0;
-	exepath = findprocesspath(vars, 2);
+	exepath = findprocesspath(vars, 0);
 	if (exepath == NULL)
 	{
 		perror("Path not found");
@@ -85,7 +85,7 @@ int	p2child(t_store *vars, char **envp)
 	dup2(vars->output_fd, 1);
 	execveresult = execve(exepath, vars->argvs2, envp);
 	if (execveresult == -1)
-		perror("smth wrong with executing second process. Terminate now");
+		perror("second process error");
 	if (exepath)
 		free(exepath);
 	return (0);
@@ -94,22 +94,29 @@ int	p2child(t_store *vars, char **envp)
 // setup all the necessary values into struct
 int	secondary(t_store *vars, char **argv, char **envp)
 {
+	int errr;
+
+	errr = 0;
 	if (pipe(vars->fdpipe) < 0)
 		return (1);
 	vars->input_fd = open(argv[1], O_RDONLY);
 	if (vars->input_fd < 0)
-		return (1);
+	{
+		perror("error opening input file");
+		errr = 1;
+	}
 	vars->output_fd = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (vars->output_fd < 0)
 	{
-		return (1);
+		perror("error opening output file");
+		errr = 1;
 	}
 	vars->path = findpath(envp);
 	vars->paths = ft_split(vars->path + 5, ':');
 	vars->argvs1 = ft_split(argv[2], ' ');
 	vars->argvs2 = ft_split(argv[3], ' ');
 	vars->envp = envp;
-	return (0);
+	return (errr);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -135,5 +142,7 @@ int	main(int argc, char *argv[], char *envp[])
 		closepipes(&vars);
 		freestuff(&vars);
 	}
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }

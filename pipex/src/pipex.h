@@ -32,7 +32,7 @@ typedef struct s_pipex
 
 	char	*path;
 	char	**envp;
-}	t_store ;
+}	t_store;
 
 int		secondary(t_store *vars, char **argv, char **envp);
 char	*findprocesspath(t_store *vars, int processnum);
